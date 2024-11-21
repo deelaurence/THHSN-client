@@ -79,8 +79,9 @@ export const addProductNameAndPrice = createAsyncThunk(
 // Async action for adding product name, description, category, quantity and price
 export const addProductImage = createAsyncThunk(
   'admin/addProductImage',
-      async (images:FileList) => {      
+      async (images:FileList,{getState}) => {      
         try {
+          const state=getState() as any
           const formData = new FormData();
           Array.from(images).forEach((file)=>{
             formData.append('images',file)
@@ -92,7 +93,8 @@ export const addProductImage = createAsyncThunk(
           const headers={
             'Authorization':`Bearer ${persistedAdmin?.token}`
           }
-          const response = await apiClient.put('/v1/admin/manage/product/image/id',formData,{headers});
+          const productId=state?.admin.productDraftOne?._id
+          const response = await apiClient.put(`/v1/admin/manage/product/image/${productId}`,formData,{headers});
           return response.data;
       } catch (error:any) {
 
@@ -144,11 +146,14 @@ const adminSlice = createSlice({
       //ProductNameAndPRIce
       .addCase(addProductNameAndPrice.pending, (state) => {
         state.status = 'loading';
+        console.log(state)
       })
       .addCase(addProductNameAndPrice.fulfilled, (state, action: PayloadAction<{ payload:{ email: string, name:string, token:string} }>) => {
         state.status = 'succeeded';
         const {payload} = action.payload
+        console.log(action)
         state.productDraftOne = payload
+        console.log(state.productDraftOne)
         if(state.addProductPage!==undefined){
           state.addProductPage+=1
         }
@@ -157,7 +162,7 @@ const adminSlice = createSlice({
       .addCase(addProductNameAndPrice.rejected, (state, action) => {
         state.status = 'failed';
         console.log(action.error.message)
-        state.error = action.error.message || 'Sign-in failed';
+        state.error = action.error.message || 'Adding Product name failed';
       })
 
 
@@ -175,6 +180,7 @@ const adminSlice = createSlice({
         // window.location.href=sdk.adminDashboardRoute  // Redirect to admin dashboard after successful sign-in. Replace with your dashboard route.
       })
       .addCase(addProductImage.rejected, (state, action) => {
+        console.log(action)
         state.status = 'failed';
         console.log(action.error.message)
         state.error = action.error.message || 'Sign-in failed';

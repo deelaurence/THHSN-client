@@ -18,7 +18,7 @@ const AddProduct = () => {
   let addProductPage = useSelector((state:RootState)=>{
     return state.admin.addProductPage
   })
-  addProductPage=1
+  // addProductPage=0
   return (
     <div className='min-h-screen px-6'>
         {/* todo, change the heading based on current page */}

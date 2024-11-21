@@ -1,7 +1,7 @@
 // src/store/store.ts
 import { configureStore } from '@reduxjs/toolkit';
-import adminReducer from './adminSlice';
-
+import adminReducer, {signOutAdmin} from './adminSlice';
+import { apiClient } from '../utils/apiClient';
 // Configure the Redux store
 const store = configureStore({
   reducer: {
@@ -13,5 +13,17 @@ const store = configureStore({
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
+
+// Set up Axios interceptor AFTER creating the store
+apiClient.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response && error.response.status === 401) {
+      // Dispatch sign-out action to Redux store
+      store.dispatch(signOutAdmin());
+    }
+    return Promise.reject(error);
+  }
+);
 
 export default store;

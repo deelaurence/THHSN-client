@@ -7,9 +7,11 @@ module.exports = {
   ],
   theme: {
     extend: {
+      backgroundImage:{
+      },
       colors: {
         primary: {
-          light: '#0c1400', // Lighter shade for hover or light mode
+          light: '#343333', // Lighter shade for hover or light mode
           // DEFAULT: '#000f0a', 
           DEFAULT: '#292929', 
           // DEFAULT: '#171717',

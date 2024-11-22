@@ -7,6 +7,10 @@
     /* border: 1px solid yellow; */
     transition: color 0.3s ease-out, background-color 0.3s ease-out, border-color 0.3s ease-out;
 }
+body{
+    transition: .3s ease-out;
+}
+
 
 /* Add these styles to your global CSS file */
 input:-webkit-autofill,
@@ -60,3 +64,17 @@ input{
 .force-z{
     z-index: 999999 ; /* Ensure the element is always on top */
 }
+
+textarea,
+  input[type="text"],
+  input[type="number"],
+  input[type="password"],
+  input[type="email"]
+  {
+       -webkit-appearance: none !important;
+       border-radius: 0 !important;
+       
+  }
+
+
+  

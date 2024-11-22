@@ -1,29 +1,19 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import CategoryHeader from '../../components/CategoryHeader';
 import FormInput from '../../components/FormInput';
 import Button from '../../components/Button';
 import { SlInfo } from 'react-icons/sl';
-import { addProductNameAndPrice } from '../../store/adminSlice.ts';
+import { IoAddCircle } from 'react-icons/io5';
+import { IoCloseOutline } from "react-icons/io5";
 import { useDispatch, useSelector } from 'react-redux';
-import { FaBagShopping } from "react-icons/fa6";
-import { IoWalletOutline } from "react-icons/io5";
-import { SiGoogleanalytics } from "react-icons/si";
-import {IoMdCheckmarkCircle}  from 'react-icons/io'
-import PageHeader from '../../components/PageHeader'
-import {Sdk} from '../../utils/sdk'
-import Analytics from "./Analytics";
-import Payments from "./Payments";
-const sdk = new Sdk();
+import { AiTwotoneTags } from "react-icons/ai";
 import { RootState, AppDispatch } from '../../store/store.ts';
+import { addProductVariation } from '../../store/adminSlice.ts';
 
-interface Product {
-    name: string;
-    category: string;
-    price: number|string;
-    quantity: number|string;
-    description: string;
-    images: File[];
-  }
+interface Variants{
+  name:string,
+  variations:{variation:string,price:number,quantity:number}[]
+}
 
 const ProductStepTwo = () => {
   const dispatch = useDispatch<AppDispatch>()
@@ -33,57 +23,155 @@ const ProductStepTwo = () => {
   const adminError = useSelector((state:RootState)=>{
     return state.admin.error
   })
-  const [currentMenu, setCurrentMenu] = useState<number >(0);
-  const [productData, setProductData] = useState<Product>({
-    name: 'a',
-    price: 5,
-    quantity:4,
-    category:'d',
-    description: 'e',
-    images: [],
-  });
-  
-  // Handle product data changes
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    setProductData({ ...productData, [name]: value });
+  const baseProduct = useSelector((state:RootState)=>{
+    return state.admin.productDraftOne
+  })
+  const [variants, setVariants]=useState<Variants[]>([]);
+  const [variantHeader, setVariantHeader]=useState<string>('')
+  const [variantChildren, setVariantChildren]=useState<string>('')
+  const [variantPrice, setVariantPrice]=useState<number>(0)
+  const [variantQuantity, setVariantQuantity]=useState<number>(0)
+  const [disablePushButton,setDisablePushButton]=useState<boolean>(true)
+  // Handle adding product to the list
+  const handleSubmitVariation = (e:React.FormEvent) => {
+    e.preventDefault();
+    console.log(variants)
+    dispatch(addProductVariation(variants))
   };
 
-  // Handle adding product to the list
-  const handleSubmitDraft = (e:React.FormEvent) => {
-    e.preventDefault();
-    dispatch(addProductNameAndPrice(productData))
+  const handleChange=(e:any)=>{
+    setVariantChildren(e.target.value)
+  }
+  const handlePriceChange=(e:any)=>{
+    setVariantPrice(Number(e.target.value))
+  }
+  const handleQuantityChange=(e:any)=>{
+    setVariantQuantity(Number(e.target.value))
+  }
+
+  const handleRemoveVariant = (indexA: number, indexB: number) => {
+    // Make a shallow copy of the variants array
+    let updatedVariants = [...variants];
+    
+    // Remove the selected variation from the specified variant
+    updatedVariants[indexA] = {
+      ...updatedVariants[indexA],
+      variations: updatedVariants[indexA].variations.filter((_, idx) => idx !== indexB)
+    };
+    updatedVariants = updatedVariants.filter((variant) => variant.variations.length > 0);
+
+    // Update the state with the modified variants array
+    setVariants(updatedVariants);
   };
+  
+  
+  useEffect(()=>{
+    if(variantHeader&&variantChildren&&variantPrice&&variantQuantity){
+      setDisablePushButton(false)
+    }
+  },[!variantHeader,variantChildren,variantPrice,variantQuantity])
+
+
+  const pushVariant = () => {
+
+    if(!variantHeader||!variantChildren||!variantPrice||!variantQuantity){
+      return
+    }
+    const existingHeaders = variants.map((variant) => variant.name);
+    
+    if (existingHeaders.includes(variantHeader)) {
+      // Find and update existing variant
+      const updatedVariants = variants.map((variant) => {
+        if (variant.name === variantHeader) {
+          return {
+            ...variant,
+            variations: [
+              ...variant.variations,
+              { variation: variantChildren, price: variantPrice, quantity:variantQuantity }
+            ]
+          };
+        }
+        return variant;
+      });
+
+      setVariants(updatedVariants);
+    } else {
+      // Add a new variant
+      setVariants([
+        ...variants,
+        {
+          name: variantHeader,
+          variations: [{ variation: variantChildren, price: variantPrice, quantity:variantQuantity }]
+        }
+      ]);
+    }
+
+    // Clear input fields after adding
+    setVariantChildren('');
+    setVariantPrice(0);
+    setVariantQuantity(0);
+    setDisablePushButton(true)
+  };
+  
+
+
+
 
   return (
-    <div className='min-h-screen'>
+    <div className='min-h-screen pb-4'>
       
+        
         <form 
-        onSubmit={handleSubmitDraft}
+        onSubmit={handleSubmitVariation}
         >
-          {/* category for name and description */}
-          <CategoryHeader heading='Make It Catchy!' subheading='Help Customers Understand Your Product at a Glance'/>
-          <FormInput type='text' placeholder='Product name' value={productData.name} required={true} onChange={handleInputChange} name='name' />
+         {/* Input Variation details */}
+          <CategoryHeader heading='Add variants!' subheading='Set variations of the product'/>
           <FormInput
             type="select"
-            placeholder="Category"
-            value={productData.category}
-            required={true}
-            onChange={(e) => setProductData({...productData,category: e.target.value})}
+            placeholder="Variant Title"
+            value={variantHeader}
+            required={false}
+            fieldTip='Select variations category for the product'
+            onChange={(e)=>{
+              setVariantHeader(e.target.value)
+            }}
+         
             selectOptions={[
-              { label: 'Electronics', value: 'electronics' },
-              { label: 'Clothing', value: 'clothing' },
-              { label: 'Books', value: 'books' },
+              { label: 'Length', value: 'length' },
+              { label: 'Colour', value: 'colour' },
             ]}
           />
-          <FormInput type='textarea' placeholder='Description' value={productData.description} required={true} onChange={handleInputChange} name='description' fieldTip='Tell Us What Makes This Product Special' />
-            
-
-          {/* category for amount and quantity in stock   */}
-          <CategoryHeader heading='Choose Your Winning Price' subheading='Tag Your Product with a Great Price'/>
-          <FormInput type='number' placeholder='Base price' value={productData.price} required={true} onChange={handleInputChange} name='price' fieldTip='The base price is the least price of the product variants' />
-          <FormInput type='number' placeholder='Quantity in stock' value={productData.quantity} required={true} onChange={handleInputChange} name='quantity'  />
-          <Button disabled={adminStatus==="loading"} size="large" label="continue" loading={adminStatus==='loading'} />
+          <FormInput onChange={handleChange} type='text' placeholder='Description' value={variantChildren} required={false} name='description' fieldTip={variantHeader==='length'?'12 inches? 14 inches?':'Blonde. Gray. Whatever. '} />
+          <FormInput onChange={handlePriceChange} type='number' placeholder='Price' value={variantPrice||''} required={false} name='description' fieldTip={`How much does this variant cost?`} />
+          <FormInput onChange={handleQuantityChange} type='number' placeholder='Quantity' value={variantQuantity||''} required={false} name='quantity' fieldTip={`How much do you have in stock?`} />
+          <IoAddCircle className={`${disablePushButton?'opacity-30':''}  text-7xl my-6`} onClick={pushVariant}/>
+          
+          
+          {/* Variations Added displayed */}
+          {variants.map((variant,indexA)=>(
+            <div className=' mb-6 mt-12 flex flex-col gap-2 text-base font-bold' key={indexA}>
+              <div className='flex opacity-80  gap-1 items-center gap'>
+              <AiTwotoneTags />
+              <h3 className=' '>{variant.name}</h3>
+              </div>
+              {variant.variations.map((variation,indexB)=>{
+                return (
+                <div className='text-xs rounded font-normal bg-primary-light p-2 flex justify-between' key={indexB}>
+                    <p className='opacity-80'>We have <span className='font-medium'>{variation.quantity}</span> pieces of  <span className='font-medium'>{variation.variation}</span> each costing #{variation.price}</p>
+                  <IoCloseOutline
+                  onClick={()=>{handleRemoveVariant(indexA,indexB)}}
+                  className='justify-self-end text-sm  text-red-300'/>
+                </div>
+                  )})}  
+                  </div>
+                ))} 
+              
+              <div className='flex '>
+           
+            <Button 
+            // onClick={}
+            disabled={adminStatus==="loading"||variants.length===0} size="large" label="continue" loading={adminStatus==='loading'} />
+          </div>
       </form>
       {adminStatus === 'loading' && <p className="text-gray-500">Loading...</p>}
       {adminStatus === 'failed' && (

@@ -16,11 +16,9 @@ import Payments from "./Payments";
 const sdk = new Sdk();
 import { RootState, AppDispatch } from '../../store/store.ts';
 
-interface Product {
+interface ProductDraftOne {
     name: string;
     category: string;
-    price: number|string;
-    quantity: number|string;
     description: string;
     images: File[];
   }
@@ -34,10 +32,8 @@ export const ProductStepOne = () => {
     return state.admin.error
   })
   const [currentMenu, setCurrentMenu] = useState<number >(0);
-  const [productData, setProductData] = useState<Product>({
+  const [productData, setProductData] = useState<ProductDraftOne>({
     name: 'a',
-    price: 5,
-    quantity:4,
     category:'d',
     description: 'e',
     images: [],
@@ -79,10 +75,7 @@ export const ProductStepOne = () => {
           <FormInput type='textarea' placeholder='Description' value={productData.description} required={true} onChange={handleInputChange} name='description' fieldTip='Tell Us What Makes This Product Special' />
             
 
-          {/* category for amount and quantity in stock   */}
-          <CategoryHeader heading='Choose Your Winning Price' subheading='Tag Your Product with a Great Price'/>
-          <FormInput type='number' placeholder='Base price' value={productData.price} required={true} onChange={handleInputChange} name='price' fieldTip='The base price is the least price of the product variants' />
-          <FormInput type='number' placeholder='Quantity in stock' value={productData.quantity} required={true} onChange={handleInputChange} name='quantity'  />
+          
           <Button disabled={adminStatus==="loading"} size="large" label="continue" loading={adminStatus==='loading'} />
       </form>
       {adminStatus === 'loading' && <p className="text-gray-500">Loading...</p>}

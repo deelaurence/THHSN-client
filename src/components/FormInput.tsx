@@ -61,7 +61,7 @@ const FormInput: React.FC<FormInputProps> = ({
           onChange={handleSanitize}
           className={`${value === '' ? 'placeholder' : 'dark:text-neutral-300'} w-full py-2 border-b dark:border-neutral-600 bg-secondary border-neutral-700 focus:outline-none focus:dark:border-b-neutral-100 dark:bg-primary px-0`}
         >
-          <option value="" disabled className="text-neutral-800">
+          <option value="" disabled className="text-neutral-500 text-xs font-medium">
             {placeholder}
           </option>
           {selectOptions.map((option: any) => (

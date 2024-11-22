@@ -9,7 +9,14 @@ interface AdminState {
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
   error: string | null;
   formErrors:string[];
-  productDraftOne?:{}
+  productDraftOne?:{
+    name?: string,
+    category?: string,
+    description?: string,
+    images?: [],
+    _id?: string,
+    __v?: number
+  }
   addProductPage:0|1|2
 }
 
@@ -53,8 +60,6 @@ export const addProductNameAndPrice = createAsyncThunk(
   'admin/addProductNameAndPrice',
       async (productDetails: { 
           name: string; 
-          price: number|string;
-          quantity:number|string;
           category:string;
           description:string; 
         }) => {       
@@ -108,6 +113,34 @@ export const addProductImage = createAsyncThunk(
       }
 }
 );
+
+
+export const addProductVariation = createAsyncThunk(
+  'admin/addProductVariation',
+      async (variations:{},{getState}) => {      
+        try {
+          const state=getState() as any
+
+          const headers={
+            'Authorization':`Bearer ${persistedAdmin?.token}`,
+            'content-Type':"application/json"
+          }
+          const productId=state?.admin.productDraftOne?._id
+          const response = await apiClient.put(`/v1/admin/manage/product/variant/${productId}`,variations,{headers});
+          return response.data;
+      } catch (error:any) {
+
+          if(error.response){
+            throw error.response.data.reason
+          }
+          else{
+            console.log(error)
+            throw "Failed to connect, Try again"
+          }
+      }
+}
+);
+
 
 
 
@@ -183,7 +216,28 @@ const adminSlice = createSlice({
         console.log(action)
         state.status = 'failed';
         console.log(action.error.message)
-        state.error = action.error.message || 'Sign-in failed';
+        state.error = action.error.message || 'Adding Image Failed';
+      })
+
+
+      //ProductImage
+      .addCase(addProductVariation.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(addProductVariation.fulfilled, (state, action: PayloadAction<{ payload:{ email: string, name:string, token:string} }>) => {
+        state.status = 'succeeded';
+        // const {payload} = action.payload
+        // state.productDraftOne = payload
+        if(state.addProductPage!==undefined){
+          state.addProductPage+=1
+        }
+        // window.location.href=sdk.adminDashboardRoute  // Redirect to admin dashboard after successful sign-in. Replace with your dashboard route.
+      })
+      .addCase(addProductVariation.rejected, (state, action) => {
+        console.log(action)
+        state.status = 'failed';
+        console.log(action.error.message)
+        state.error = action.error.message || 'Adding Image Failed';
       });
   },
 });

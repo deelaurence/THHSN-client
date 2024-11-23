@@ -4,10 +4,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import AdminLogin from './pages/admin/AdminLogin';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import Home from './pages/Home';
-import { useDispatch, useSelector } from 'react-redux';
-import { signInAdmin } from './store/adminSlice.ts';
-import { RootState, AppDispatch } from './store/store.ts';
- 
+import Placeholder from './components/PlaceHolderComponent.tsx'; 
 import Navbar from './components/Navbar.tsx';
 import AdminPrivateRoutes from './components/ProtectedRoute.tsx';
 import { Sdk } from './utils/sdk.ts';
@@ -28,6 +25,10 @@ const App: React.FC = () => {
             <Route element={<AdminPrivateRoutes />}>
               <Route path={sdk.adminDashboardRoute} element={<AdminDashboard/>} />
               <Route path={sdk.addProductRoute} element={<AddProduct/>} />
+              <Route path={sdk.managePaymentsRoute} element={<Placeholder header='Payments' paragraph='something here later'/>} />
+              <Route path={sdk.productDraftsRoute} element={<Placeholder header='Drafts' paragraph='manage drafts'/>} />
+              <Route path={sdk.salesRoute} element={<Placeholder header='Sales' paragraph='something here later'/>} />
+              <Route path={sdk.manageUsersRoute} element={<Placeholder header='Users' paragraph='something here later'/>} />
             </Route>
         </Routes>
     </Router>

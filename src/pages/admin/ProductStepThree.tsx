@@ -173,7 +173,6 @@ const ProductStepTwo = () => {
             disabled={adminStatus==="loading"||variants.length===0} size="large" label="continue" loading={adminStatus==='loading'} />
           </div>
       </form>
-      {adminStatus === 'loading' && <p className="text-gray-500">Loading...</p>}
       {adminStatus === 'failed' && (
         <p className="text-danger dark:text-danger-light text-[12px] py-2 flex gap-1 items-center input-errors"><SlInfo/> {adminError}</p>
       )}

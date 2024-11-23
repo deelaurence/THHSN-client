@@ -5,6 +5,10 @@ export class Sdk{
     adminLoginRoute:string='/admin/login'
     adminDashboardRoute:string='/admin/dashboard'
     addProductRoute:string='/admin/add-product'
+    managePaymentsRoute:string='/admin/payments'
+    productDraftsRoute:string='/admin/drafts'
+    salesRoute:string='/admin/sales'
+    manageUsersRoute:string='/admin/users'
     theme:string|null=localStorage.getItem('theme')
     navbarData = [
         {

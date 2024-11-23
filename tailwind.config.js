@@ -9,6 +9,9 @@ module.exports = {
     extend: {
       backgroundImage:{
       },
+      fontFamily: {
+        queens: ['queens', 'sans-serif'],
+      },
       colors: {
         primary: {
           light: '#343333', // Lighter shade for hover or light mode

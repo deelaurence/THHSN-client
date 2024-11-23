@@ -3,8 +3,37 @@
 @tailwind components;
 @tailwind utilities;
 
+
+@font-face {
+    font-family: 'wotfard';
+    src: url('./assets/fonts/wotfard-medium-webfont.woff2') format('woff2');
+    font-weight: 500;
+}
+@font-face {
+    font-family: 'wotfard';
+    src: url('./assets/fonts/wotfard-regular-webfont.woff') format('woff');
+    font-weight: 400;
+}
+@font-face {
+    font-family: 'wotfard';
+    src: url('./assets/fonts/wotfard-semibold-webfont.woff2') format('woff2');
+    font-weight: 700;
+}
+
+@font-face {
+    font-family: 'queens';
+    src: url('./assets/fonts/Queens_W-Regular.woff2') format('woff2');
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: 'wotfard';
+    src: url('');
+}
+
 *{
-    /* border: 1px solid yellow; */
+    /* border: 1px solid gray; */
+    font-family: wotfard;
     transition: color 0.3s ease-out, background-color 0.3s ease-out, border-color 0.3s ease-out;
 }
 body{

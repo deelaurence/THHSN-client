@@ -6,6 +6,7 @@ import { RootState, AppDispatch } from '../../store/store.ts';
 import FormInput from '../../components/FormInput.tsx';
 import Button from '../../components/Button.tsx'
 import { SlInfo } from 'react-icons/sl';
+import { Sdk } from '../../utils/sdk.ts';
 const AdminLogin: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -18,6 +19,17 @@ const AdminLogin: React.FC = () => {
     e.preventDefault();
     dispatch(signInAdmin({email,password}));
   };
+
+  const {getAdminObject,adminDashboardRoute}= new Sdk()
+
+
+  //Redirect to admin dashboard if still logged in
+  useEffect(()=>{
+    if(getAdminObject()?.token){
+      window.location.href=adminDashboardRoute
+    }
+  },[])
+
 
   useEffect(()=>{
     const errorElements = document.querySelectorAll('.input-errors')
@@ -49,7 +61,6 @@ const AdminLogin: React.FC = () => {
         {/* <Button  label="Sign In"/> */}
         </div>
       </form>
-      {adminStatus === 'loading' && <p className="text-gray-500">Loading...</p>}
       {adminStatus === 'failed' && (
         <p className="text-danger dark:text-danger-light text-[12px] py-2 flex gap-1 items-center input-errors"><SlInfo/> {adminError}</p>
       )}

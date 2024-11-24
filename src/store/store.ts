@@ -2,10 +2,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 import adminReducer, {signOutAdmin} from './adminSlice';
 import { apiClient } from '../utils/apiClient';
+import productReducer from './productSlice'
 // Configure the Redux store
 const store = configureStore({
   reducer: {
-    admin: adminReducer, // Add admin reducer here
+    admin: adminReducer,
+    product:productReducer
   },
   // Enabling Redux DevTools if they are available
   devTools: true, // Recommended way to enable DevTools only in development

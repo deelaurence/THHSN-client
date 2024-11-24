@@ -9,6 +9,7 @@ export class Sdk{
     productDraftsRoute:string='/admin/drafts'
     salesRoute:string='/admin/sales'
     manageUsersRoute:string='/admin/users'
+    manageInventoryRoute:string='/admin/inventory'
     theme:string|null=localStorage.getItem('theme')
     navbarData = [
         {

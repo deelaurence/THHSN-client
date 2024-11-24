@@ -12,6 +12,8 @@ import { Link } from "react-router-dom";
 import Analytics from "./Analytics";
 import Payments from "./Payments";
 import { PiPenDuotone } from "react-icons/pi";
+import DashboardNav from "../../components/DashboardNav";
+
 const sdk = new Sdk();
 import PageHeader from '../../components/PageHeader'
 import { GrAnalytics } from "react-icons/gr";
@@ -31,37 +33,31 @@ const menuItems = [
     label: 'Add Products',
     route: sdk.addProductRoute,
     icon: <FaBagShopping />,
-    component: <AddProduct/>
   },
   {
     label: 'Payments',
     route: sdk.managePaymentsRoute, // Replace with the correct route
     icon: <IoWalletOutline />,
-    component: <Payments/>
   },
   {
     label: 'Drafts',
     route: sdk.productDraftsRoute, // Replace with the correct route
     icon: <PiPenDuotone />,
-    component: <Payments/>
   },
   {
     label: 'Sales',
     route: sdk.salesRoute, // Replace with the correct route
     icon: <BsGraphUpArrow />,
-    component: <Payments/>
   },
   {
     label: 'Users',
     route: sdk.manageUsersRoute, // Replace with the correct route
     icon: <LuUsers2 />,
-    component: <Payments/>
   },
   {
-    label: 'Wrap',
-    route: sdk.addProductRoute, // Replace with the correct route
+    label: 'Manage Inventory',
+    route: sdk.manageInventoryRoute, // Replace with the correct route
     icon: <GrAnalytics />,
-    component: <Analytics/>
   },
 ];
 
@@ -88,23 +84,7 @@ const AdminDashboard = () => {
   return (
     <section className="px-6 ">
       <PageHeader heading="Hello Betran" accent="How are you today?"/>
-      <div className="flex gap-4 flex-wrap *:flex *:gap-1 *:items-center  *:w-fit">
-        {/* Map through the menu items */}
-        {menuItems.map((item, index) => (
-          <Link 
-            key={index} 
-            to={item.route}
-
-            className={` dark:bg-primary-light bg-neutral-200 p-3 dark:border-b-neutral-400  border-b flex   items-center text-sm gap-2`}
-            onClick={() => console.log("")}>
-            {item.icon}
-            <span className="text-xs">{item.label}</span>
-          </Link>
-        ))}
-      </div>
-      <div>
-        
-      </div>
+      <DashboardNav menuItems={menuItems}/>
       <div className="flex  mt-16 ">
         <PieChart 
         chartTitle="Sales By Category"

@@ -10,6 +10,7 @@ import AdminPrivateRoutes from './components/ProtectedRoute.tsx';
 import { Sdk } from './utils/sdk.ts';
 import AddProduct from './pages/admin/AddProduct.tsx';
 import { ThemeProvider } from './contexts/AppContext.tsx';
+import Inventory from './pages/admin/Inventory.tsx';
 const sdk = new Sdk()
 
 const App: React.FC = () => {
@@ -25,6 +26,7 @@ const App: React.FC = () => {
             <Route element={<AdminPrivateRoutes />}>
               <Route path={sdk.adminDashboardRoute} element={<AdminDashboard/>} />
               <Route path={sdk.addProductRoute} element={<AddProduct/>} />
+              <Route path={sdk.manageInventoryRoute} element={<Inventory/>} />
               <Route path={sdk.managePaymentsRoute} element={<Placeholder header='Payments' paragraph='something here later'/>} />
               <Route path={sdk.productDraftsRoute} element={<Placeholder header='Drafts' paragraph='manage drafts'/>} />
               <Route path={sdk.salesRoute} element={<Placeholder header='Sales' paragraph='something here later'/>} />

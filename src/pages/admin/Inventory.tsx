@@ -10,6 +10,7 @@ import AddProduct from './AddProduct';
 import Payments from './Payments';
 const sdk=new Sdk()
 import InventoryUnit from '../../components/InventoryUnit';
+import SingleLineError from '../../components/errors/SingleLineError';
 
 
 const Inventory: React.FC = () => {
@@ -28,11 +29,13 @@ const Inventory: React.FC = () => {
   useEffect(() => {
     dispatch(fetchProducts());
   }, [dispatch]);
+  console.log(error)
 
   return (
     <div className="container mx-auto p-6">
-      <PageHeader heading="" accent="Manage Inventory"/>
+      <PageHeader heading="" accent="Manage Inventory" backToRoute={sdk.adminDashboardRoute} backToLabel='Dashboard'/>
       <DashboardNav menuItems={menuItems} />
+      {error&&<SingleLineError errorMessage={error}/>}
     </div>
   );
 };

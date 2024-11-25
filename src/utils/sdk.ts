@@ -10,6 +10,7 @@ export class Sdk{
     salesRoute:string='/admin/sales'
     manageUsersRoute:string='/admin/users'
     manageInventoryRoute:string='/admin/inventory'
+    singleInventoryRoute:string='/admin/inventory'
     theme:string|null=localStorage.getItem('theme')
     navbarData = [
         {
@@ -61,5 +62,16 @@ export class Sdk{
 
     setAdminObject(object:AdminObject){
         localStorage.setItem(this.adminObjectKey,JSON.stringify(object))
+    }
+
+
+    setSingleProductDetail(object:any){
+      localStorage.setItem('single_product',JSON.stringify(object))
+    }
+    getSingleProductDetail(){
+      const singleProduct = localStorage.getItem('single_product')
+      if(singleProduct!=='undefined'&&singleProduct!==null){
+        return JSON.parse(singleProduct)
+      }
     }
 }

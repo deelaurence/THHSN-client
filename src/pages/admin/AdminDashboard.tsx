@@ -36,27 +36,27 @@ const menuItems = [
   },
   {
     label: 'Payments',
-    route: sdk.managePaymentsRoute, // Replace with the correct route
+    route: sdk.managePaymentsRoute, 
     icon: <IoWalletOutline />,
   },
   {
     label: 'Drafts',
-    route: sdk.productDraftsRoute, // Replace with the correct route
+    route: sdk.productDraftsRoute, 
     icon: <PiPenDuotone />,
   },
   {
     label: 'Sales',
-    route: sdk.salesRoute, // Replace with the correct route
+    route: sdk.salesRoute, 
     icon: <BsGraphUpArrow />,
   },
   {
     label: 'Users',
-    route: sdk.manageUsersRoute, // Replace with the correct route
+    route: sdk.manageUsersRoute, 
     icon: <LuUsers2 />,
   },
   {
     label: 'Manage Inventory',
-    route: sdk.manageInventoryRoute, // Replace with the correct route
+    route: sdk.manageInventoryRoute, 
     icon: <GrAnalytics />,
   },
 ];

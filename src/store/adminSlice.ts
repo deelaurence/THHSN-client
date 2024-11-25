@@ -229,9 +229,9 @@ const adminSlice = createSlice({
         // const {payload} = action.payload
         // state.productDraftOne = payload
         if(state.addProductPage!==undefined){
-          state.addProductPage+=1
+          state.addProductPage=0
         }
-        // window.location.href=sdk.adminDashboardRoute  // Redirect to admin dashboard after successful sign-in. Replace with your dashboard route.
+        window.location.href=sdk.manageInventoryRoute 
       })
       .addCase(addProductVariation.rejected, (state, action) => {
         console.log(action)

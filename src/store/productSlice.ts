@@ -97,7 +97,9 @@ const productSlice = createSlice({
         state.categories = action.payload.map((product:IProduct)=>{
             return product.category
         })
+        //Add 'all' to the filter by category array
         state.categories.unshift('all')
+        state.error=''
 
         
         

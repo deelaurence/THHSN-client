@@ -33,9 +33,9 @@ export const ProductStepOne = () => {
   })
   const [currentMenu, setCurrentMenu] = useState<number >(0);
   const [productData, setProductData] = useState<ProductDraftOne>({
-    name: 'a',
-    category:'d',
-    description: 'e',
+    name: '',
+    category:'',
+    description: '',
     images: [],
   });
   
@@ -67,9 +67,10 @@ export const ProductStepOne = () => {
             required={true}
             onChange={(e) => setProductData({...productData,category: e.target.value})}
             selectOptions={[
-              { label: 'Electronics', value: 'electronics' },
-              { label: 'Clothing', value: 'clothing' },
-              { label: 'Books', value: 'books' },
+              { label: 'Hair Products', value: 'Products' },
+              { label: 'Lace fronts', value: 'Lace Fronts' },
+              { label: 'Hair tools', value: 'Hair Tools' },
+              { label: 'Wig Textures', value: 'Wig Textures' },
             ]}
           />
           <FormInput type='textarea' placeholder='Description' value={productData.description} required={true} onChange={handleInputChange} name='description' fieldTip='Tell Us What Makes This Product Special' />

@@ -12,8 +12,8 @@ import { Link } from 'react-router-dom';
 
 const InventoryUnit: React.FC<{filterProp:string}> = ({filterProp}) => {
   const dispatch:AppDispatch = useDispatch();
-  const { products, categories, status, error } = useSelector((state: RootState) => state.product); // Update this line based on your state structure
-    console.log(products)
+  const { products, categories, status, error } = useSelector((state: RootState) => state.product); 
+    
  
 
 
@@ -38,7 +38,6 @@ const InventoryUnit: React.FC<{filterProp:string}> = ({filterProp}) => {
       {/* Product List */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {status === 'loading' && <p>Loading products...</p>}
-        {status === 'failed' && <p className="text-red-500">{error}</p>}
         {status === 'succeeded' && filteredProducts.length === 0 && (
           <p className="text-gray-500">No products found in this category.</p>
         )}
@@ -46,7 +45,7 @@ const InventoryUnit: React.FC<{filterProp:string}> = ({filterProp}) => {
         {filteredProducts.map((product) => (
 
           <Link
-            to={''}
+            to={`${sdk.singleInventoryRoute}/${product.name}`}
             key={product._id} className="flex border-b-[1px] border-b-gray-300 dark:border-b-neutral-700 justify-start items-center gap-4 pt-6">
             <img
               src={product.images[0]} // Assuming you have an array of images

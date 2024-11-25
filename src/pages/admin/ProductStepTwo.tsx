@@ -59,7 +59,7 @@ const ProductStepTwo = () => {
         >
         {/* category for name and description */}
         
-        <CategoryHeader heading='Make It Catchy!' subheading='Help Customers Understand Your Product at a Glance'/>
+        <CategoryHeader heading='Adding some fierce new looks!' subheading='You can upload upto five images right now.'/>
         <ImageInput required={true} type='file' placeholder='image' multiple={true}  onChange={handleFileChange}/>
         <Button disabled={adminStatus==="loading"} size="large" label="continue" loading={adminStatus==='loading'} />
           </form>

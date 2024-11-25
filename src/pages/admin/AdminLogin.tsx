@@ -7,10 +7,11 @@ import FormInput from '../../components/FormInput.tsx';
 import Button from '../../components/Button.tsx'
 import { SlInfo } from 'react-icons/sl';
 import { Sdk } from '../../utils/sdk.ts';
+import PageHeader from '../../components/PageHeader.tsx';
 const AdminLogin: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [disableSubmit, setDisableSubmit] = useState(true)
+  const [disableSubmit, setDisableSubmit] = useState(false)
   const dispatch = useDispatch<AppDispatch>();
   const adminStatus = useSelector((state: RootState) => state.admin.status);
   const adminError = useSelector((state: RootState) => state.admin.error);
@@ -34,7 +35,7 @@ const AdminLogin: React.FC = () => {
   useEffect(()=>{
     const errorElements = document.querySelectorAll('.input-errors')
     console.log(errorElements)
-    setDisableSubmit(errorElements.length>0)
+    setDisableSubmit(adminFormErrors[adminFormErrors.length-1]!=='')
     
   },[adminFormErrors])
 
@@ -47,13 +48,13 @@ const AdminLogin: React.FC = () => {
 
   return (
     <div className="flex px-6 flex-col items-center  w-full justify-center h-screen dark:bg-primary dark:text-secondary">
-      <h2 className="text-2xl font-bold mb-6"><span className='text-orange-500'>Hi</span> Admin.</h2>
+      <PageHeader heading='' accent='Hi, Admin'/>
       <form
         className="w-full pt-6 pb-8 mb-4"
         onSubmit={handleSignIn}
       >
-        <FormInput  type='email' placeholder='Email' value={email} required={true} onChange={handleEmailChange} />
-        <FormInput  type='password' placeholder='Password' value={password} required={true} onChange={handlePasswordChange} />
+        <FormInput type='email' placeholder='Email' value={email} required={true} onChange={handleEmailChange} />
+        <FormInput type='password' placeholder='Password' value={password} required={true} onChange={handlePasswordChange} />
         <div className="flex mt-8 items-center justify-between">
           
         <Button disabled={disableSubmit||adminStatus==="loading"} size="large" label="Sign In" loading={adminStatus==='loading'} />

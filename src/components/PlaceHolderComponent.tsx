@@ -1,5 +1,8 @@
 // src/components/LandingPage.tsx
 import React from 'react';
+import PageHeader from './PageHeader';
+import { Sdk } from '../utils/sdk';
+const sdk = new Sdk()
 
 interface PlaceholderProps{
     header:string;
@@ -8,10 +11,9 @@ interface PlaceholderProps{
 
 const Placeholder: React.FC<PlaceholderProps> = ({header,paragraph}) => {
   return (
-    <div className="flex mx-6 py-12 flex-col items-center justify-center " >
-      <h1 className="text-4xl font-bold mb-6">{header}</h1>
-            {paragraph}
-       </div>
+    <div className='px-6'>
+        <PageHeader heading='' accent={header} backToLabel='Dashboard' backToRoute={sdk.adminDashboardRoute} />
+    </div>
   );
 };
 

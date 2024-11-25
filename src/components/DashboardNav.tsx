@@ -27,7 +27,7 @@ const DashboardNav:React.FC<IMenuProps>= ({menuItems}) => {
             key={index} 
             to={item.route||''}
 
-            className={` dark:bg-primary-light bg-neutral-200 p-3  ${currentIndex===index?'border-b-2 dark:border-b-neutral-400':'dark:border-b-neutral-500'} border-b flex   items-center text-sm gap-2`}
+            className={` dark:bg-primary-light bg-neutral-200 p-3  ${currentIndex===index?'border-b-2 dark:border-b-neutral-400 border-b-neutral-700':'dark:border-b-neutral-500'} border-b flex   items-center text-sm gap-2`}
             onClick={() => setCurrentIndex(index)}>
             {item.icon}
             <span className="text-xs capitalize">{item.label}</span>

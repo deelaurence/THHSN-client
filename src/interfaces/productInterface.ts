@@ -1,10 +1,10 @@
-interface VariationLevelOne {
+export interface VariationLevelOne {
     variation: string;
     price: number;
     quantity: number;
   }
   
-  interface VariationLevelTwo {
+  export interface VariationLevelTwo {
     name: string;
     variations: VariationLevelOne[];
   }

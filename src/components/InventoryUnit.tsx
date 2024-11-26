@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchProducts } from '../store/productSlice'; // Assume you have a slice for fetching products
+import { fetchProducts } from '../store/fetchProductSlice'; // Assume you have a slice for fetching products
 import { RootState,AppDispatch } from '../store/store';
 import { Sdk } from '../utils/sdk';
 const sdk=new Sdk()

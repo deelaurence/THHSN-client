@@ -1,34 +1,30 @@
 import PageHeader from '../../components/PageHeader'
 import { Sdk } from '../../utils/sdk'
 import { useParams } from 'react-router-dom'
-import { useSelector } from 'react-redux'
-import { RootState } from '../../store/store'
 import { useState,useEffect } from 'react'
 import Slideshow from '../../components/ImageSlide'
 const sdk = new Sdk()
 import { VariationLevelOne } from '../../interfaces/productInterface'
+import Button from '../../components/Button'
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState, AppDispatch } from '../../store/store.ts';
+import { setEditProductMode } from '../../store/adminSlice'
+import { useNavigate } from 'react-router-dom'
 
 const ProductDetail = () => {
 const { products } = useSelector((state: RootState) => state.product);
+const { editingProduct } = useSelector((state: RootState) => state.admin);
 const [currentVariation, setCurrentVariation] = useState(0)
 const [innerVariation, setInnerVariation]=useState<VariationLevelOne[]>()
 const {name}=useParams()
-let trimmedName = name ? name.trim() : "";
-// const images = [
-    //     'https://images.unsplash.com/photo-1732423486660-43b0d2909e0b?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwzfHx8ZW58MHx8fHx8',
-    //     'https://images.unsplash.com/photo-1732465286852-a0b95393a90d?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHw0fHx8ZW58MHx8fHx8',
-    //     'https://images.unsplash.com/photo-1732364756002-5a709ad5d794?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHw1fHx8ZW58MHx8fHx8'
-    // ]
+const dispatch = useDispatch<AppDispatch>();
+const navigate = useNavigate()
 
+let trimmedName = name ? name.trim() : "";
 let product = products.filter((product)=>{
-    console.log(product.name,trimmedName)
-    console.log(product.name===trimmedName)
     return product.name.replace(/\s+/g, '')===trimmedName.replace(/\s+/g, '')
 })[0]
-console.log(name)
-console.log(product)
 if(!product){
-    console.log('no product')
     product = sdk.getSingleProductDetail()
 }
 sdk.setSingleProductDetail(product)
@@ -37,12 +33,18 @@ sdk.setSingleProductDetail(product)
 useEffect(() => {
 if (product.variations[currentVariation]) {
     setInnerVariation(product.variations[currentVariation].variations);
+
 }
 }, [currentVariation]);
 
+
+const handleEditMode = ()=>{
+    dispatch(setEditProductMode(!editingProduct))
+    navigate(sdk.addProductRoute)
+}
  
 return (
-    <div className='px-6 pb-12'>
+    <div className='px-6 pb-12 relative'>
         <PageHeader heading='' accent='' backToLabel='Inventory List' backToRoute={sdk.manageInventoryRoute}/>
         <Slideshow images={product.images}/>
         <div className='text-[10px] flex gap-1 items-center  pt-6'>
@@ -95,6 +97,7 @@ return (
                 })
             }
         </div>
+        <Button onClick={handleEditMode} label='Edit'  size='large' extraClass='mt-16' loading={false} />
     </div>
     
   )

@@ -10,7 +10,6 @@ const persistedAdmin = sdk.getAdminObject();
 // Define the product state
 interface ProductState {
   products: IProduct[];
-  productDetails: any | null;
   categories:string[]
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
   error: string | null;
@@ -19,7 +18,6 @@ interface ProductState {
 const initialState: ProductState = {
   products: [],
   categories:[],
-  productDetails: null,
   status: 'idle',
   error: null,
 };

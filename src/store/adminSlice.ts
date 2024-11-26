@@ -8,6 +8,7 @@ interface AdminState {
   admin: { email: string, token: string, name:string}  | null;
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
   error: string | null;
+  editingProduct:boolean;
   formErrors:string[];
   productDraftOne?:{
     name?: string,
@@ -27,6 +28,7 @@ const persistedAdmin = sdk.getAdminObject()
 const initialState: AdminState = {
   admin: persistedAdmin||null,
   status: 'idle',
+  editingProduct:false,
   error: null,
   formErrors:[],
   productDraftOne:{},
@@ -155,6 +157,10 @@ const adminSlice = createSlice({
     },
     formIsValid(state,action){
       state.formErrors.push(action.payload)
+    },
+    setEditProductMode(state,action){
+      state.editingProduct=action.payload
+      state.addProductPage=0
     }
   },
   extraReducers: (builder) => {
@@ -242,5 +248,5 @@ const adminSlice = createSlice({
   },
 });
 
-export const { signOutAdmin,formIsValid } = adminSlice.actions;
+export const { signOutAdmin,formIsValid,setEditProductMode } = adminSlice.actions;
 export default adminSlice.reducer;

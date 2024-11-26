@@ -2,7 +2,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import adminReducer, {signOutAdmin} from './adminSlice';
 import { apiClient } from '../utils/apiClient';
-import productReducer from './productSlice'
+import productReducer from './fetchProductSlice'
 // Configure the Redux store
 const store = configureStore({
   reducer: {

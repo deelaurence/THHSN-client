@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchProducts } from '../../store/productSlice'; // Assume you have a slice for fetching products
+import { fetchProducts } from '../../store/fetchProductSlice'; // Assume you have a slice for fetching products
 import { RootState,AppDispatch } from '../../store/store';
 import PageHeader from '../../components/PageHeader';
 import DashboardNav from '../../components/DashboardNav';
@@ -8,6 +8,7 @@ import { Sdk } from '../../utils/sdk';
 const sdk=new Sdk()
 import InventoryUnit from '../../components/InventoryUnit';
 import SingleLineError from '../../components/errors/SingleLineError';
+import { RxDragHandleDots2 } from 'react-icons/rx';
 
 
 const Inventory: React.FC = () => {
@@ -18,6 +19,7 @@ const Inventory: React.FC = () => {
   const menuItems = categories.map((category)=>{
     return {
         label:category,
+        icon:<RxDragHandleDots2 className='opacity-60 text-xs' />,
         component:<InventoryUnit filterProp={category}/>
     }
   })
@@ -26,7 +28,6 @@ const Inventory: React.FC = () => {
   useEffect(() => {
     dispatch(fetchProducts());
   }, [dispatch]);
-  console.log(error)
 
   return (
     <div className="container mx-auto p-6">

@@ -6,7 +6,8 @@ import { SlInfo } from 'react-icons/sl';
 import { addProductNameAndPrice } from '../../store/adminSlice.ts';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState, AppDispatch } from '../../store/store.ts';
-
+import { Sdk } from '../../utils/sdk.ts';
+const {getSingleProductDetail} = new Sdk()
 interface ProductDraftOne {
     name: string;
     category: string;
@@ -19,13 +20,16 @@ export const ProductStepOne = () => {
   const adminStatus = useSelector((state:RootState)=>{
     return state.admin.status
   })
+  const {editingProduct} = useSelector((state:RootState)=>{
+    return state.admin
+  })
   const adminError = useSelector((state:RootState)=>{
     return state.admin.error
   })
   const [productData, setProductData] = useState<ProductDraftOne>({
-    name: '',
-    category:'',
-    description: '',
+    name: editingProduct?getSingleProductDetail().name:'',
+    category:editingProduct?getSingleProductDetail().category:'',
+    description:editingProduct?getSingleProductDetail().description:'',
     images: [],
   });
   

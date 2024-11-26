@@ -4,6 +4,7 @@ import Loader from './Loader';
 interface ButtonProps {
   label: string;
   loading: boolean;
+  extraClass?:string;
   variant?: 'primary' | 'secondary' | 'danger';
   size?: 'small' | 'medium' | 'large';
   onClick?: () => void;
@@ -13,6 +14,7 @@ interface ButtonProps {
 const Button: React.FC<ButtonProps> = ({
   label,
   loading,
+  extraClass,
   variant = 'primary',
   size = 'medium',
   onClick,
@@ -45,7 +47,7 @@ const Button: React.FC<ButtonProps> = ({
     <div className='flex items-center justify-center w-full'>
         <button
         onClick={onClick}
-        className={`${baseStyles} ${variantStyles[variant]} ${sizeStyles[size]}`}
+        className={`${baseStyles} ${variantStyles[variant]} ${sizeStyles[size]} ${extraClass}`}
         disabled={disabled}
         
         >

@@ -1,13 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProducts } from '../../store/productSlice'; // Assume you have a slice for fetching products
 import { RootState,AppDispatch } from '../../store/store';
-import { IProduct } from '../../interfaces/productInterface';
 import PageHeader from '../../components/PageHeader';
 import DashboardNav from '../../components/DashboardNav';
 import { Sdk } from '../../utils/sdk';
-import AddProduct from './AddProduct';
-import Payments from './Payments';
 const sdk=new Sdk()
 import InventoryUnit from '../../components/InventoryUnit';
 import SingleLineError from '../../components/errors/SingleLineError';
@@ -15,7 +12,7 @@ import SingleLineError from '../../components/errors/SingleLineError';
 
 const Inventory: React.FC = () => {
   const dispatch:AppDispatch = useDispatch();
-  const { products, categories, status, error } = useSelector((state: RootState) => state.product); // Update this line based on your state structure
+  const {  categories, error } = useSelector((state: RootState) => state.product); // Update this line based on your state structure
   
   //Use categories coming from reducer state [Straight from the api]
   const menuItems = categories.map((category)=>{

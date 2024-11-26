@@ -9,7 +9,7 @@ interface PlaceholderProps{
     paragraph:string;
 }
 
-const Placeholder: React.FC<PlaceholderProps> = ({header,paragraph}) => {
+const Placeholder: React.FC<PlaceholderProps> = ({header}) => {
   return (
     <div className='px-6'>
         <PageHeader heading='' accent={header} backToLabel='Dashboard' backToRoute={sdk.adminDashboardRoute} />

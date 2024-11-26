@@ -224,7 +224,7 @@ const adminSlice = createSlice({
       .addCase(addProductVariation.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(addProductVariation.fulfilled, (state, action: PayloadAction<{ payload:{ email: string, name:string, token:string} }>) => {
+      .addCase(addProductVariation.fulfilled, (state) => {
         state.status = 'succeeded';
         // const {payload} = action.payload
         // state.productDraftOne = payload

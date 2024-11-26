@@ -1,29 +1,39 @@
-import React from 'react'
 import PageHeader from '../../components/PageHeader'
 import { Sdk } from '../../utils/sdk'
 import { useParams } from 'react-router-dom'
-import { useDispatch,useSelector } from 'react-redux'
-import { AppDispatch,RootState } from '../../store/store'
+import { useSelector } from 'react-redux'
+import { RootState } from '../../store/store'
 import { useState,useEffect } from 'react'
 import Slideshow from '../../components/ImageSlide'
 const sdk = new Sdk()
 import { VariationLevelOne } from '../../interfaces/productInterface'
 
 const ProductDetail = () => {
-const dispatch:AppDispatch = useDispatch();
-const { products, categories, status, error } = useSelector((state: RootState) => state.product);
+const { products } = useSelector((state: RootState) => state.product);
 const [currentVariation, setCurrentVariation] = useState(0)
 const [innerVariation, setInnerVariation]=useState<VariationLevelOne[]>()
 const {name}=useParams()
-const product = products.filter(product=>product.name===name)[0]||sdk.getSingleProductDetail()
+let trimmedName = name ? name.trim() : "";
 // const images = [
-//     'https://images.unsplash.com/photo-1732423486660-43b0d2909e0b?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwzfHx8ZW58MHx8fHx8',
-//     'https://images.unsplash.com/photo-1732465286852-a0b95393a90d?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHw0fHx8ZW58MHx8fHx8',
-//     'https://images.unsplash.com/photo-1732364756002-5a709ad5d794?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHw1fHx8ZW58MHx8fHx8'
-// ]
+    //     'https://images.unsplash.com/photo-1732423486660-43b0d2909e0b?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwzfHx8ZW58MHx8fHx8',
+    //     'https://images.unsplash.com/photo-1732465286852-a0b95393a90d?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHw0fHx8ZW58MHx8fHx8',
+    //     'https://images.unsplash.com/photo-1732364756002-5a709ad5d794?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHw1fHx8ZW58MHx8fHx8'
+    // ]
+
+let product = products.filter((product)=>{
+    console.log(product.name,trimmedName)
+    console.log(product.name===trimmedName)
+    return product.name.replace(/\s+/g, '')===trimmedName.replace(/\s+/g, '')
+})[0]
+console.log(name)
+console.log(product)
+if(!product){
+    console.log('no product')
+    product = sdk.getSingleProductDetail()
+}
 sdk.setSingleProductDetail(product)
 
-  // Update `innerVariation` whenever `currentVariation` changes
+// Update `innerVariation` whenever `currentVariation` changes
 useEffect(() => {
 if (product.variations[currentVariation]) {
     setInnerVariation(product.variations[currentVariation].variations);
@@ -32,7 +42,7 @@ if (product.variations[currentVariation]) {
 
  
 return (
-    <div className='px-6 py-12'>
+    <div className='px-6 pb-12'>
         <PageHeader heading='' accent='' backToLabel='Inventory List' backToRoute={sdk.manageInventoryRoute}/>
         <Slideshow images={product.images}/>
         <div className='text-[10px] flex gap-1 items-center  pt-6'>

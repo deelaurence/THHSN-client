@@ -1,16 +1,7 @@
 import { Sdk } from "../../utils/sdk";
 import { FaBagShopping } from "react-icons/fa6";
 import { IoWalletOutline } from "react-icons/io5";
-import { SiGoogleanalytics } from "react-icons/si";
-import { useSelector } from "react-redux";
-import {IoMdCheckmarkCircle}  from 'react-icons/io'
-import { RootState } from "../../store/store";
-import { useState } from "react";
-import AddProduct from "./AddProduct";
 import BarChart from "../../components/BarChart";
-import { Link } from "react-router-dom";
-import Analytics from "./Analytics";
-import Payments from "./Payments";
 import { PiPenDuotone } from "react-icons/pi";
 import DashboardNav from "../../components/DashboardNav";
 
@@ -79,8 +70,8 @@ const salesData = [
 ];
 const AdminDashboard = () => {
   // const [currentMenu, setCurrentMenu] = useState<number >(0);
-  const adminObject = useSelector((state: RootState) => state.admin.admin);
-  const firstName = adminObject?.name.split(' ')[0];
+  // const adminObject = useSelector((state: RootState) => state.admin.admin);
+  // const firstName = adminObject?.name.split(' ')[0];
   return (
     <section className="px-6 ">
       <PageHeader heading="Hello Betran" accent="How are you today?"/>

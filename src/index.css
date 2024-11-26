@@ -98,7 +98,8 @@ textarea,
   input[type="text"],
   input[type="number"],
   input[type="password"],
-  input[type="email"]
+  input[type="email"],
+  select
   {
        -webkit-appearance: none !important;
        border-radius: 0 !important;

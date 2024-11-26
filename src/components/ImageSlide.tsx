@@ -8,6 +8,9 @@ const Slideshow: React.FC<Images> = ({ images }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [slideDirection, setSlideDirection] = useState<'left' | 'right'>('right');
 
+  if(slideDirection){
+    
+  }
   // Change slide automatically every 3 seconds
   useEffect(() => {
     const interval = setInterval(() => {
@@ -69,13 +72,13 @@ const Slideshow: React.FC<Images> = ({ images }) => {
       {/* Navigation Buttons */}
       <button
         onClick={goToPrevious}
-        className="text-xs  z-10 bg-[rgba(0,0,0,.1)] text-white px-2 py-1"
+        className="text-xs  z-10 bg-[rgba(255,255,255,.1)] dark:bg-[rgba(0,0,0,.1)]  px-2 py-1"
       >
         <FaArrowLeftLong/>
       </button>
       <button
         onClick={goToNext}
-        className="  z-10 bg-[rgba(0,0,0,.1)] text-white px-3 py-2"
+        className="  z-10 bg-[rgba(255,255,255,.1)] dark:bg-[rgba(0,0,0,.1)] px-3 py-2"
       >
         <FaArrowRightLong/>
       </button>

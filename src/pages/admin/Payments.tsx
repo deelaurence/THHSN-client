@@ -1,4 +1,3 @@
-import React from 'react'
 import { Sdk } from '../../utils/sdk'
 const sdk = new Sdk()
 import PageHeader from '../../components/PageHeader'

@@ -1,20 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import { RiLogoutCircleFill } from "react-icons/ri";
-import { HiLogout } from "react-icons/hi";
-import { FaRegUser } from "react-icons/fa";
-import { IoBagHandleOutline, IoClose, IoCloseOutline } from 'react-icons/io5';
+import { useEffect, useState } from 'react';
+import { IoCloseOutline } from 'react-icons/io5';
 import { RootState, AppDispatch } from '../store/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { signOutAdmin } from '../store/adminSlice';
 import { Link } from 'react-router-dom';
 import { Sdk } from '../utils/sdk';
 import { IoMenuOutline } from 'react-icons/io5';
-import { CiUser } from 'react-icons/ci';
 import {FiUser} from 'react-icons/fi'
-import { BsArrowRight, BsHandbag } from 'react-icons/bs';
+import { BsArrowRight} from 'react-icons/bs';
 import ThemeToggleButton from './ThemeToggleButton';
-import { MdArrowOutward, MdArrowRight, MdOutlineArrowForward, MdOutlineShoppingBag } from "react-icons/md";
-import { PiBag, PiUserBold } from 'react-icons/pi';
+import { PiBag} from 'react-icons/pi';
 const sdk = new Sdk();
 
 const Navbar = () => {

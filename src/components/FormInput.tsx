@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { sanitizerForm } from '../utils/sanitizeForm';
 import { useDispatch } from 'react-redux';
-import { RootState, AppDispatch } from '../store/store.ts';
+import {  AppDispatch } from '../store/store.ts';
 import { formIsValid } from '../store/adminSlice.ts';
 import { SlInfo } from "react-icons/sl";
+import { MdKeyboardArrowDown } from 'react-icons/md';
 
 interface FormInputProps {
   type: string;
@@ -55,6 +56,7 @@ const FormInput: React.FC<FormInputProps> = ({
   return (
     <div className="pb-4">
       {type === 'select' && selectOptions ? (
+        <div className=' relative'>
         <select
           value={value}
           required={required}
@@ -70,6 +72,10 @@ const FormInput: React.FC<FormInputProps> = ({
             </option>
           ))}
         </select>
+         <p className='absolute opacity-50 top-1/2 right-0 -translate-y-1/2' >
+         <MdKeyboardArrowDown/> 
+         </p>
+         </div> 
       ) : type === 'textarea' ? (
         <textarea
           ref={textareaRef}

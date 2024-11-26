@@ -1,8 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { SlInfo } from "react-icons/sl";
-import { IoMdAdd } from 'react-icons/io';
 import { IoCloseOutline } from "react-icons/io5";
-import { RiDeleteBinLine } from "react-icons/ri";
 import { IoCloudUploadOutline } from 'react-icons/io5';
 interface FormInputProps {
   type: string;

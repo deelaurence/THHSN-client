@@ -1,30 +1,12 @@
 import React, { useState } from 'react';
 import CategoryHeader from '../../components/CategoryHeader';
-import FormInput from '../../components/FormInput';
 import Button from '../../components/Button';
 import { SlInfo } from 'react-icons/sl';
 import ImageInput from '../../components/ImageInput.tsx';
 import { addProductImage } from '../../store/adminSlice.ts';
 import { useDispatch, useSelector } from 'react-redux';
-import { FaBagShopping } from "react-icons/fa6";
-import { IoWalletOutline } from "react-icons/io5";
-import { SiGoogleanalytics } from "react-icons/si";
-import {IoMdCheckmarkCircle}  from 'react-icons/io'
-import PageHeader from '../../components/PageHeader'
-import {Sdk} from '../../utils/sdk'
-import Analytics from "./Analytics";
-import Payments from "./Payments";
-const sdk = new Sdk();
 import { RootState, AppDispatch } from '../../store/store.ts';
 
-interface Product {
-    name: string;
-    category: string;
-    price: number|string;
-    quantity: number|string;
-    description: string;
-    images: File[];
-  }
 
 const ProductStepTwo = () => {
   const dispatch = useDispatch<AppDispatch>()

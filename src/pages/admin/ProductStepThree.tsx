@@ -23,9 +23,7 @@ const ProductStepTwo = () => {
   const adminError = useSelector((state:RootState)=>{
     return state.admin.error
   })
-  const baseProduct = useSelector((state:RootState)=>{
-    return state.admin.productDraftOne
-  })
+  
   const [variants, setVariants]=useState<Variants[]>([]);
   const [variantHeader, setVariantHeader]=useState<string>('')
   const [variantChildren, setVariantChildren]=useState<string>('')

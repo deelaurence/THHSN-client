@@ -1,18 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProducts } from '../store/productSlice'; // Assume you have a slice for fetching products
 import { RootState,AppDispatch } from '../store/store';
-import PageHeader from '../components/PageHeader';
-import DashboardNav from '../components/DashboardNav';
 import { Sdk } from '../utils/sdk';
-import CategoryHeader from './CategoryHeader';
 const sdk=new Sdk()
 import { Link } from 'react-router-dom';
 
 
 const InventoryUnit: React.FC<{filterProp:string}> = ({filterProp}) => {
   const dispatch:AppDispatch = useDispatch();
-  const { products, categories, status, error } = useSelector((state: RootState) => state.product); 
+  const { products, status } = useSelector((state: RootState) => state.product); 
     
  
 
@@ -37,9 +34,9 @@ const InventoryUnit: React.FC<{filterProp:string}> = ({filterProp}) => {
 
       {/* Product List */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {status === 'loading' && <p>Loading products...</p>}
+        {status === 'loading' && <p className='text-[10px] mt-6'>Loading products...</p>}
         {status === 'succeeded' && filteredProducts.length === 0 && (
-          <p className="text-gray-500">No products found in this category.</p>
+          <p className="text-gray-500 text-[10px] mt-6">No products found in this category.</p>
         )}
 
         {filteredProducts.map((product) => (

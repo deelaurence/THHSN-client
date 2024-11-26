@@ -5,15 +5,6 @@ import Button from '../../components/Button';
 import { SlInfo } from 'react-icons/sl';
 import { addProductNameAndPrice } from '../../store/adminSlice.ts';
 import { useDispatch, useSelector } from 'react-redux';
-import { FaBagShopping } from "react-icons/fa6";
-import { IoWalletOutline } from "react-icons/io5";
-import { SiGoogleanalytics } from "react-icons/si";
-import {IoMdCheckmarkCircle}  from 'react-icons/io'
-import PageHeader from '../../components/PageHeader'
-import {Sdk} from '../../utils/sdk'
-import Analytics from "./Analytics";
-import Payments from "./Payments";
-const sdk = new Sdk();
 import { RootState, AppDispatch } from '../../store/store.ts';
 
 interface ProductDraftOne {
@@ -31,7 +22,6 @@ export const ProductStepOne = () => {
   const adminError = useSelector((state:RootState)=>{
     return state.admin.error
   })
-  const [currentMenu, setCurrentMenu] = useState<number >(0);
   const [productData, setProductData] = useState<ProductDraftOne>({
     name: '',
     category:'',

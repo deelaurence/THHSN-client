@@ -64,7 +64,7 @@ const ImageInput: React.FC<FormInputProps> = ({
           />
           <div
             onClick={() => fileInputRef.current?.click()}
-            className="py-6  opacity-60 px-4 bg-primary flex items-center flex-col justify-center text-white rounded h-32 w-full border-dashed border-2 dark:border-secondary-dark   my-12 shadow-sm"
+            className="py-6  opacity-50 px-4 dark:bg-primary  dark:text-secondary flex items-center flex-col justify-center  rounded h-32 w-full border-dashed border-2 border-primary dark:border-secondary-dark   my-12 shadow-sm"
           >
             <IoCloudUploadOutline className='text-3xl'/>
             Upload Images

@@ -15,7 +15,7 @@ interface Variants{
   variations:{variation:string,price:number,quantity:number}[]
 }
 
-const ProductStepTwo = () => {
+const ProductStepThree = () => {
   const dispatch = useDispatch<AppDispatch>()
   const adminStatus = useSelector((state:RootState)=>{
     return state.admin.status
@@ -182,4 +182,4 @@ const ProductStepTwo = () => {
 
 
 
-export default ProductStepTwo
+export default ProductStepThree

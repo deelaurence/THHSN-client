@@ -13,7 +13,7 @@ interface ThemeContextType{
 export const ThemeContext = createContext<ThemeContextType|undefined>(undefined);
 
 export const ThemeProvider:React.FC<{children: React.ReactNode}> = ({children})=>{
-    const [theme, setTheme] = React.useState(sdk.theme??'dark');
+    const [theme, setTheme] = React.useState(sdk.theme??'light');
     document.documentElement.classList.add(theme)
     
     const toggleTheme = ()=>{

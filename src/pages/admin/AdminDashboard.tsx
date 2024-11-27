@@ -4,7 +4,6 @@ import { IoWalletOutline } from "react-icons/io5";
 import BarChart from "../../components/BarChart";
 import { PiPenDuotone } from "react-icons/pi";
 import DashboardNav from "../../components/DashboardNav";
-
 const sdk = new Sdk();
 import PageHeader from '../../components/PageHeader'
 import { GrAnalytics } from "react-icons/gr";
@@ -12,6 +11,7 @@ import { GrAnalytics } from "react-icons/gr";
 import PieChart from "../../components/PieChart";
 import { BsGraphUpArrow } from "react-icons/bs";
 import { LuUsers2 } from "react-icons/lu";
+import { HiOutlineLightBulb } from "react-icons/hi";
 const data = [
   { color: '#FF6384', percentage: 80,label:"Hair Products" }, // 40% - Red
   { color: '#36A2EB', percentage: 10 ,label:"Wig Bundles" }, // 30% - Blue
@@ -49,6 +49,11 @@ const menuItems = [
     label: 'Manage Inventory',
     route: sdk.manageInventoryRoute, 
     icon: <GrAnalytics />,
+  },
+  {
+    label: 'Random Facts',
+    route: sdk.randomFactsRoute, 
+    icon: <HiOutlineLightBulb />,
   },
 ];
 

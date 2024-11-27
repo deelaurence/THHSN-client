@@ -3,11 +3,13 @@ import { configureStore } from '@reduxjs/toolkit';
 import adminReducer, {signOutAdmin} from './adminSlice';
 import { apiClient } from '../utils/apiClient';
 import productReducer from './fetchProductSlice'
+import factReducer from './randomFacts'
 // Configure the Redux store
 const store = configureStore({
   reducer: {
     admin: adminReducer,
-    product:productReducer
+    product:productReducer,
+    facts:factReducer
   },
   // Enabling Redux DevTools if they are available
   devTools: true, // Recommended way to enable DevTools only in development

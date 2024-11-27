@@ -12,6 +12,7 @@ import AddProduct from './pages/admin/AddProduct.tsx';
 import { ThemeProvider } from './contexts/AppContext.tsx';
 import Inventory from './pages/admin/Inventory.tsx';
 import ProductDetail from './pages/product/ProductDetail.tsx';
+import RandomFacts from './pages/admin/RandomFacts.tsx';
 const sdk = new Sdk()
 
 const App: React.FC = () => {
@@ -33,6 +34,7 @@ const App: React.FC = () => {
               <Route path={sdk.productDraftsRoute} element={<Placeholder header='Drafts' paragraph='manage drafts'/>} />
               <Route path={sdk.salesRoute} element={<Placeholder header='Sales' paragraph='something here later'/>} />
               <Route path={sdk.manageUsersRoute} element={<Placeholder header='Users' paragraph='something here later'/>} />
+              <Route path={sdk.randomFactsRoute} element={<RandomFacts/>} />
             </Route>
         </Routes>
     </Router>

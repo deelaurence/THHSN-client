@@ -10,6 +10,7 @@ export class Sdk{
     salesRoute:string='/admin/sales'
     manageUsersRoute:string='/admin/users'
     manageInventoryRoute:string='/admin/inventory'
+    randomFactsRoute:string='/admin/random-facts'
     singleInventoryRoute:string='/admin/inventory'
     theme:string|null=localStorage.getItem('theme')
     navbarData = [

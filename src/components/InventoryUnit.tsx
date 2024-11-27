@@ -4,13 +4,11 @@ import { fetchProducts } from '../store/fetchProductSlice';
 import { RootState, AppDispatch } from '../store/store';
 import { Sdk } from '../utils/sdk';
 import { Link } from 'react-router-dom';
-import Loader from './Loader';
-import SingleLineError from './errors/SingleLineError';
 const sdk = new Sdk();
  
 const InventoryUnit: React.FC<{ filterProp: string }> = ({ filterProp }) => {
   const dispatch: AppDispatch = useDispatch();
-  const { products,status,error } = useSelector((state: RootState) => state.product);
+  const { products,status } = useSelector((state: RootState) => state.product);
   console.log(status)
   console.log('status')
   // Fetch products on component mount

@@ -7,22 +7,23 @@ import DashboardNav from '../../components/DashboardNav';
 import { Sdk } from '../../utils/sdk';
 const sdk=new Sdk()
 import InventoryUnit from '../../components/InventoryUnit';
-import SingleLineError from '../../components/errors/SingleLineError';
 import { RxDragHandleDots2 } from 'react-icons/rx';
+import Loader from '../../components/Loader';
+import SingleLineError from '../../components/errors/SingleLineError';
 
 
 const Inventory: React.FC = () => {
   const dispatch:AppDispatch = useDispatch();
-  const {  categories, error } = useSelector((state: RootState) => state.product); // Update this line based on your state structure
-  
+  const { categories,status,error } = useSelector((state: RootState) => state.product); // Update this line based on your state structure
   //Use categories coming from reducer state [Straight from the api]
   const menuItems = categories.map((category)=>{
     return {
-        label:category,
-        icon:<RxDragHandleDots2 className='opacity-60 text-xs' />,
-        component:<InventoryUnit filterProp={category}/>
+      label:category,
+      icon:<RxDragHandleDots2 className='opacity-60 text-xs' />,
+      component:<InventoryUnit filterProp={category}/>
     }
   })
+  console.log(menuItems)
 
   // Fetch products on component mount
   useEffect(() => {
@@ -32,8 +33,9 @@ const Inventory: React.FC = () => {
   return (
     <div className="container mx-auto p-6">
       <PageHeader heading="" accent="Manage Inventory" backToRoute={sdk.adminDashboardRoute} backToLabel='Dashboard'/>
-      <DashboardNav menuItems={menuItems} />
-      {error&&<SingleLineError errorMessage={error}/>}
+      {<DashboardNav menuItems={menuItems} />}
+      {status==='loading'&& <p className='mt-32'><Loader/></p>}
+      {status==='failed'&& <p className='mt-8'> <SingleLineError errorMessage={error||"Connection Error try again"}/></p>}
     </div>
   );
 };

@@ -13,7 +13,7 @@ import { useNavigate } from 'react-router-dom'
 
 const ProductDetail = () => {
 const { products } = useSelector((state: RootState) => state.product);
-const { editingProduct } = useSelector((state: RootState) => state.admin);
+// const { editingProduct } = useSelector((state: RootState) => state.admin);
 const [currentVariation, setCurrentVariation] = useState(0)
 const [innerVariation, setInnerVariation]=useState<VariationLevelOne[]>()
 const {name}=useParams()
@@ -39,12 +39,12 @@ if (product.variations[currentVariation]) {
 
 
 const handleEditMode = ()=>{
-    dispatch(setEditProductMode(!editingProduct))
+    dispatch(setEditProductMode(true))
     navigate(sdk.addProductRoute)
 }
  
 return (
-    <div className='px-6 pb-12 relative'>
+    <div className='px-6 pb-12 '>
         <PageHeader heading='' accent='' backToLabel='Inventory List' backToRoute={sdk.manageInventoryRoute}/>
         <Slideshow images={product.images}/>
         <div className='text-[10px] flex gap-1 items-center  pt-6'>

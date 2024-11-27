@@ -8,23 +8,29 @@ import { IoCloseOutline } from "react-icons/io5";
 import { useDispatch, useSelector } from 'react-redux';
 import { AiTwotoneTags } from "react-icons/ai";
 import { RootState, AppDispatch } from '../../store/store.ts';
-import { addProductVariation } from '../../store/adminSlice.ts';
-
+import { addProductVariation,setEditProductMode } from '../../store/adminSlice.ts';
+import { Sdk } from '../../utils/sdk.ts';
+import { useNavigate } from 'react-router-dom';
+const sdk = new Sdk()
 interface Variants{
   name:string,
   variations:{variation:string,price:number,quantity:number}[]
 }
 
 const ProductStepThree = () => {
+  const navigate = useNavigate()
   const dispatch = useDispatch<AppDispatch>()
   const adminStatus = useSelector((state:RootState)=>{
     return state.admin.status
+  })
+  const editingProduct = useSelector((state:RootState)=>{
+    return state.admin.editingProduct
   })
   const adminError = useSelector((state:RootState)=>{
     return state.admin.error
   })
   
-  const [variants, setVariants]=useState<Variants[]>([]);
+  const [variants, setVariants]=useState<Variants[]>(editingProduct?sdk.getSingleProductDetail().variations:[]);
   const [variantHeader, setVariantHeader]=useState<string>('')
   const [variantChildren, setVariantChildren]=useState<string>('')
   const [variantPrice, setVariantPrice]=useState<number>(0)
@@ -33,8 +39,11 @@ const ProductStepThree = () => {
   // Handle adding product to the list
   const handleSubmitVariation = (e:React.FormEvent) => {
     e.preventDefault();
-    console.log(variants)
     dispatch(addProductVariation(variants))
+    if(editingProduct){
+      navigate(sdk.manageInventoryRoute)
+      dispatch(setEditProductMode(false))
+    }
   };
 
   const handleChange=(e:any)=>{
@@ -154,8 +163,8 @@ const ProductStepThree = () => {
               </div>
               {variant.variations.map((variation,indexB)=>{
                 return (
-                <div className='text-xs rounded font-normal bg-primary-light p-2 flex justify-between' key={indexB}>
-                    <p className='opacity-80'>We have <span className='font-medium'>{variation.quantity}</span> pieces of  <span className='font-medium'>{variation.variation}</span> each costing #{variation.price}</p>
+                <div className='text-xs rounded font-normal bg-neutral-200 dark:bg-primary-light p-2 flex justify-between' key={indexB}>
+                    <p className='opacity-80 '>We have <span className='font-medium'>{variation.quantity}</span> pieces of  <span className='font-medium'>{variation.variation}</span> each costing #{variation.price}</p>
                   <IoCloseOutline
                   onClick={()=>{handleRemoveVariant(indexA,indexB)}}
                   className='justify-self-end text-sm  text-red-300'/>

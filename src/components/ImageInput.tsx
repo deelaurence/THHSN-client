@@ -1,7 +1,11 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { SlInfo } from "react-icons/sl";
 import { IoCloseOutline } from "react-icons/io5";
 import { IoCloudUploadOutline } from 'react-icons/io5';
+import { useSelector } from 'react-redux';
+import { RootState } from '../store/store';
+import { Sdk } from '../utils/sdk';
+const sdk = new Sdk()
 interface FormInputProps {
   type: string;
   name?: string;
@@ -22,6 +26,16 @@ const ImageInput: React.FC<FormInputProps> = ({
 }) => {
   const [previews, setPreviews] = useState<string[]>([]);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const admin = useSelector((state:RootState)=>{
+    return state.admin
+  })
+
+useEffect(()=>{
+
+  if(admin.editingProduct){
+    setPreviews(sdk.getSingleProductDetail().images)
+  }
+},[])
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;

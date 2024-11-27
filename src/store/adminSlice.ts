@@ -64,19 +64,29 @@ export const addProductNameAndPrice = createAsyncThunk(
           name: string; 
           category:string;
           description:string; 
-        }) => {       
+        },{getState}) => {       
       try {
           const headers={
             'content-Type':'application/json',
             'Authorization':`Bearer ${persistedAdmin?.token}`
           }
-          const response = await apiClient.post('/v1/admin/manage/product/add', productDetails,{headers});
+          const state = getState() as any
+          
+          let response;
+          //Togglr between editing and adding new name and description
+          if (state.admin.editingProduct){
+            response = await apiClient.put(`/v1/admin/manage/product/name-and-description/${sdk.getSingleProductDetail()._id}`, productDetails,{headers});
+          }
+          else{
+            response = await apiClient.post('/v1/admin/manage/product/add', productDetails,{headers});
+          } 
           return response.data;
       } catch (error:any) {
           if(error.response){
             throw error.response.data.reason
           }
           else{
+            console.log(error)
             throw "Failed to connect, Try again"
           }
       }
@@ -161,6 +171,9 @@ const adminSlice = createSlice({
     setEditProductMode(state,action){
       state.editingProduct=action.payload
       state.addProductPage=0
+    },
+    jumpToProductPage(state,action){
+      state.addProductPage=action.payload
     }
   },
   extraReducers: (builder) => {
@@ -185,14 +198,11 @@ const adminSlice = createSlice({
       //ProductNameAndPRIce
       .addCase(addProductNameAndPrice.pending, (state) => {
         state.status = 'loading';
-        console.log(state)
       })
       .addCase(addProductNameAndPrice.fulfilled, (state, action: PayloadAction<{ payload:{ email: string, name:string, token:string} }>) => {
         state.status = 'succeeded';
         const {payload} = action.payload
-        console.log(action)
         state.productDraftOne = payload
-        console.log(state.productDraftOne)
         if(state.addProductPage!==undefined){
           state.addProductPage+=1
         }
@@ -237,7 +247,7 @@ const adminSlice = createSlice({
         if(state.addProductPage!==undefined){
           state.addProductPage=0
         }
-        window.location.href=sdk.manageInventoryRoute 
+        // window.location.href=sdk.manageInventoryRoute 
       })
       .addCase(addProductVariation.rejected, (state, action) => {
         console.log(action)
@@ -248,5 +258,5 @@ const adminSlice = createSlice({
   },
 });
 
-export const { signOutAdmin,formIsValid,setEditProductMode } = adminSlice.actions;
+export const { signOutAdmin,jumpToProductPage,formIsValid,setEditProductMode } = adminSlice.actions;
 export default adminSlice.reducer;

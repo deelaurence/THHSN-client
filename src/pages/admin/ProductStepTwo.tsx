@@ -3,7 +3,7 @@ import CategoryHeader from '../../components/CategoryHeader';
 import Button from '../../components/Button';
 import { SlInfo } from 'react-icons/sl';
 import ImageInput from '../../components/ImageInput.tsx';
-import { addProductImage } from '../../store/adminSlice.ts';
+import { addProductImage, jumpToProductPage } from '../../store/adminSlice.ts';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState, AppDispatch } from '../../store/store.ts';
 
@@ -30,6 +30,9 @@ const ProductStepTwo = () => {
   // Handle adding product to the list
   const handleUpload = (e:React.FormEvent) => {
     e.preventDefault();
+    if(!images){
+      return dispatch(jumpToProductPage(2))
+    }
     dispatch(addProductImage(images))
   };
 
@@ -42,7 +45,7 @@ const ProductStepTwo = () => {
         {/* category for name and description */}
         
         <CategoryHeader heading='Adding some fierce new looks!' subheading='You can upload upto five images right now.'/>
-        <ImageInput required={true} type='file' placeholder='image' multiple={true}  onChange={handleFileChange}/>
+        <ImageInput required={false} type='file' placeholder='image' multiple={true}  onChange={handleFileChange}/>
         <Button disabled={adminStatus==="loading"} size="large" label="continue" loading={adminStatus==='loading'} />
           </form>
         {adminStatus === 'failed' && (

@@ -18,11 +18,15 @@ const AddProduct = () => {
   let addProductPage = useSelector((state:RootState)=>{
     return state.admin.addProductPage
   })
+  let editingProduct = useSelector((state:RootState)=>{
+    return state.admin.editingProduct
+  })
+  
   // addProductPage=0
   return (
     <div className='min-h-screen px-6'>
         {/* todo, change the heading based on current page */}
-        <PageHeader heading="Hello Betran" accent="How are you today?"/>
+        <PageHeader heading={editingProduct?"Revamp your store":"Grow your Inventory,"} accent={editingProduct?"Sell More Tomorrow!":"Grow your brand"}/>
         <StepProgess menuItems={menuItems} currentMenu={addProductPage} />
         {menuItems[addProductPage].component}
     </div>

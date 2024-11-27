@@ -35,7 +35,7 @@ const Inventory: React.FC = () => {
       <PageHeader heading="" accent="Manage Inventory" backToRoute={sdk.adminDashboardRoute} backToLabel='Dashboard'/>
       {<DashboardNav menuItems={menuItems} />}
       {status==='loading'&& <p className='mt-32'><Loader/></p>}
-      {status==='failed'&& <p className='mt-8'> <SingleLineError errorMessage={error||"Connection Error try again"}/></p>}
+      {status==='failed'&& <div className='mt-8'> <SingleLineError errorMessage={error||"Connection Error try again"}/></div>}
     </div>
   );
 };

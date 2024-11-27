@@ -16,7 +16,7 @@ interface StepProgressProps{
 
 
 
-const StepProgess:React.FC<StepProgressProps> = ({menuItems,currentMenu}) => {
+const StepProgessTypeOne:React.FC<StepProgressProps> = ({menuItems,currentMenu}) => {
   return (
     <div className='flex relative justify-between gap-10'>
           {menuItems.map((item, index) => (
@@ -48,4 +48,21 @@ const StepProgess:React.FC<StepProgressProps> = ({menuItems,currentMenu}) => {
   )
 }
 
-export default StepProgess
+const StepProgessTypeTwo:React.FC<StepProgressProps> = ({menuItems,currentMenu}) => {
+  return (
+    <div className='flex gap-3 my-16 items-center justify-center'>
+      {menuItems.map((item,index)=>{
+        return( 
+        <div
+        key={item.label}
+        className={`rounded-2xl h-2 ${currentMenu===index?'w-8 bg-neutral-400  dark:bg-neutral-600 ':'bg-neutral-300 dark:bg-neutral-700 w-2'}`}>
+          
+        </div>
+      )})}
+    </div>
+  )
+}
+export {
+  StepProgessTypeOne,
+  StepProgessTypeTwo
+}

@@ -26,8 +26,13 @@ const Button: React.FC<ButtonProps> = ({
 
   
   // Base styles for the button
-  const baseStyles = `uppercase bg-primary h-12 text-secondary dark:bg-secondary dark:text-primary focus:outline-none transition ease-in-out duration-200 
-                      hover:opacity-90 disabled:opacity-80 font-semibold disabled:cursor-not-allowed`;
+  const baseStyles = `
+  uppercase bg-primary h-12 text-secondary 
+  dark:bg-secondary dark:text-primary 
+  focus:outline-none transition ease-in-out 
+  duration-200 hover:opacity-90 
+  disabled:opacity-80 font-semibold 
+  disabled:cursor-not-allowed`;
 
   // Variant styles based on the variant prop
   const variantStyles = {

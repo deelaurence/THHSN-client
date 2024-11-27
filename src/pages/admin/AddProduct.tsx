@@ -6,7 +6,7 @@ import PageHeader from '../../components/PageHeader'
 import { ProductStepOne } from './ProductStepOne.tsx';
 import ProductStepTwo from './ProductStepTwo.tsx';
 import ProductStepThree from './ProductStepThree.tsx';
-import StepProgess from '../../components/StepProgess.tsx';
+import {StepProgessTypeOne,StepProgessTypeTwo} from '../../components/StepProgess.tsx';
 import { MenuItems } from '../../components/StepProgess.tsx';
 import { RootState} from '../../store/store.ts';
 import {Sdk} from '../../utils/sdk'
@@ -14,7 +14,6 @@ const sdk = new Sdk();
 
 
 const AddProduct = () => {
-  
   let addProductPage = useSelector((state:RootState)=>{
     return state.admin.addProductPage
   })
@@ -22,12 +21,13 @@ const AddProduct = () => {
     return state.admin.editingProduct
   })
   
-  // addProductPage=0
+  let stepProgressType=2
+  // addProductPage=2
   return (
-    <div className='min-h-screen px-6'>
+    <div className='min-h-screen px-6 mt-16'>
         {/* todo, change the heading based on current page */}
-        <PageHeader heading={editingProduct?"Revamp your store":"Grow your Inventory,"} accent={editingProduct?"Sell More Tomorrow!":"Grow your brand"}/>
-        <StepProgess menuItems={menuItems} currentMenu={addProductPage} />
+        <PageHeader heading={editingProduct?"Revamp your store,":"Grow your inventory,"} accent={editingProduct?"Sell More Tomorrow!":"Grow your brand"}/>
+        {stepProgressType===1?<StepProgessTypeOne menuItems={menuItems} currentMenu={addProductPage} />:<StepProgessTypeTwo menuItems={menuItems} currentMenu={addProductPage}/>}
         {menuItems[addProductPage].component}
     </div>
   );

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { RootState, AppDispatch } from '../../store/store'
 import { fetchFacts } from '../../store/randomFacts'
 import { useDispatch,useSelector } from 'react-redux'

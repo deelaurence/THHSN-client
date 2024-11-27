@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 
+
+
 interface IMenu{
     label:string;
     route?:string;
@@ -12,7 +14,13 @@ interface IMenuProps{
     menuItems:IMenu[]
 }
 
-
+/**
+ * This either navigates to a new page or displays a new component on the same page depending on the content of the 
+ * array supplied as argument.
+ * Components or Route
+ * @param menuItems
+ * @returns 
+ */
 
 
 const DashboardNav:React.FC<IMenuProps>= ({menuItems}) => {
@@ -32,17 +40,14 @@ const DashboardNav:React.FC<IMenuProps>= ({menuItems}) => {
             {item.icon}
             <span className="text-xs capitalize">{item.label}</span>
           </Link>
-
-
-
-
         ))}
       </div>
-    {menuItems[currentIndex]?.component&&
-    <div>
-        {menuItems[currentIndex].component}
-    </div>
-    }
+      {/* if component is supplied switch based on the current index */}
+      {menuItems[currentIndex]?.component&&
+      <div>
+          {menuItems[currentIndex].component}
+      </div>
+      }
 </>  
 )
 }

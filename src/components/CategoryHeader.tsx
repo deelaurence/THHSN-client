@@ -10,8 +10,8 @@ interface CategoryHeaderProps{
 const CategoryHeader:React.FC<CategoryHeaderProps> = ({heading,subheading}) => {
   return (
     <div className='mt-10'>
-        <h1 className='font-semibold flex items-center gap-4 text-xl mb-1'>{heading}</h1>
-        <p className='mb-6 text-xs opacity-60'>{subheading}</p>
+        <h1 className='font-semibold opacity-80 flex items-center gap-4 text-xl mb-1'>{heading}</h1>
+        <p className='mb-6 text-xs opacity-60 dark:opacity-40'>{subheading}</p>
     </div>
   )
 }

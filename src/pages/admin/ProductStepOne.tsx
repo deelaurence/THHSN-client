@@ -64,7 +64,8 @@ export const ProductStepOne = () => {
               { label: 'Hair Products', value: 'Products' },
               { label: 'Lace fronts', value: 'Lace Fronts' },
               { label: 'Hair tools', value: 'Hair Tools' },
-              { label: 'Wig Textures', value: 'Wig Textures' },
+              { label: 'Wigs', value: 'Wigs' },
+              { label: 'Bundles', value: 'Bundles' },
             ]}
           />
           <FormInput type='textarea' placeholder='Description' value={productData.description} required={true} onChange={handleInputChange} name='description' fieldTip='Tell Us What Makes This Product Special' />

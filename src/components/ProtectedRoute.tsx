@@ -8,7 +8,7 @@ const AdminPrivateRoutes = () => {
     const adminObject = useSelector((state: RootState) =>{
         return state.admin.admin
     }) 
-    return adminObject?.token ? 
+    return adminObject?.token? 
     <>
     
     <Outlet /> 

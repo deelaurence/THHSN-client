@@ -40,7 +40,7 @@ const InventoryUnit: React.FC<{ filterProp: string }> = ({ filterProp }) => {
             className="flex border-b-[1px] border-b-gray-300 dark:border-b-neutral-700 justify-start items-center gap-4 pt-6"
           >
             <img
-              src={product.images[0]} // Assuming you have an array of images
+              src={product.images[0]} 
               alt={product.name}
               className="w-[20%] h-12 object-cover mb-4"
             />

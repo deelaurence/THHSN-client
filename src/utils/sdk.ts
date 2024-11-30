@@ -13,6 +13,7 @@ export class Sdk{
     randomFactsRoute:string='/admin/random-facts'
     singleInventoryRoute:string='/admin/inventory'
     theme:string|null=localStorage.getItem('theme')
+    heroSectionImage="https://images.unsplash.com/photo-1512084747998-038941f49b84?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fGhhaXIlMjBlJTIwY29tbWVyY2V8ZW58MHx8MHx8fDA%3D"
     navbarData = [
         {
           label: "Home",

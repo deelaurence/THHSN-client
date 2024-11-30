@@ -42,10 +42,30 @@ const Navbar = () => {
     dispatch(signOutAdmin());
   };
 
+
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 30) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+
   return (
-    <div className='relative pb-12 z-100 force-z'>
+    <div className={`relative  pb-12 z-100 force-z`}>
       {/* Main Navbar */}
-      <div className='px-6 py-4 border-b fixed w-full bg-secondary border-b-primary dark:border-b-neutral-700 justify-between dark:bg-primary flex items-center  dark:text-secondary'>
+      <div className={`${scrolled?'bg-secondary dark:bg-primary':''} px-6 py-4 border-b  border-b-primary fixed w-full   dark:border-b-neutral-500 justify-between flex items-center  dark:text-secondary`}>
         <div className='flex items-center gap-3'>
           {/* Hamburger Icon */}
           <button onClick={toggleMenu} className='focus:outline-none md:hidden'>
@@ -54,7 +74,7 @@ const Navbar = () => {
           <Link to='/' className='font-bold'>Logo</Link>
         </div>
 
-        <div className='flex items-center gap-4'>
+        <div className='flex  items-center gap-4'>
             <FiUser className='text-[1.5rem] ' />
             {/* <PiUserBold className=' text-[1.5rem]'/> */}
             <PiBag className='text-[1.7rem]'/>
@@ -96,7 +116,6 @@ const Navbar = () => {
         className={`fixed top-0 left-0 w-screen h-full bg-secondary dark:bg-primary text-white transition-transform transform z-50 ${
           isMenuOpen ? 'translate-x-0 z-100' : '-translate-x-full'
         } md:hidden`}
-        onClick={toggleMenu}
       >
         <div className='flex flex-col '>
           {/* Close Button */}

@@ -41,9 +41,9 @@ const ProductStepThree = () => {
     e.preventDefault();
     dispatch(addProductVariation(variants))
     if(editingProduct){
-      navigate(sdk.manageInventoryRoute)
       dispatch(setEditProductMode(false))
     }
+    navigate(sdk.manageInventoryRoute)
   };
 
   const handleChange=(e:any)=>{
@@ -80,9 +80,9 @@ const ProductStepThree = () => {
 
 
   const pushVariant = () => {
-
+    
     if(!variantHeader||!variantChildren||!variantPrice||!variantQuantity){
-      return
+      return alert("Fill in all fields")
     }
     const existingHeaders = variants.map((variant) => variant.name);
     
@@ -175,9 +175,9 @@ const ProductStepThree = () => {
               
               <div className='flex '>
            
-            <Button 
+            {variants.length>0&&<Button 
             // onClick={}
-            disabled={adminStatus==="loading"||variants.length===0} size="large" label="continue" loading={adminStatus==='loading'} />
+            disabled={adminStatus==="loading"||variants.length===0} size="large" label="continue" loading={adminStatus==='loading'} />}
           </div>
       </form>
       {adminStatus === 'failed' && (

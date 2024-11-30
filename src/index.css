@@ -106,5 +106,11 @@ textarea,
        
   }
 
-
+  @layer utilities {
+    .bg-noise {
+      background-image: url('./assets/images/blue_noise_med.png');
+      background-size: cover;
+    }
+  }
+  
   

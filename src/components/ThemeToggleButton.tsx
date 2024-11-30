@@ -1,18 +1,40 @@
-// components/ThemeToggleButton.tsx
 import React from 'react';
 import { useTheme } from '../contexts/AppContext';
 import { FaRegMoon } from "react-icons/fa6";
 import { IoIosSunny } from "react-icons/io";
+import { MdOutlineLight } from 'react-icons/md';
+
 const ThemeToggleButton: React.FC = () => {
   const { theme, toggleTheme } = useTheme();
 
   return (
-    <button
+    <div
       onClick={toggleTheme}
-      className="p-2 rounded-md  text-2xl dark:bg-primary text-gray-800 dark:text-gray-200"
+      className="relative w-16 h-5 shadow  border-neutral-500 border   dark:bg-primary-light  rounded-full cursor-pointer flex items-center transition-all duration-300"
     >
-      {theme === 'light' ? <FaRegMoon/> : <IoIosSunny/>}
-    </button>
+      <div
+        className={`absolute left-1  w-4 h-full rounded-full  flex items-center justify-center transition-all duration-300 ${
+          theme === 'light' ? 'translate-x-0' : ' translate-x-10'
+        }`}
+      >
+        {theme === 'light' ? (
+          <FaRegMoon className="text-primary rounded-full h-2 w-2 p-1 shadow bg-white border border-neutral-500  text-lg" />
+        ) : (
+          <MdOutlineLight className=" w-3 h-3 rounded-full text-neutral-500  text-3xl " />
+        )}
+      </div>
+      <div
+        className={`absolute left-1 text-[8px] w-4 h-full rounded-full  flex items-center justify-center transition-all duration-300 ${
+          theme === 'dark' ? 'translate-x-2' : ' translate-x-8'
+        }`}
+      >
+        {theme === 'light' ? (
+          <p className='font-semibold uppercase text-neutral-500 mt-[0.3px]'>Dark</p>
+        ) : (
+          <p className='font-semibold uppercase text-neutral-500 mt-[0.3px]'>light</p>
+        )}
+      </div>
+    </div>
   );
 };
 

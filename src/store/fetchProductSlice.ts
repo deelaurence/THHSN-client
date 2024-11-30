@@ -7,12 +7,23 @@ import { IProduct } from '../interfaces/productInterface';
 const sdk = new Sdk();
 const persistedAdmin = sdk.getAdminObject();
 
+/**
+ * 
+ * Public is the tag for fetching products without being an admin
+ * or being authenticated at all
+ */
+
+
 // Define the product state
 interface ProductState {
   products: IProduct[];
   categories:string[]
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
   error: string | null;
+  productsPublic: IProduct[];
+  categoriesPublic:string[]
+  statusPublic: 'idle' | 'loading' | 'succeeded' | 'failed';
+  errorPublic: string | null;
 }
 
 const initialState: ProductState = {
@@ -20,9 +31,13 @@ const initialState: ProductState = {
   categories:[],
   status: 'idle',
   error: null,
+  productsPublic: [],
+  categoriesPublic:[],
+  statusPublic: 'idle',
+  errorPublic: null,
 };
 
-// Async action to get all products
+// Async action to get all products by admin
 export const fetchProducts = createAsyncThunk(
   'product/fetchProducts',
   async (_, { rejectWithValue }) => {
@@ -31,6 +46,22 @@ export const fetchProducts = createAsyncThunk(
         'Authorization': `Bearer ${persistedAdmin?.token}`,
       };
       const response = await apiClient.get('/v1/admin/manage/products', { headers });
+      return response.data.payload;
+    } catch (error: any) {
+      if (error.response) {
+        return rejectWithValue(error.response.data.reason);
+      }
+      return rejectWithValue('Failed to connect, Try again');
+    }
+  }
+);
+
+// Async action to get all products by admin for public
+export const fetchProductsPublic = createAsyncThunk(
+  'product/fetchProductsPublic',
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await apiClient.get('/v1/public/products');
       return response.data.payload;
     } catch (error: any) {
       if (error.response) {
@@ -60,13 +91,30 @@ const productSlice = createSlice({
         //Add 'all' to the filter by category array
         state.categories.unshift('all')
         state.error=''
-
-        
-        
       })
       .addCase(fetchProducts.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.payload as string;
+      })
+
+
+
+      .addCase(fetchProductsPublic.pending, (state) => {
+        state.statusPublic = 'loading';
+      })
+      .addCase(fetchProductsPublic.fulfilled, (state, action: PayloadAction<any[]>) => {
+        state.statusPublic = 'succeeded';
+        state.productsPublic = action.payload;
+        const categoriesPublic = action.payload.map((product: IProduct) => product.category);
+        state.categoriesPublic = Array.from(new Set(categoriesPublic));
+
+        //Add 'all' to the filter by category array
+        state.categoriesPublic.unshift('all')
+        state.errorPublic=''
+      })
+      .addCase(fetchProductsPublic.rejected, (state, action) => {
+        state.statusPublic = 'failed';
+        state.errorPublic = action.payload as string;
       })
 
       

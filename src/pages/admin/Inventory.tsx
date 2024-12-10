@@ -23,7 +23,6 @@ const Inventory: React.FC = () => {
       component:<InventoryUnit filterProp={category}/>
     }
   })
-  console.log(menuItems)
 
   // Fetch products on component mount
   useEffect(() => {

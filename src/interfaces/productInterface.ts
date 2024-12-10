@@ -16,6 +16,7 @@ export interface VariationLevelOne {
     description?: string; // Optional, as your backend does not make it required
     quantity: number;
     price: number;
+    bestSeller:boolean;
     images: string[]; // Array of image URLs
     variations: VariationLevelTwo[];
   }

@@ -1,7 +1,6 @@
 import React from 'react';
 import { useTheme } from '../contexts/AppContext';
 import { FaRegMoon } from "react-icons/fa6";
-import { IoIosSunny } from "react-icons/io";
 import { MdOutlineLight } from 'react-icons/md';
 
 const ThemeToggleButton: React.FC = () => {
@@ -20,7 +19,7 @@ const ThemeToggleButton: React.FC = () => {
         {theme === 'light' ? (
           <FaRegMoon className="text-primary rounded-full h-2 w-2 p-1 shadow bg-white border border-neutral-500  text-lg" />
         ) : (
-          <MdOutlineLight className=" w-3 h-3 rounded-full text-neutral-500  text-3xl " />
+          <MdOutlineLight className=" w-4 h-4 bg-neutral-200 rounded-full text-neutral-500   text-3xl " />
         )}
       </div>
       <div
@@ -31,7 +30,7 @@ const ThemeToggleButton: React.FC = () => {
         {theme === 'light' ? (
           <p className='font-semibold uppercase text-neutral-500 mt-[0.3px]'>Dark</p>
         ) : (
-          <p className='font-semibold uppercase text-neutral-500 mt-[0.3px]'>light</p>
+          <p className='font-semibold uppercase text-neutral-500 mt-[0.4px]'>light</p>
         )}
       </div>
     </div>

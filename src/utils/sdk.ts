@@ -1,8 +1,11 @@
 import { AdminObject } from "../interfaces/adminInterfaces";
+import threeMogels from '../assets/images/LUX_BEAUTE_Banner-1_3024x (1).png'
+
 export class Sdk{
 
     private adminObjectKey:string='admin_object';
     adminLoginRoute:string='/admin/login'
+    shopRoute:string='/shop'
     adminDashboardRoute:string='/admin/dashboard'
     addProductRoute:string='/admin/add-product'
     managePaymentsRoute:string='/admin/payments'
@@ -13,7 +16,7 @@ export class Sdk{
     randomFactsRoute:string='/admin/random-facts'
     singleInventoryRoute:string='/admin/inventory'
     theme:string|null=localStorage.getItem('theme')
-    heroSectionImage="https://images.unsplash.com/photo-1512084747998-038941f49b84?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fGhhaXIlMjBlJTIwY29tbWVyY2V8ZW58MHx8MHx8fDA%3D"
+    heroSectionImage=threeMogels
     navbarData = [
         {
           label: "Home",

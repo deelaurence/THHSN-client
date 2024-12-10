@@ -25,22 +25,57 @@
     src: url('./assets/fonts/Queens_W-Regular.woff2') format('woff2');
     font-weight: 400;
 }
+@font-face {
+    font-family: 'frunchy';
+    src: url('./assets/fonts/FontsFree-Net-Frunchy.ttf') format('truetype');
+}
 
 @font-face {
-    font-family: 'wotfard';
-    src: url('');
+    font-family: 'adelia';
+    src: url('./assets/fonts/FontsFree-Net-adelia.ttf') format('truetype');
 }
+
+
+.frunchy{
+    font-family: frunchy;
+}
+.adelia{
+    font-family: adelia;
+}
+
 
 *{
     /* border: 1px solid gray; */
     font-family: wotfard;
     transition: color 0.3s ease-out, background-color 0.3s ease-out, border-color 0.3s ease-out;
 }
+
+
+
+
 body{
     transition: .3s ease-out;
+    
 }
 
+.rainbow {
+    -webkit-background-clip: text; /* For Safari support */
+    background-clip: text;
+    color: transparent;
+    background-image: linear-gradient(to right, #de8500, #856afc);
+}
+  
 
+.cedarville-cursive-regular {
+    font-family: "Cedarville Cursive", cursive;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.italianno{
+    font-family: "Italianno", cursive;
+}
+  
 /* Add these styles to your global CSS file */
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
@@ -102,8 +137,7 @@ textarea,
   select
   {
        -webkit-appearance: none !important;
-       border-radius: 0 !important;
-       
+       border-radius: 0 !important;      
   }
 
   @layer utilities {
@@ -113,4 +147,129 @@ textarea,
     }
   }
   
+  .italiana {
+    font-family: "Italiana", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+  }
   
+  .oranienbaum {
+    font-family: "Oranienbaum", serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+  .oranienbaum-italic {
+    font-family: "Oranienbaum", serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+  
+  .cinzel-decorative {
+    font-family: "Cinzel Decorative", serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+  
+  .cinzel-decorative-bold {
+    font-family: "Cinzel Decorative", serif;
+    font-weight: 700;
+    font-style: normal;
+  }
+  
+  .cinzel-decorative-black {
+    font-family: "Cinzel Decorative", serif;
+    font-weight: 900;
+    font-style: normal;
+  }
+  
+  .cormorant-infant {
+    font-family: "Cormorant Infant", serif;
+    font-weight: 300;
+    font-style: normal;
+  }
+  
+  .cormorant-infant-regular {
+    font-family: "Cormorant Infant", serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+  
+  .cormorant-infant-medium {
+    font-family: "Cormorant Infant", serif;
+    font-weight: 500;
+    font-style: normal;
+  }
+  
+  .cormorant-infant-semibold {
+    font-family: "Cormorant Infant", serif;
+    font-weight: 600;
+    font-style: normal;
+  }
+  
+  .cormorant-infant-bold {
+    font-family: "Cormorant Infant", serif;
+    font-weight: 700;
+    font-style: normal;
+  }
+  
+  .cormorant-infant-light-italic {
+    font-family: "Cormorant Infant", serif;
+    font-weight: 300;
+    font-style: italic;
+  }
+  
+  .cormorant-infant-regular-italic {
+    font-family: "Cormorant Infant", serif;
+    font-weight: 400;
+    font-style: italic;
+  }
+  
+  .cormorant-infant-medium-italic {
+    font-family: "Cormorant Infant", serif;
+    font-weight: 500;
+    font-style: italic;
+  }
+  
+  .cormorant-infant-semibold-italic {
+    font-family: "Cormorant Infant", serif;
+    font-weight: 600;
+    font-style: italic;
+  }
+  
+  .cormorant-infant-bold-italic {
+    font-family: "Cormorant Infant", serif;
+    font-weight: 700;
+    font-style: italic;
+  }
+  
+  .newsreader {
+    font-family: "Newsreader", serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+  }
+  
+  .italianno-regular {
+    font-family: "Italianno", serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+  .sacramento {
+    font-family: "sacramento", serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+  
+
+  @keyframes marquee {
+    from {
+      transform: translateX(-30%);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  
+  .animate-marquee {
+    animation: marquee linear infinite reverse;
+    will-change: transform; /* Optimizes rendering performance */
+  }

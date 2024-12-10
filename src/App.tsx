@@ -13,6 +13,8 @@ import { ThemeProvider } from './contexts/AppContext.tsx';
 import Inventory from './pages/admin/Inventory.tsx';
 import ProductDetail from './pages/product/ProductDetail.tsx';
 import RandomFacts from './pages/admin/RandomFacts.tsx';
+import Footer from './components/Footer.tsx';
+import MainShop from './pages/shop/MainShop.tsx';
 const sdk = new Sdk()
 
 const App: React.FC = () => {
@@ -24,6 +26,7 @@ const App: React.FC = () => {
       <Navbar/>
         <Routes>
             <Route path="/" element={<Home />} />
+            <Route path={sdk.shopRoute} element={<MainShop />} />
             <Route path={sdk.adminLoginRoute} element={<AdminLogin/>} />
             <Route element={<AdminPrivateRoutes />}>
               <Route path={sdk.adminDashboardRoute} element={<AdminDashboard/>} />
@@ -37,6 +40,7 @@ const App: React.FC = () => {
               <Route path={sdk.randomFactsRoute} element={<RandomFacts/>} />
             </Route>
         </Routes>
+        <Footer/>
     </Router>
     </ThemeProvider>
     </div>

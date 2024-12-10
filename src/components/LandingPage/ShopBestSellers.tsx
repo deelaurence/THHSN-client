@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { AppDispatch,RootState } from '../../store/store'
 import { useSelector,useDispatch } from 'react-redux'
 import Loader from '../Loader'
 import { fetchProductsPublic } from '../../store/fetchProductSlice'
+import ProductListing from '../ProductListing'
 const ShopBestSellers = () => {
   
     
@@ -10,12 +11,11 @@ const ShopBestSellers = () => {
     useEffect(()=>{
         dispatch(fetchProductsPublic())
     },[])
-    const {productsPublic,errorPublic,statusPublic} = useSelector((state:RootState)=>{
+    const {productsPublic,statusPublic} = useSelector((state:RootState)=>{
         return state.product
     })
 
-    
-    
+
     
 
 
@@ -23,9 +23,9 @@ const ShopBestSellers = () => {
     <section>
         {statusPublic==='loading'&&<Loader/>}
         {statusPublic==='succeeded'&&(
-        <div>
+        <div className='px-6'>
             <h2 className='text-3xl mt-14 mb-10 text-center font-queens' >Shop Best Sellers</h2>
-            
+            <ProductListing products={productsPublic.slice(0,6)} />
         </div>
         )}
     </section>

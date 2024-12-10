@@ -78,7 +78,7 @@ const AdminDashboard = () => {
   // const adminObject = useSelector((state: RootState) => state.admin.admin);
   // const firstName = adminObject?.name.split(' ')[0];
   return (
-    <section className="px-6 ">
+    <section className="px-6">
       <PageHeader heading="Hello Betran" accent="How are you today?"/>
       <DashboardNav menuItems={menuItems}/>
       <div className="flex  mt-16 ">

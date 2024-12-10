@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { FaArrowLeftLong,FaArrowRightLong } from "react-icons/fa6";
 import Button from './Button';
 
 interface ImageObject {
@@ -36,12 +35,12 @@ const Slideshow: React.FC<Images> = ({ images }) => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
   };
 
-  const goToPrevious = () => {
-    setSlideDirection('left');
-    setCurrentIndex((prevIndex) =>
-      prevIndex === 0 ? images.length - 1 : prevIndex - 1
-    );
-  };
+//   const goToPrevious = () => {
+//     setSlideDirection('left');
+//     setCurrentIndex((prevIndex) =>
+//       prevIndex === 0 ? images.length - 1 : prevIndex - 1
+//     );
+//   };
 
   return (
     <div className="relative overflow-hidden slideshow h-72">

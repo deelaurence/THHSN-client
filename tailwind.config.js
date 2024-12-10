@@ -8,16 +8,22 @@ module.exports = {
   theme: {
     extend: {
       backgroundImage:{
+        'mygray-gradient': 'linear-gradient(to bottom, #e8e8e8, #c8c8c8)',
+      },
+      screens: {
+        tablet: { raw: '(min-width: 600px) and (max-width: 1025px) and (min-height: 800px) and (max-height: 1369px)' },
       },
       fontFamily: {
         queens: ['queens', 'sans-serif'],
       },
       colors: {
         primary: {
-          light: '#343333', // Lighter shade for hover or light mode
+          // light: '#343333', // Lighter shade for hover or light mode
+          light: '#1f271b', // Lighter shade for hover or light mode
           // DEFAULT: '#000f0a', 
-          DEFAULT: '#292929', 
+          // DEFAULT: '#292929', 
           // DEFAULT: '#171717',
+          DEFAULT: '#1f271b',
           dark: '#1e3a8a',    // Darker shade for focus or dark mode
         },
         secondary: {
@@ -25,6 +31,9 @@ module.exports = {
           DEFAULT: '#f2edeb', // Your default color
           dark: '#a89d97',  
           veryDark: '#4f4641' // Very dark version
+        },
+        mygray:{
+          DEFAULT:'#e8e8e8'
         },
         success: {
           light: '#559b98',
@@ -57,5 +66,41 @@ module.exports = {
           },
     },}
   },
-  plugins: [],
+  plugins: [
+    function ({ addUtilities, e }) {
+      // Rainbow Text Utilities
+      addUtilities(
+        {
+          '.rainbow-text': {
+            backgroundImage: 'linear-gradient(to right, #de8500, #856afc)',
+            backgroundClip: 'text',
+            WebkitBackgroundClip: 'text', // Safari support
+            color: 'transparent',
+          },
+          [`.${e('dark-rainbow-text')}`]: {
+            backgroundImage: 'linear-gradient(to right, #de8500, #856afc)',
+            backgroundClip: 'text',
+            WebkitBackgroundClip: 'text', // Safari support
+            color: 'transparent',
+          },
+        },
+        ['responsive', 'hover'] // Enables responsive and hover variants
+      );
+
+      // Radial Gradient Background Utilities
+      addUtilities(
+        {
+          '.radial-gradient-bg': {
+            backgroundImage:
+              'radial-gradient(circle, rgba(230, 150, 30, 0.526) 0%, transparent 100%)',
+          },
+          [`.${e('dark-radial-gradient-bg')}`]: {
+            backgroundImage:
+              'radial-gradient(circle, rgba(30, 150, 230, 0.526) 0%, transparent 100%)',
+          },
+        },
+        ['responsive', 'hover']
+      );
+    },
+  ],
 };

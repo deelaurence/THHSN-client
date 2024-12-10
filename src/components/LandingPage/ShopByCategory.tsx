@@ -1,4 +1,3 @@
-import React from 'react'
 import Slideshow from '../ImageSlides2'
 const images=[
     {

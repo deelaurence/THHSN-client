@@ -273,3 +273,14 @@ textarea,
     animation: marquee linear infinite reverse;
     will-change: transform; /* Optimizes rendering performance */
   }
+
+
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none; /* For Chrome, Safari, and Opera */
+  }
+  
+  .no-scrollbar {
+    -ms-overflow-style: none; /* For Internet Explorer and Edge */
+    scrollbar-width: none; /* For Firefox */
+  }

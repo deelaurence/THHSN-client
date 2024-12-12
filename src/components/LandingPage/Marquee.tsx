@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaAsterisk } from 'react-icons/fa';
+
 import { SiInfluxdb } from "react-icons/si";
 type MarqueeProps = {
   text: string; // The text to display in the marquee
@@ -8,7 +8,7 @@ type MarqueeProps = {
 
 const Marquee: React.FC<MarqueeProps> = ({ text, speed = 10 }) => {
   return (
-    <div className="relative  overflow-hidden whitespace-nowrap w-full h-10 bg-gray-100">
+    <div className="relative  overflow-hidden whitespace-nowrap w-full h-10 ">
       <div
         className="absolute top-1/4 translate-y-1/2  flex items-center animate-marquee space-x-4"
         style={{

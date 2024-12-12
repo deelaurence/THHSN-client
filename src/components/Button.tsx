@@ -27,7 +27,7 @@ const Button: React.FC<ButtonProps> = ({
   
   // Base styles for the button
   const baseStyles = `
-  uppercase bg-transparent border border-2 
+  uppercase  border border-2 
   border-primary text-primary 
   dark:radial-gradient-bg
   dark:bg-secondary dark:text-primary 
@@ -51,10 +51,10 @@ const Button: React.FC<ButtonProps> = ({
   };
 
   return (
-    <div className='flex items-center justify-center w-full'>
+    <div className='flex items-center justify-center'>
         <button
         onClick={onClick}
-        className={`${extraClass} ${baseStyles} ${variantStyles[variant]} ${sizeStyles[size]} `}
+        className={` ${baseStyles} ${variantStyles[variant]} ${sizeStyles[size]} ${extraClass}`}
         disabled={disabled}
         
         >

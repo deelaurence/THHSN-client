@@ -2,11 +2,14 @@ import React from 'react';
 import { Sdk } from '../utils/sdk';
 import Button from '../components/Button';
 import TheCollections from '../components/LandingPage/TheCollections';
-import ShopByCategory from '../components/LandingPage/ShopByCategory';
+import NewArrivals from '../components/LandingPage/NewArrival';
+import IndulgeInLuxury from '../components/LandingPage/IndulgeInLuxury';
 import ShopBestSellers from '../components/LandingPage/ShopBestSellers';
 import FAQs from '../components/LandingPage/FAQs';
+import BestSellers from '../components/LandingPage/BestSellers';
 import { Link } from 'react-router-dom';
 import Marquee from '../components/LandingPage/Marquee';
+import TheLuxeExperience from '../components/LandingPage/TheLuxeExperience';
 const { heroSectionImage } = new Sdk();
 
 const Home: React.FC = () => {
@@ -28,15 +31,15 @@ const Home: React.FC = () => {
         <div className='flex  flex-col  sm:items-center  justify-end tablet:ml-44 '>
            
           <div className='relative text-center  '>
-            <h1 className="frunchy relative  font-thin -my-12 text-[50vw]  sm:text-[18rem] mb-4">
-            <p className='absolute frunchy top-[7rem]  sm:-left-14 sm:top-40 tablet:top-44 tablet:-left-8 -rotate-90 text-xl tablet:text-4xl sm:text-6xl tracking-widest'>
+            <h1 className="cinzel-decorative relative  -mt-12 text-[50vw] sm:text-[14rem] mb-4">
+            <p className='absolute frunchy top-[7rem] sm:-left-14 sm:top-40 tablet:top-44 tablet:-left-8 -rotate-90 text-xl tablet:text-4xl sm:text-6xl tracking-widest'>
               THE
             </p>
                BEST
             </h1>
           </div>
-        <p className='text-[12vw] sm:text-[4rem] opacity-90 tracking-[.5rem] sm:-ml-12 adelia -mt-32 text-center sm:-mt-44 '>
-           luxurious
+        <p className='text-[12vw] sm:text-[4rem] opacity-90 tracking-[.5rem] sm:-ml-12 adelia font-thin -mt-32 text-center sm:-mt-32 '>
+           exquisite
         </p>
         <p className='tracking-[0.5rem] text-center sm:tracking-[1rem] text-sm sm:text-base opacity-70 sm:-ml-12 '>HAIR EXPERIENCE</p>
         </div>
@@ -48,8 +51,12 @@ const Home: React.FC = () => {
     </div>
     <Marquee text="Experience the best luxury hair" speed={6} />
     <TheCollections/>
-    <ShopByCategory/>
+    <IndulgeInLuxury/>
+    <BestSellers/>
+    <NewArrivals/>
+    {/* <ShopByCategory/> */}
     <ShopBestSellers/>
+    <TheLuxeExperience/>
     <FAQs/>
     </section> 
   );

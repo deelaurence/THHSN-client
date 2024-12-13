@@ -71,7 +71,7 @@ const Navbar = () => {
           <button onClick={toggleMenu} className='focus:outline-none md:hidden'>
             <IoMenuOutline className='text-2xl' />
           </button>
-          <Link to='/' className='font-bold'>Logo</Link>
+          <Link to='/' className='font-bold cinzel-decorative'>The human hair shop</Link>
         </div>
 
         <div className='flex  items-center gap-4'>

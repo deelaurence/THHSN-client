@@ -21,8 +21,8 @@ const Footer = () => {
   return (
     <footer className="bg-primary mt-2 pt-16 text-secondary ">
       
-      <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8">
-        <h3 className="text-4xl dark:border-t  border-neutral-700 font-bold  font-queens flex  items-baseline">BETRANBUNDS<span className="dark:rainbow-text text-8xl">.</span></h3>
+        <h3 className="text-4xl gap-1 px-6 sm:px-20 pb-12 leading-0 dark:border-t border-neutral-700 h-fit font-bold font-queens flex items-baseline">BETRANBUNDS<span className="text-8xl">.</span></h3>
+        <div className="max-w-6xl mx-auto px-6 sm:px-20 grid grid-cols-1 md:grid-cols-3 gap-8">
         {links.map((linkGroup, index) => (
           <div key={index}>
             <h4 className="text-lg font-semibold font-queens mb-4">{linkGroup.category}</h4>

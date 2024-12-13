@@ -1,6 +1,5 @@
 import { LiaLongArrowAltLeftSolid, LiaLongArrowAltRightSolid } from "react-icons/lia";
 import { useRef } from 'react';
-import Button from "../Button"
 import image1 from "../../assets/images/Collections/1.png"
 import image2 from "../../assets/images/Collections/2.png"
 import image3 from "../../assets/images/Collections/3.png"
@@ -60,7 +59,7 @@ const TheCollections = () => {
 
   return (
     <section className="">
-      <h2 className="text-3xl mt-16 mb-16 adelia text-center mx-auto">The Collections</h2>
+      <h2 className="text-3xl sm:text-4xl mx-6 sm:mx-16 mt-16 mb-6 font-queens  uppercase">The collections</h2>
       <div className="relative">
         {/* Scrollable Container */}
         <div

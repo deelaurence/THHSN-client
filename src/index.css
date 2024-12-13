@@ -33,9 +33,17 @@
 @font-face {
     font-family: 'adelia';
     src: url('./assets/fonts/FontsFree-Net-adelia.ttf') format('truetype');
+  }
+  
+  @font-face{
+    font-family: 'griff';
+    src: url('./assets/fonts/Griffiths.otf') format('opentype');
+
 }
 
-
+.griff{
+  font-family: griff;
+}
 .frunchy{
     font-family: frunchy;
 }
@@ -184,7 +192,7 @@ textarea,
   
   .cormorant-infant {
     font-family: "Cormorant Infant", serif;
-    font-weight: 300;
+    font-weight: 400;
     font-style: normal;
   }
   

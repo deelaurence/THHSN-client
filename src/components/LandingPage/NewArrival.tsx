@@ -1,4 +1,3 @@
-import React from 'react'
 import BestSellersAndNewArrivals from './_BestSellersAndNewArrivals'
 import image1 from "../../assets/images/BestSellers/1.png"
 import image2 from "../../assets/images/BestSellers/2.png"
@@ -52,7 +51,7 @@ const store=[
 const NewArrivals = () => {
   return (
     <div className='my-32'>
-        <BestSellersAndNewArrivals title='Best Sellers' subtitle='From wigs to bundles. to waves to curlies, shop our best sellers' store={store}/>
+        <BestSellersAndNewArrivals title='New Arrivals' subtitle='From wigs to bundles. to waves to curlies, shop our best sellers' store={store}/>
     </div>
   )
 }

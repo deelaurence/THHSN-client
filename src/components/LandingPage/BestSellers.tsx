@@ -1,4 +1,3 @@
-import React from 'react'
 import BestSellersAndNewArrivals from './_BestSellersAndNewArrivals'
 import image1 from "../../assets/images/BestSellers/1.png"
 import image2 from "../../assets/images/BestSellers/2.png"

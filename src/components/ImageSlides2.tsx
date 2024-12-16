@@ -18,6 +18,7 @@ const Slideshow: React.FC<Images> = ({ images }) => {
   const [slideDirection, setSlideDirection] = useState<'left' | 'right'>('right');
 
   // Change slide automatically every 3 seconds
+  console.log(slideDirection)
   useEffect(() => {
     const interval = setInterval(() => {
       goToNext();

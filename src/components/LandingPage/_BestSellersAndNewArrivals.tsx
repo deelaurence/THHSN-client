@@ -86,14 +86,14 @@ const BestSellersAndNewArrivals: React.FC<BestSellersProps> = ({
                   />
                 )}
               </div>
-              <div className="h-24">
+              <div className="h-20">
                 <p className="px-2 flex gap-2 font-queens text-sm sm:text-xl pt-4 uppercase">
                   {item.text}
                 </p>
                 <p className="font-queens px-2">${item.price}.00 </p>
               </div>
               <Button
-                extraClass="text-xs mx-1 py-2 capitalize"
+                extraClass="text-xs mx-1  bg-transparent py-2 capitalize"
                 size="large"
                 label="Add to Cart"
                 loading={false}

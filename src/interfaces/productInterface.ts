@@ -17,6 +17,7 @@ export interface VariationLevelOne {
     quantity: number;
     price: number;
     bestSeller:boolean;
+    newArrival:boolean;
     images: string[]; // Array of image URLs
     variations: VariationLevelTwo[];
   }

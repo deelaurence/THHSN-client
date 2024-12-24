@@ -1,6 +1,11 @@
 import { LiaLongArrowAltLeftSolid, LiaLongArrowAltRightSolid } from "react-icons/lia";
 import React, { useRef, useState } from "react";
 import Button from "../Button";
+import { Link } from "react-router-dom";
+import { Sdk } from "../../utils/sdk";
+  
+    
+
 
 interface StoreItem {
   text: string;
@@ -23,7 +28,7 @@ const BestSellersAndNewArrivals: React.FC<BestSellersProps> = ({
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-
+ 
   const scrollNext = () => {
     if (containerRef.current) {
       const { scrollLeft, clientWidth } = containerRef.current;
@@ -43,7 +48,6 @@ const BestSellersAndNewArrivals: React.FC<BestSellersProps> = ({
       });
     }
   };
-
   return (
     <section>
       <h2 className="text-2xl mt-16 font-queens uppercase px-6 sm:px-16 mx-auto">
@@ -62,9 +66,11 @@ const BestSellersAndNewArrivals: React.FC<BestSellersProps> = ({
               key={index}
               
             >
+              <Link to={`${new Sdk().productDetailRoute}`}>
               <div 
               onMouseEnter={() => setHoveredIndex(index)}
               onMouseLeave={() => setHoveredIndex(null)}
+              
               className="h-64 sm:h-[24rem] relative overflow-hidden cursor-pointer">
                 {/* Primary Image */}
 
@@ -86,6 +92,7 @@ const BestSellersAndNewArrivals: React.FC<BestSellersProps> = ({
                   />
                 )}
               </div>
+              </Link>
               <div className="h-20">
                 <p className="px-2 flex gap-2 font-queens text-sm sm:text-xl pt-4 uppercase">
                   {item.text}

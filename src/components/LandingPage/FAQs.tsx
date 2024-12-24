@@ -33,14 +33,14 @@ const FAQs = () => {
   return (
     <section>
       <h2 className="font-queens duration-500 text-3xl text-center my-12">FAQs</h2>
-      <div className="max-w-4xl mx-auto">
+      <div className="px-6 sm:px-16">
         {displayedFAQs.map((faq, index) => (
           <div
             key={index}
             className="border-b dark:opacity-80 border-neutral-300 dark:border-neutral-700 overflow-hidden"
           >
             <button
-              className="w-full text-left py-4 px-6 flex justify-between items-center"
+              className="w-full text-left py-4  flex justify-between items-center"
               onClick={() => toggleAccordion(index)}
             >
               {faq.question}
@@ -51,7 +51,7 @@ const FAQs = () => {
                 openIndex === index ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'
               }`}
             >
-              <div className="py-4 px-6 opacity-70 dark:opacity-50 font-thin text-xs">
+              <div className="py-4 opacity-70 dark:opacity-50 font-thin text-xs">
                 {faq.answer}
               </div>
             </div>

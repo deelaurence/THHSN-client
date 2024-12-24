@@ -11,7 +11,6 @@ import { RxDragHandleDots2 } from 'react-icons/rx';
 import Loader from '../../components/Loader';
 import SingleLineError from '../../components/errors/SingleLineError';
 
-
 const Inventory: React.FC = () => {
   const dispatch:AppDispatch = useDispatch();
   const { categories,status,error } = useSelector((state: RootState) => state.product); // Update this line based on your state structure

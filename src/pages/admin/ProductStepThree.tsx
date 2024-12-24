@@ -177,6 +177,7 @@ const ProductStepThree = () => {
            
             {variants.length>0&&<Button 
             // onClick={}
+            extraClass='bg-primary text-secondary'
             disabled={adminStatus==="loading"||variants.length===0} size="large" label="continue" loading={adminStatus==='loading'} />}
           </div>
       </form>

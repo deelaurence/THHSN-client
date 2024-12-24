@@ -24,7 +24,7 @@ const Navbar = () => {
     const time=setTimeout(() => {
       setIsMenuOpen(!isMenuOpen);
     }, 500);
-
+    //@ts-ignore
     setTimeoutId(time)
 
   };
@@ -65,7 +65,7 @@ const Navbar = () => {
   return (
     <div className={`relative  pb-12 z-100 force-z`}>
       {/* Main Navbar */}
-      <div className={`${scrolled?'bg-secondary dark:bg-primary':'bg-secondary dark:bg-primary'} px-6 py-4 sm:py-8 border-b  border-b-primary fixed w-full   dark:border-b-neutral-500 justify-between flex items-center  dark:text-secondary`}>
+      <div className={`${scrolled?'bg-secondary dark:bg-primary':'bg-secondary dark:bg-primary'} px-6 sm:px-16 py-4 sm:py-8 border-b  border-b-primary fixed w-full   dark:border-b-neutral-500 justify-between flex items-center  dark:text-secondary`}>
         <div className='flex items-center gap-3'>
           {/* Hamburger Icon */}
           <button onClick={toggleMenu} className='focus:outline-none md:hidden'>

@@ -72,7 +72,7 @@ export const ProductStepOne = () => {
             
 
           
-          <Button disabled={adminStatus==="loading"} size="large" label="continue" loading={adminStatus==='loading'} />
+          <Button disabled={adminStatus==="loading"} size="large" label="continue" extraClass='bg-primary text-secondary' loading={adminStatus==='loading'} />
       </form>
       
       {adminStatus === 'failed' && (

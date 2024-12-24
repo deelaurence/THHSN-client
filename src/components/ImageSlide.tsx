@@ -33,12 +33,12 @@ const Slideshow: React.FC<Images> = ({ images }) => {
   };
 
   return (
-    <div className="relative overflow-hidden slideshow h-64">
+    <div className="relative overflow-hidden slideshow h-[32rem]">
       
 
       {/* Sliding Images Wrapper */}
       <div
-        className="relative flex transition-transform duration-500 ease-in-out"
+        className="relative h-full flex transition-transform duration-500 ease-in-out"
         style={{
           transform: `translateX(${-currentIndex * 100}%)`,
         }}
@@ -46,7 +46,7 @@ const Slideshow: React.FC<Images> = ({ images }) => {
         {images.map((image, index) => (
           <div
             key={index}
-            className="w-full h-64 flex-shrink-0"
+            className="w-full h-full  flex-shrink-0"
             style={{
               transition: 'transform 0.5s ease-in-out',
             }}
@@ -61,7 +61,7 @@ const Slideshow: React.FC<Images> = ({ images }) => {
       </div>
 
       {/* Indicators */}
-      <div className="flex items-baseline absolute bottom-2 right-2  justify-center ">
+      <div className="flex items-baseline  absolute bottom-2 right-2  justify-center ">
         <p className='text-sm font-semibold'>0{currentIndex+1}</p>
         <p className='text-[10px]'>/{images.length}</p>
       </div>
@@ -72,13 +72,13 @@ const Slideshow: React.FC<Images> = ({ images }) => {
       {/* Navigation Buttons */}
       <button
         onClick={goToPrevious}
-        className="text-xs  z-10 bg-[rgba(255,255,255,.1)] dark:bg-[rgba(0,0,0,.1)]  px-2 py-1"
+        className="text-xs  z-10 bg-[rgba(255,255,255,.3)] dark:bg-[rgba(0,0,0,.2)]  px-2 py-2 rounded-full"
       >
         <FaArrowLeftLong/>
       </button>
       <button
         onClick={goToNext}
-        className="  z-10 bg-[rgba(255,255,255,.1)] dark:bg-[rgba(0,0,0,.1)] px-3 py-2"
+        className="  z-10 bg-[rgba(255,255,255,.3)] dark:bg-[rgba(0,0,0,.2)] px-3 py-3 rounded-full"
       >
         <FaArrowRightLong/>
       </button>

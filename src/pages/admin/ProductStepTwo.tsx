@@ -46,7 +46,7 @@ const ProductStepTwo = () => {
         
         <CategoryHeader heading='Adding some fierce new looks!' subheading='You can upload upto five images right now.'/>
         <ImageInput required={false} type='file' placeholder='image' multiple={true}  onChange={handleFileChange}/>
-        <Button disabled={adminStatus==="loading"} size="large" label="continue" loading={adminStatus==='loading'} />
+        <Button extraClass='bg-primary text-secondary' disabled={adminStatus==="loading"} size="large" label="continue" loading={adminStatus==='loading'} />
           </form>
         {adminStatus === 'failed' && (
             <p className="text-danger dark:text-danger-light text-[12px] py-2 flex gap-1 items-center input-errors"><SlInfo/> {adminError}</p>

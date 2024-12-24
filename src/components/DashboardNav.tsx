@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 
 
 
+
 interface IMenu{
     label:string;
     route?:string;
@@ -15,7 +16,8 @@ interface IMenuProps{
 }
 
 /**
- * This either navigates to a new page or displays a new component on the same page depending on the content of the 
+ * This either navigates to a new page or displays a new component on the 
+ * same page depending on the content of the 
  * array supplied as argument.
  * Components or Route
  * @param menuItems
@@ -44,7 +46,7 @@ const DashboardNav:React.FC<IMenuProps>= ({menuItems}) => {
       </div>
       {/* if component is supplied switch based on the current index */}
       {menuItems[currentIndex]?.component&&
-      <div>
+      <div>      
           {menuItems[currentIndex].component}
       </div>
       }

@@ -33,6 +33,7 @@ const App: React.FC = () => {
               <Route path={sdk.addProductRoute} element={<AddProduct/>} />
               <Route path={sdk.manageInventoryRoute} element={<Inventory/>} />
               <Route path={sdk.singleInventoryRoute+'/:name'} element={<ProductDetail/>}/>
+              <Route path={sdk.productDetailRoute+'/:name'} element={<ProductDetail/>}/>
               <Route path={sdk.managePaymentsRoute} element={<Placeholder header='Payments' paragraph='something here later'/>} />
               <Route path={sdk.productDraftsRoute} element={<Placeholder header='Drafts' paragraph='manage drafts'/>} />
               <Route path={sdk.salesRoute} element={<Placeholder header='Sales' paragraph='something here later'/>} />

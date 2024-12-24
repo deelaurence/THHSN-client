@@ -101,12 +101,15 @@ const FormInput: React.FC<FormInputProps> = ({
         <p className="text-primary dark:opacity-30 opacity-50 dark:text-secondary text-[10px] py-2 flex gap-1 items-center input-errors">
           <SlInfo /> {fieldTip}
         </p>
-      )}
-      {singleInputError && (
-        <p className="dark:text-danger-light text-danger text-[10px] py-2 flex gap-1 items-center input-errors">
-          <SlInfo /> {singleInputError}
+      )} 
+      <p
+          className={`dark:text-danger-light  -mb-4 text-danger text-[10px] py-2 flex gap-1 items-center input-errors 
+            transition-opacity duration-300 ${singleInputError ? 'opacity-100' : 'opacity-0'}
+          `}
+        >
+          <SlInfo className='my-1' />
+          {singleInputError??"Something went wrong"}
         </p>
-      )}
     </div>
   );
 };

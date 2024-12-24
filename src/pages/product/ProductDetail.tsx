@@ -8,12 +8,17 @@ import { VariationLevelOne } from '../../interfaces/productInterface'
 import Button from '../../components/Button'
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState, AppDispatch } from '../../store/store.ts';
-import { setEditProductMode } from '../../store/adminSlice'
+import { setEditProductMode,addBestsellerAndNewArrival } from '../../store/adminSlice'
 import { useNavigate } from 'react-router-dom'
+import { LiaShippingFastSolid } from "react-icons/lia";
+import { BsStars } from "react-icons/bs";
+import Loader from '../../components/Loader.tsx'
 
 const ProductDetail = () => {
+const [isNewArrival, setIsNewArrival] = useState(false);
+const [isBestSeller, setIsBestSeller] = useState(false);
 const { products } = useSelector((state: RootState) => state.product);
-// const { editingProduct } = useSelector((state: RootState) => state.admin);
+const { status } = useSelector((state: RootState) => state.admin);
 const [currentVariation, setCurrentVariation] = useState(0)
 const [innerVariation, setInnerVariation]=useState<VariationLevelOne[]>()
 const {name}=useParams()
@@ -33,9 +38,17 @@ sdk.setSingleProductDetail(product)
 useEffect(() => {
 if (product.variations[currentVariation]) {
     setInnerVariation(product.variations[currentVariation].variations);
-
 }
 }, [currentVariation]);
+
+//update the state of bestseller and newArrival
+useEffect(()=>{
+    setIsBestSeller(product.bestSeller)
+    setIsNewArrival(product.newArrival)
+    // dispatch(addBestsellerAndNewArrival(
+    //     {bestSeller:true,newArrival:false}
+    // ))
+},[])
 
 
 const handleEditMode = ()=>{
@@ -67,7 +80,7 @@ return (
                             setInnerVariation(variation.variations)
                             console.log(innerVariation)
                         }}
-                        className={`${currentVariation===index?'':'opacity-30'} px-2 py-1 border border-neutral-600 dark:border-neutral-400 w-fit gap-4`}>
+                        className={`${currentVariation===index?'':'opacity-40'} px-2 py-1 border border-neutral-600 dark:border-neutral-400 w-fit gap-4`}>
                         {variation.name}
                     </div>
                    <></>
@@ -97,7 +110,41 @@ return (
                 })
             }
         </div>
-        <Button onClick={handleEditMode} label='Edit'  size='large' extraClass='mt-16' loading={false} />
+
+        {/* BESTSELLER AND NEW ARRIVAL TOGGLE */}
+        
+        <div className='flex flex-col min-h-12  mt-12'>
+            <div className={`flex justify-center relative z-0 -mb-6 items-center duration-1000  w-full ${status==='loading'?'opacity-100':'opacity-0'}`}>
+                <Loader/>
+            </div>
+            <section className={`flex relative z-10 duration-1000 gap-4 ${status==='loading'?'opacity-0':'opacity-100'}`}>
+                <div 
+                className='flex text-green-500 items-center gap-2 cursor-pointer'
+                onClick={() =>{
+                    setIsNewArrival(!isNewArrival)
+                    dispatch(addBestsellerAndNewArrival(
+                        {bestSeller:isBestSeller,newArrival:!isNewArrival}
+                    ))
+                    }}>
+                <LiaShippingFastSolid className={`text-xl    ${isNewArrival ? '' : ' opacity-40'}`} />
+                <span className={`text-sm    ${isNewArrival ? 'underline' : ' opacity-40'}`}>Make New Arrival</span>
+                </div>
+                <div 
+                className='flex text-yellow-600 items-center gap-2 cursor-pointer'
+                onClick={() => {
+                    setIsBestSeller(!isBestSeller)
+                    dispatch(addBestsellerAndNewArrival(
+                    {bestSeller:!isBestSeller,newArrival:isNewArrival}
+                ))
+                }
+                }>
+                <BsStars className={`text-xl   ${isBestSeller ? '' : ' opacity-40'}`} />
+                <span className={`text-sm   ${isBestSeller ? 'underline' : ' opacity-40'}`}>Make Best Seller</span>
+                </div>
+            </section>
+        
+        </div>
+        <Button onClick={handleEditMode} label='Edit'  size='large' extraClass='mt-16 bg-primary text-secondary' loading={false} />
     </div>
     
   )

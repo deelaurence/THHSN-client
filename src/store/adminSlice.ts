@@ -154,6 +154,39 @@ export const addProductVariation = createAsyncThunk(
 );
 
 
+// Async action for adding bestseller and new arrival
+export const addBestsellerAndNewArrival = createAsyncThunk(
+  'admin/addBestsellerAndNewArrival',
+      async (productDetails: { 
+          bestSeller:boolean;
+          newArrival:boolean
+        },{}) => {       
+        try {
+        
+
+          
+          const productId=sdk.getSingleProductDetail()._id
+          const headers={
+            'content-Type':'application/json',
+            'Authorization':`Bearer ${persistedAdmin?.token}`
+          }
+          let response = await apiClient.put(`/v1/admin/manage/product/bestseller-newarrival/${productId}`, productDetails,{headers});
+          
+          
+          return response.data;
+      } catch (error:any) {
+          if(error.response){
+            throw error.response.data.reason
+          }
+          else{
+            console.log(error)
+            throw "Failed to connect, Try again"
+          }
+      }
+}
+);
+
+
 
 
 const adminSlice = createSlice({
@@ -236,7 +269,7 @@ const adminSlice = createSlice({
       })
 
 
-      //ProductImage
+      //ProductVariation
       .addCase(addProductVariation.pending, (state) => {
         state.status = 'loading';
       })
@@ -254,7 +287,25 @@ const adminSlice = createSlice({
         state.status = 'failed';
         console.log(action.error.message)
         state.error = action.error.message || 'Adding Image Failed';
-      });
+      })
+
+
+
+
+      //BestSellerAndNewArrival
+      .addCase(addBestsellerAndNewArrival.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(addBestsellerAndNewArrival.fulfilled, (state, action: PayloadAction<{ payload:{ email: string, name:string, token:string} }>) => {
+        state.status = 'succeeded';
+        const {payload} = action.payload
+        state.productDraftOne = payload
+      })
+      .addCase(addBestsellerAndNewArrival.rejected, (state, action) => {
+        state.status = 'failed';
+        console.log(action.error.message)
+        state.error = action.error.message || 'Adding Product name failed';
+      })
   },
 });
 

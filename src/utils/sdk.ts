@@ -15,6 +15,7 @@ export class Sdk{
     manageInventoryRoute:string='/admin/inventory'
     randomFactsRoute:string='/admin/random-facts'
     singleInventoryRoute:string='/admin/inventory'
+    productDetailRoute:string='/product/details'
     theme:string|null=localStorage.getItem('theme')
     heroSectionImage=threeMogels
     navbarData = [

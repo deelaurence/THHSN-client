@@ -47,7 +47,7 @@ const AdminLogin: React.FC = () => {
   }
 
   return (
-    <div className="flex px-6 flex-col items-center  w-full justify-center h-screen dark:bg-primary dark:text-secondary">
+    <div className="flex px-6 flex-col items-center justify-center h-screen dark:bg-primary dark:text-secondary">
       <PageHeader heading='' accent='Hi, Admin'/>
       <form
         className="w-full pt-6 pb-8 mb-4"
@@ -55,11 +55,8 @@ const AdminLogin: React.FC = () => {
       >
         <FormInput type='email' placeholder='Email' value={email} required={true} onChange={handleEmailChange} />
         <FormInput type='password' placeholder='Password' value={password} required={true} onChange={handlePasswordChange} />
-        <div className="flex mt-8 items-center justify-between">
-          
-        <Button disabled={disableSubmit||adminStatus==="loading"} size="large" label="Sign In" loading={adminStatus==='loading'} />
-        {/* <Button disabled={disableSubmit} variant="danger" size="large" label="Sign In"/> */}
-        {/* <Button  label="Sign In"/> */}
+        <div className=" mt-8 ">
+          <Button extraClass=' border-none py-1 font-thin bg-primary text-secondary' disabled={disableSubmit||adminStatus==="loading"} size="large" label="Sign In" loading={adminStatus==='loading'} />
         </div>
       </form>
       {adminStatus === 'failed' && (

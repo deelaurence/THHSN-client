@@ -12,17 +12,15 @@ const Footer = () => {
         { name: "Terms of Service", url: "/terms" }
       ] },
     { category: "Social Media", items: [
-        { name: "Facebook", url: "https://facebook.com" },
-        { name: "Twitter", url: "https://twitter.com" },
-        { name: "Instagram", url: "https://instagram.com" }
+        { name: "Tiktok", url: "https://www.tiktok.com/@thehumanhairshop.ng?_t=ZM-8sFxXXeiRWP&_r=1" },
+        { name: "Instagram", url: "https://www.instagram.com/thehumanhairshopng?igsh=MXVwcW81NDFpYjNubw==" }
       ] },
   ];
 
   return (
     <footer className="bg-primary mt-2 pt-16 text-secondary ">
-      
-        <h3 className="text-6xl gap-1 px-6 sm:px-20 pb-12 leading-0 dark:border-t border-neutral-700 h-fit font-bold font-queens flex items-baseline">THE HUMAN HAIR SHOP NG<span className="text-8xl"></span></h3>
-        <div className="max-w-6xl mx-auto px-6 sm:px-20 grid grid-cols-1 md:grid-cols-3 gap-8">
+        <h3 className="text-2xl dark:pt-16 gap-1 px-6 tablet:px-6 sm:px-20 pb-12 leading-0 dark:border-t border-neutral-700 h-fit font-bold font-queens flex items-baseline">THE HUMAN HAIR SHOP NG<span className="text-8xl"></span></h3>
+        <div className=" px-6 tablet:px-6 sm:px-20 grid grid-cols-1 md:grid-cols-3 gap-8">
         {links.map((linkGroup, index) => (
           <div key={index}>
             <h4 className="text-lg font-semibold font-queens mb-4">{linkGroup.category}</h4>

@@ -186,6 +186,32 @@ export const addBestsellerAndNewArrival = createAsyncThunk(
 }
 );
 
+//add a cover image to the bestseller and newArrival
+export const bestsellerAndNewArrivalCoverimage = createAsyncThunk(
+  'admin/bestsellerAndNewArrivalCoverimage',
+      async (productDetails: { 
+          coverImage:string
+        },{}) => {       
+        try {          
+          const productId=sdk.getSingleProductDetail()._id
+          const headers={
+            'content-Type':'application/json',
+            'Authorization':`Bearer ${persistedAdmin?.token}`
+          }
+          let response = await apiClient.put(`/v1/admin/manage/product/bestseller-newarrival-coverimage/${productId}`, productDetails,{headers});
+          return response.data;
+      } catch (error:any) {
+          if(error.response){
+            throw error.response.data.reason
+          }
+          else{
+            console.log(error)
+            throw "Failed to connect, Try again"
+          }
+      }
+}
+);
+
 
 
 
@@ -302,6 +328,22 @@ const adminSlice = createSlice({
         state.productDraftOne = payload
       })
       .addCase(addBestsellerAndNewArrival.rejected, (state, action) => {
+        state.status = 'failed';
+        console.log(action.error.message)
+        state.error = action.error.message || 'Adding Product name failed';
+      })
+
+
+      //BestSellerAndNewArrival
+      .addCase(bestsellerAndNewArrivalCoverimage.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(bestsellerAndNewArrivalCoverimage.fulfilled, (state, action: PayloadAction<{ payload:{ email: string, name:string, token:string} }>) => {
+        state.status = 'succeeded';
+        const {payload} = action.payload
+        state.productDraftOne = payload
+      })
+      .addCase(bestsellerAndNewArrivalCoverimage.rejected, (state, action) => {
         state.status = 'failed';
         console.log(action.error.message)
         state.error = action.error.message || 'Adding Product name failed';

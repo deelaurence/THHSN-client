@@ -9,12 +9,14 @@ import { useEffect } from 'react'
 import { AppDispatch,RootState } from '../../store/store'
 import { useSelector,useDispatch } from 'react-redux'
 import { fetchProductsPublic } from '../../store/fetchProductSlice'
-  
-  
-const store=[
+import { Sdk } from '../../utils/sdk' 
+
+const{mergeProductInDatabaseWithStaticImages}=new Sdk()
+
+let store=[
     {
         text:"Curly wavy hair extension",
-        image:image1,
+        image:image4,
         secondaryImage:image2,
         price:200,
         path:"/"
@@ -36,7 +38,7 @@ const store=[
     },
     {
         text:"Lace Frontal",
-        image:image4,
+        image:image1,
         secondaryImage:image6,
         price:200,
         path:"/"
@@ -54,6 +56,13 @@ const store=[
 
 
 const BestSellers = () => {
+    /**
+     * The store contains the hardcoded value 
+     * while the name and price has to be changed 
+     * dynamically based on the items with
+     * bestsellers=true in the database
+     * 
+     */
     const dispatch = useDispatch<AppDispatch>()
     useEffect(()=>{
         dispatch(fetchProductsPublic())
@@ -61,10 +70,16 @@ const BestSellers = () => {
     const {productsPublic,statusPublic} = useSelector((state:RootState)=>{
         return state.product
     })
-    console.log(productsPublic,statusPublic)
+
+    const bestsellersInDatabase=productsPublic
+    .filter((product => product.bestSeller))
+    
   return (
-    <div className='my-32'>
-        <BestSellersAndNewArrivals title='Best Sellers' subtitle='From wigs to bundles. to waves to curlies, shop our best sellers' store={store}/>
+    <div className='mt-32'>
+        <BestSellersAndNewArrivals 
+        title='Best Sellers' 
+        subtitle='From wigs to bundles. to waves to curlies, shop our best sellers' 
+        store={mergeProductInDatabaseWithStaticImages(store,bestsellersInDatabase,statusPublic!=="succeeded")}/>
     </div>
   )
 }

@@ -1,11 +1,14 @@
 import { AdminObject } from "../interfaces/adminInterfaces";
 import threeMogels from '../assets/images/LUX_BEAUTE_Banner-1_3024x (1).png'
-
+import {StaticBestSellerAndArrival} from "../interfaces/bestSellerAndNewArrival";
+import { IProduct } from "../interfaces/productInterface";
+import { Cart } from "../interfaces/cart";
 export class Sdk{
 
     private adminObjectKey:string='admin_object';
     adminLoginRoute:string='/admin/login'
     shopRoute:string='/shop'
+    cartRoute:string='/cart'
     adminDashboardRoute:string='/admin/dashboard'
     addProductRoute:string='/admin/add-product'
     managePaymentsRoute:string='/admin/payments'
@@ -70,14 +73,68 @@ export class Sdk{
         localStorage.setItem(this.adminObjectKey,JSON.stringify(object))
     }
 
+    mergeProductInDatabaseWithStaticImages(
+      staticData:StaticBestSellerAndArrival[],
+      dataInDatabase:IProduct[],
+      returnPreset:boolean
+    ){
+        
+      if(returnPreset){
+        return staticData
+      }
+      return staticData.slice(0,dataInDatabase.length)
+        .map((item,index)=>{
+            return{
+                ...item,
+                image:dataInDatabase[index].coverImage??item.image,
+                price:dataInDatabase[index]
+                .variations[0]
+                .variations[0]
+                .price,
+                text:dataInDatabase[index].name
+            }
+        })  
+    }
+
 
     setSingleProductDetail(object:any){
+      // console.log(object)
+      // if(object.coverImage){
+      //   object.images.unshift(object.coverImage)
+      // }
       localStorage.setItem('single_product',JSON.stringify(object))
     }
+
+
+    setCart(object:Cart){
+      const currentCart = localStorage.getItem('cart')
+      if(currentCart){
+        const cart = JSON.parse(currentCart)
+        cart.push(object)
+        localStorage.setItem('cart',JSON.stringify(cart))
+        return;
+      }
+      localStorage.setItem('cart',JSON.stringify([object]))
+    }
+
+    modifyExistingCartArray(cart:Cart[]){
+      localStorage.setItem('cart',JSON.stringify(cart))
+    }
+
+    getCart(){
+      const currentCart = localStorage.getItem('cart')
+      if(currentCart){
+        return JSON.parse(currentCart)
+      }
+      return []
+    }
+
     getSingleProductDetail(){
       const singleProduct = localStorage.getItem('single_product')
       if(singleProduct!=='undefined'&&singleProduct!==null){
         return JSON.parse(singleProduct)
       }
     }
+
+    
 }

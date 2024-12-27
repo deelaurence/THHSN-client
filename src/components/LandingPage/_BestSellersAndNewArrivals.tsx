@@ -66,7 +66,9 @@ const BestSellersAndNewArrivals: React.FC<BestSellersProps> = ({
               key={index}
               
             >
-              <Link to={`${new Sdk().productDetailRoute}`}>
+              <Link 
+              onClick={()=>console.log(item.image)}
+              to={`${new Sdk().productDetailRoute}/${item.text}`}>
               <div 
               onMouseEnter={() => setHoveredIndex(index)}
               onMouseLeave={() => setHoveredIndex(null)}
@@ -94,10 +96,10 @@ const BestSellersAndNewArrivals: React.FC<BestSellersProps> = ({
               </div>
               </Link>
               <div className="h-20">
-                <p className="px-2 flex gap-2 font-queens text-sm sm:text-xl pt-4 uppercase">
+                <p className="px-2 flex gap-2 leading-4 font-queens text-sm sm:text-xl pt-4 capitalize">
                   {item.text}
                 </p>
-                <p className="font-queens px-2">${item.price}.00 </p>
+                <p className="font-queens px-2 mt-1 font-medium"> ${item.price}.00 </p>
               </div>
               <Button
                 extraClass="text-xs mx-1  bg-transparent py-2 capitalize"

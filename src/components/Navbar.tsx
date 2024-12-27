@@ -10,13 +10,15 @@ import {FiUser} from 'react-icons/fi'
 import { BsArrowRight} from 'react-icons/bs';
 import ThemeToggleButton from './ThemeToggleButton';
 import { PiBag} from 'react-icons/pi';
+import { useTheme } from '../contexts/AppContext';
+
 const sdk = new Sdk();
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false); // State for mobile menu visibility
   const [timeoutId, setTimeoutId]= useState(0);
   const adminObject = useSelector((state: RootState) => state.admin.admin);
-
+  const {cartItems}=useTheme()
   const dispatch = useDispatch<AppDispatch>();
 
   // Toggle mobile menu visibility
@@ -77,7 +79,10 @@ const Navbar = () => {
         <div className='flex  items-center gap-4'>
             <FiUser className='text-[1.5rem] ' />
             {/* <PiUserBold className=' text-[1.5rem]'/> */}
-            <PiBag className='text-[1.7rem]'/>
+            <div className='relative'>
+              <PiBag className='text-[1.7rem]'/>
+              <p className='absolute bg-yellow-600 rounded-full h-4 w-4 text-white flex items-center justify-center text-[8px] p-1 top-0 -right-1'>{cartItems}</p>
+            </div>
             {/* <BsHandbag className=' text-[1.4rem]' /> */}
         </div>
 

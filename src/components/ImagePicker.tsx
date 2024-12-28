@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState, AppDispatch } from '../store/store.ts';
 import { bestsellerAndNewArrivalCoverimage } from '../store/adminSlice.ts';
@@ -18,7 +18,8 @@ const ImagePicker: React.FC<ImagePickerProps> = ({ images, onPick }) => {
     const handleImageClick = (image: string) => {
         setSelectedImage(image);
         onPick(image);
-        dispatch(bestsellerAndNewArrivalCoverimage({coverImage:image}))
+        const pathname = new URL(image).pathname;
+        dispatch(bestsellerAndNewArrivalCoverimage({coverImage:pathname}))
     };
     
     

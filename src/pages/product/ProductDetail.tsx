@@ -118,18 +118,18 @@ const ProductDetail = () => {
                 innerVariation?.map(({variation,price,quantity},index)=>{
                 return(
                     <div
-                    className={`${selectedVariant===index?'border-yellow-600':'border-neutral-300 dark:border-neutral-600  opacity-80'}  p-2 pl-3 pr-6 relative border mt-6`}
+                    className={`${selectedVariant===index?'border-yellow-600':'border-neutral-300 dark:border-neutral-600  opacity-80'}  p-1 pl-3  pr-6 relative border mt-6`}
                     key={index}
                     onClick={()=>{setSelectedVariant(index)}}
                     >
                     {selectedVariant===index&&<IoMdCheckmark className='text-secondary rounded-bl-lg p-[1px] bg-yellow-600 absolute top-0 right-0'/>}
-                    <p className='uppercase font-medium'>
+                    <p className='uppercase -mb-1 font-medium'>
                         {variation}   
                     </p>
                     <p className='text-yellow-600 text-[10px]'>
                         {quantity} units 
                     </p>
-                    <p className='text-xs '>
+                    <p className='text absolute right-1 -bottom-1 font-queens font-bold  '>
                         &#8358; {new Intl.NumberFormat('en-NG', { minimumFractionDigits: 0 }).format(price)}
                     </p>
                     </div>

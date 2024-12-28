@@ -13,6 +13,8 @@ import { Sdk } from '../../utils/sdk'
 
 const{mergeProductInDatabaseWithStaticImages}=new Sdk()
 
+
+//static data not being used
 let store=[
     {
         text:"Curly wavy hair extension",

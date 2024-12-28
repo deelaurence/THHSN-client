@@ -3,7 +3,7 @@ import React, { useRef, useState } from "react";
 import Button from "../Button";
 import { Link } from "react-router-dom";
 import { Sdk } from "../../utils/sdk";
-  
+import { useTheme } from "../../contexts/AppContext"; 
     
 
 
@@ -39,6 +39,8 @@ const BestSellersAndNewArrivals: React.FC<BestSellersProps> = ({
     }
   };
 
+  const {isAdmin}=useTheme()
+
   const scrollPrev = () => {
     if (containerRef.current) {
       const { scrollLeft, clientWidth } = containerRef.current;
@@ -62,11 +64,11 @@ const BestSellersAndNewArrivals: React.FC<BestSellersProps> = ({
         >
           {store.map((item, index) => (
             <div
-              className="min-w-64 sm:min-w-[25vw] tablet:min-w-[50vw] snap-start relative"
-              key={index}
-              
+            className="min-w-64 sm:min-w-[25vw] tablet:min-w-[50vw] snap-start relative"
+            key={index}
+            
             >
-              <Link 
+            <Link 
               onClick={()=>console.log(item.image)}
               to={`${new Sdk().productDetailRoute}/${item.text}`}>
               <div 
@@ -94,7 +96,6 @@ const BestSellersAndNewArrivals: React.FC<BestSellersProps> = ({
                   />
                 )}
               </div>
-              </Link>
               <div className="h-20">
                 <p className="px-2 flex gap-2 leading-4 font-queens text-sm sm:text-xl pt-4 capitalize">
                   {item.text}
@@ -104,9 +105,10 @@ const BestSellersAndNewArrivals: React.FC<BestSellersProps> = ({
               <Button
                 extraClass="text-xs mx-1  bg-transparent py-2 capitalize"
                 size="large"
-                label="Add to Cart"
+                label={isAdmin?"Edit item":"Add to Cart"}
                 loading={false}
-              />
+                />
+            </Link>
             </div>
           ))}
         </div>

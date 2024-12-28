@@ -118,7 +118,7 @@ const ProductDetail = () => {
                 innerVariation?.map(({variation,price,quantity},index)=>{
                 return(
                     <div
-                    className={`${selectedVariant===index?'border-yellow-600':'border-neutral-300 dark:border-neutral-600  opacity-80'}  p-1 pl-3  pr-6 relative border mt-6`}
+                    className={`${selectedVariant===index?'border-b-yellow-600':'border-b-neutral-300 dark:border-b-neutral-600  opacity-80'}  p-1 pl-3  pr-6 relative border-b mt-6`}
                     key={index}
                     onClick={()=>{setSelectedVariant(index)}}
                     >
@@ -172,7 +172,7 @@ const ProductDetail = () => {
             
             </div>}
 
-            {isAdmin&&<ImagePicker images={["http://localhost:5173/src/assets/images/BestSellers/2.png","http://localhost:5173/src/assets/images/BestSellers/1.png"]} onPick={()=>{console.log("picked")}}/>}
+            {isAdmin&&<ImagePicker images={sdk.bestSellersAndNewArrivalsCoverImages} onPick={()=>{console.log("picked")}}/>}
 
             {isAdmin?<Button onClick={handleEditMode} label='Edit'  size='large' extraClass='mt-16 font-thin bg-primary text-secondary py-3' loading={false} />:
             <Link

@@ -58,7 +58,10 @@
     transition: color 0.3s ease-out, background-color 0.3s ease-out, border-color 0.3s ease-out;
 }
 
-
+.gallery{
+  background: url('./assets/images/blue_noise_med.png'),#222;
+  background-blend-mode: multiply;
+}
 
 
 body{
@@ -292,3 +295,5 @@ textarea,
     -ms-overflow-style: none; /* For Internet Explorer and Edge */
     scrollbar-width: none; /* For Firefox */
   }
+
+  

@@ -28,6 +28,7 @@ export class Sdk{
         },
         {
           label: "Dashboard",
+          superUser:true,
           link: this.adminDashboardRoute,
         },
         {
@@ -52,8 +53,29 @@ export class Sdk{
           label: "Blog",
           link: "/blog",
         }
-      ];
+    ];
 
+    bestSellersAndNewArrivalsCoverImages:string[]=[
+      "https://res.cloudinary.com/dy5xob0gn/image/upload/v1735384866/THHSN/static/ufyzdmh0u2ydsxqlzgya.png",
+      "https://res.cloudinary.com/dy5xob0gn/image/upload/v1735384865/THHSN/static/skq9myj1znmimatf8qc0.webp",
+      "https://res.cloudinary.com/dy5xob0gn/image/upload/v1735384866/THHSN/static/aicwt29igtixagqwvtxx.png",
+      "https://res.cloudinary.com/dy5xob0gn/image/upload/v1735384865/THHSN/static/ijmfxbl9bkvt87djynda.png",
+      "https://res.cloudinary.com/dy5xob0gn/image/upload/v1735384865/THHSN/static/qgg4x3yr0hpqozqpzhzn.webp",
+      "https://res.cloudinary.com/dy5xob0gn/image/upload/v1735384865/THHSN/static/haybucxj8xk96fj27rjk.webp",
+      "https://res.cloudinary.com/dy5xob0gn/image/upload/v1735384865/THHSN/static/pb3obrhrmwepekytoaze.png",
+      "https://res.cloudinary.com/dy5xob0gn/image/upload/v1735384865/THHSN/static/kepa9oulu87j7y9t1ksl.webp",
+      "https://res.cloudinary.com/dy5xob0gn/image/upload/v1735384864/THHSN/static/isla786mebsuindakzv9.webp",
+      "https://res.cloudinary.com/dy5xob0gn/image/upload/v1735384864/THHSN/static/jyjtdqrfyqu93ltdcgyg.webp",
+      "https://res.cloudinary.com/dy5xob0gn/image/upload/v1735384864/THHSN/static/bxhtzfmovv1wq6wzjrps.webp"
+    ]
+    
+    productCategories=[
+      { label: 'Hair Products', value: 'Products' },
+      { label: 'Lace fronts', value: 'Lace Fronts' },
+      { label: 'Hair tools', value: 'Hair Tools' },
+      { label: 'Wigs', value: 'Wigs' },
+      { label: 'Bundles', value: 'Bundles' },
+    ]
 
     settheme(theme:string){
         localStorage.setItem('theme',theme)

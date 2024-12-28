@@ -7,7 +7,8 @@ import { addProductNameAndPrice } from '../../store/adminSlice.ts';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState, AppDispatch } from '../../store/store.ts';
 import { Sdk } from '../../utils/sdk.ts';
-const {getSingleProductDetail} = new Sdk()
+const {getSingleProductDetail,productCategories} = new Sdk()
+
 interface ProductDraftOne {
     name: string;
     category: string;
@@ -60,13 +61,7 @@ export const ProductStepOne = () => {
             value={productData.category}
             required={true}
             onChange={(e) => setProductData({...productData,category: e.target.value})}
-            selectOptions={[
-              { label: 'Hair Products', value: 'Products' },
-              { label: 'Lace fronts', value: 'Lace Fronts' },
-              { label: 'Hair tools', value: 'Hair Tools' },
-              { label: 'Wigs', value: 'Wigs' },
-              { label: 'Bundles', value: 'Bundles' },
-            ]}
+            selectOptions={productCategories}
           />
           <FormInput type='textarea' placeholder='Description' value={productData.description} required={true} onChange={handleInputChange} name='description' fieldTip='Tell Us What Makes This Product Special' />
             

@@ -18,7 +18,7 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false); // State for mobile menu visibility
   const [timeoutId, setTimeoutId]= useState(0);
   const adminObject = useSelector((state: RootState) => state.admin.admin);
-  const {cartItems}=useTheme()
+  const {cartItems,isAdmin}=useTheme()
   const dispatch = useDispatch<AppDispatch>();
 
   // Toggle mobile menu visibility
@@ -113,9 +113,6 @@ const Navbar = () => {
 
 
     {/* mobile hamburger menu section */}
-
-
-
 
       <div
         className={`fixed top-0 left-0 w-screen h-full bg-secondary dark:bg-primary text-white transition-transform transform z-50 ${

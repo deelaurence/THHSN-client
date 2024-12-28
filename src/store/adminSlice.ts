@@ -242,6 +242,7 @@ const adminSlice = createSlice({
       })
       .addCase(signInAdmin.fulfilled, (state, action: PayloadAction<{ payload:{ email: string, name:string, token:string} }>) => {
         state.status = 'succeeded';
+        state.error=''
         const {payload} = action.payload
         state.admin = payload
         sdk.setAdminObject(payload)
@@ -260,6 +261,7 @@ const adminSlice = createSlice({
       })
       .addCase(addProductNameAndPrice.fulfilled, (state, action: PayloadAction<{ payload:{ email: string, name:string, token:string} }>) => {
         state.status = 'succeeded';
+        state.error=''
         const {payload} = action.payload
         state.productDraftOne = payload
         if(state.addProductPage!==undefined){
@@ -280,6 +282,7 @@ const adminSlice = createSlice({
       })
       .addCase(addProductImage.fulfilled, (state, action: PayloadAction<{ payload:{ email: string, name:string, token:string} }>) => {
         state.status = 'succeeded';
+        state.error=''
         const {payload} = action.payload
         state.productDraftOne = payload
         if(state.addProductPage!==undefined){
@@ -301,6 +304,7 @@ const adminSlice = createSlice({
       })
       .addCase(addProductVariation.fulfilled, (state) => {
         state.status = 'succeeded';
+        state.error=''
         // const {payload} = action.payload
         // state.productDraftOne = payload
         if(state.addProductPage!==undefined){
@@ -324,6 +328,7 @@ const adminSlice = createSlice({
       })
       .addCase(addBestsellerAndNewArrival.fulfilled, (state, action: PayloadAction<{ payload:{ email: string, name:string, token:string} }>) => {
         state.status = 'succeeded';
+        state.error=''
         const {payload} = action.payload
         state.productDraftOne = payload
       })
@@ -340,6 +345,7 @@ const adminSlice = createSlice({
       })
       .addCase(bestsellerAndNewArrivalCoverimage.fulfilled, (state, action: PayloadAction<{ payload:{ email: string, name:string, token:string} }>) => {
         state.status = 'succeeded';
+        state.error=''
         const {payload} = action.payload
         state.productDraftOne = payload
       })

@@ -1,7 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 import { FaArrowLeftLong } from 'react-icons/fa6';
-import pattern from '../assets/images/circle-4-star-X-shape-bloat.png'
 
 
 interface PageHeaderProps{

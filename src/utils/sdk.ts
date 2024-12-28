@@ -52,6 +52,10 @@ export class Sdk{
         {
           label: "Blog",
           link: "/blog",
+        },
+        {
+          label: "Logout",
+          link: "/logout",
         }
     ];
 

@@ -145,32 +145,41 @@ const Navbar = () => {
 
           {sdk.navbarData.map((menu,index)=>{
             return(
-              <div 
-              key={index}
-              className='text-primary dark:border-neutral-600 px-6 py-3 border-b border-primary  dark:text-secondary'>
+                <div 
+                key={index}
+                className='text-primary dark:border-neutral-600 px-6 py-3 border-b border-primary  dark:text-secondary'>
+                {(!menu.superUser || isAdmin) && (
                 <Link
                   to={menu.link}
                   className='uppercase'
-                  onClick={toggleMenu}
-                  >
+                  onClick={menu.label==='Logout'?handleAdminLogout:toggleMenu}
+                >
                   {menu.label}
                 </Link>
-                {menu.imgUrl&&                  
-                  <div className='flex  justify-between mb-2'>
-                    <div className='flex  flex-col justify-around'>
-                      <p className='text-xl font-bold font-queens'>{menu.header}</p>
-                      <p className='text-xs flex items-center gap-1'>{menu.catchPhrase} <BsArrowRight className='text-sm mt-[2px]'/></p>
-                    </div>
-                    <div className='h-24 w-32 border border-black '>
-                      <img src={menu.imgUrl} alt={menu.label} className='w-full h-full object-cover ' />
-                    </div>
+                )}
+                {menu.imgUrl &&                  
+                <div className='flex justify-between mb-2'>
+                  <div className='flex flex-col justify-around'>
+                  <p className='text-xl font-bold font-queens'>{menu.header}</p>
+                  <p className='text-xs flex items-center gap-1'>{menu.catchPhrase} <BsArrowRight className='text-sm mt-[2px]'/></p>
                   </div>
+                  <div className='h-24 w-32 border border-black'>
+                  <img src={menu.imgUrl} alt={menu.label} className='w-full h-full object-cover' />
+                  </div>
+                </div>
                 }
-              </div>
+                {/* {adminObject && (
+            <div onClick={handleAdminLogout} className='cursor-pointer'>
+              Logout
+            </div>
+          )} */}
+                </div>
             )
           })
+          
             
           }
+        
         </div>
       </div>
     </div>

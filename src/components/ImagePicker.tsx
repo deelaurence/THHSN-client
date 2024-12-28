@@ -6,8 +6,7 @@ import Loader from './Loader.tsx';
 import { IoMdCheckmark } from "react-icons/io";
 import leaf2 from '../assets/images/star-rectangle-12.png'
 import leaf from '../assets/images/circle-half-stacked.png'
-import { FaUpload } from 'react-icons/fa6';
-import { BiUpArrow, BiUpload } from 'react-icons/bi';
+import {  BiUpload } from 'react-icons/bi';
 // import leaf3 from '../assets/images/circle-4-star-X-shape-bloat.png'
 // import leaf4 from '../assets/images/plant-5.png'
 // import leaf5 from '../assets/images/blue_noise_med.png'

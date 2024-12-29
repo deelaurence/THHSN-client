@@ -80,7 +80,9 @@ const Navbar = () => {
             <FiUser className='text-[1.5rem] ' />
             {/* <PiUserBold className=' text-[1.5rem]'/> */}
             <div className='relative'>
-              <PiBag className='text-[1.7rem]'/>
+              <Link to={sdk.cartRoute}>
+                <PiBag className='text-[1.7rem]'/>
+              </Link>
               <p className='absolute bg-yellow-600 rounded-full h-4 w-4 text-white flex items-center justify-center text-[8px] p-1 top-0 -right-1'>{cartItems}</p>
             </div>
             {/* <BsHandbag className=' text-[1.4rem]' /> */}

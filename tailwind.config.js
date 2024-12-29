@@ -19,16 +19,19 @@ module.exports = {
       colors: {
         primary: {
           // light: '#343333', // Lighter shade for hover or light mode
-          light: '#1f271b', // Lighter shade for hover or light mode
+          // light: '#304245',
+          // superlight:'#1B2723', // Lighter shade for hover or light mode
           // DEFAULT: '#000f0a', 
           // DEFAULT: '#292929', 
           // DEFAULT: '#171717',
-          DEFAULT: '#1f271b',
-          dark: '#1e3a8a',    // Darker shade for focus or dark mode
+            DEFAULT: '#1f271b',
+            light: '#222d1f',   // Slightly lighter shade
+            dark: '#1e3a8a',    // Darker shade for focus or dark mode
         },
         secondary: {
           light: '#faf9f8',   // Slightly lighter version of the default
           DEFAULT: '#f2edeb', // Your default color
+          darker:'#eae6e4',
           dark: '#a89d97',  
           veryDark: '#4f4641' // Very dark version
         },

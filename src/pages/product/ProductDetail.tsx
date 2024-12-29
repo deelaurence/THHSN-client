@@ -16,6 +16,8 @@ import Loader from '../../components/Loader.tsx'
 import { useTheme } from '../../contexts/AppContext.tsx'
 import ImagePicker from '../../components/ImagePicker.tsx'
 import { IoMdCheckmark } from "react-icons/io";
+import { MdOutlineKeyboardArrowDown } from 'react-icons/md'
+import { GoHeart, GoHeartFill } from 'react-icons/go'
 
 
 
@@ -31,7 +33,7 @@ const ProductDetail = () => {
     const [currentVariation, setCurrentVariation] = useState(0)
     const [innerVariation, setInnerVariation]=useState<VariationLevelOne[]>()
     const [selectedVariant,setSelectedVariant]=useState(0)
-
+    const [isFav,setisFav]=useState(false)
 
 
     const {name}=useParams()
@@ -87,49 +89,70 @@ const ProductDetail = () => {
             <h2 className='mt-2 mb-4 font-queens text-4xl'>{product.name}</h2>
 
             <p className='text-[10px]'>{product.description}</p>
+
             
-            <div className='flex gap-4 mt-6'>
-            {product.variations.map((variation,index)=>{
-            return(
+            
+            
+            <div className='mt-10 flex justify-between items-start'>
+                {/* variation price */}
+                {/* variation price */}
+                {innerVariation&&<p className='text-3xl  font-queens '>
+                    &#8358;{new Intl.NumberFormat('en-NG', { minimumFractionDigits: 0 }).format(innerVariation[selectedVariant].price)}
+                </p>}
                 
-                <div key={index}>
+                {/* 💖 icon */}
                 <div 
-                    onClick={()=>{
-                    setCurrentVariation(index)
-                    setInnerVariation(variation.variations)
-                    setSelectedVariant(0)
+                onClick={()=>{setisFav(!isFav)}}
+                className={` ${isFav?'bg-red-200':'bg-neutral-200'} dark:bg-primary-light  w-fit p-2 rounded-full`}>
+                {!isFav?<GoHeart/>:
+                <GoHeartFill className='text-red-400'/>}
+                </div>
+            </div>
+           
+
+
+            {/* dropdown to toggle variation*/}
+            <div className='flex items-center mt-2'>
+                
+                <select 
+                    value={currentVariation} 
+                    onChange={(e) => {
+                        const index = parseInt(e.target.value);
+                        setCurrentVariation(index);
+                        setInnerVariation(product.variations[index].variations);
+                        setSelectedVariant(0);
                     }}
-                    className={`${currentVariation===index?'':'opacity-40'} px-2 py-1 border border-neutral-600 dark:border-neutral-400 w-fit gap-4`}>
-                    {variation.name}
-                </div>
-                <></>
-                </div>
-            )
-            })}
-            
+                    className='py-1 opacity-90 focus:outline-none capitalize bg-transparent w-fit gap-4'
+                >
+                    {product.variations.map((variation, index) => (
+                        <option key={index} value={index}>
+                            {variation.name}
+                        </option>
+                    ))}
+                </select>
+                <MdOutlineKeyboardArrowDown className='text-xl'/>
             </div>
 
 
 
-
             {/* Choose Variant to cart */}
-            <div className='mt-12  '>
+            <div className=' flex gap-2 flex-wrap'>
             {
                 innerVariation?.map(({variation,price,quantity},index)=>{
                 return(
                     <div
-                    className={`${selectedVariant===index?'border-b-yellow-600':'border-b-neutral-300 dark:border-b-neutral-600  opacity-80'}  p-1 pl-3  pr-6 relative border-b mt-6`}
+                    className={`w-fit rounded-xl ${selectedVariant===index?'border-yellow-600 bg-gradient-to-t from-secondary-darker to-secondary via-secondary dark:bg-gradient-to-tr dark:from-primary-light dark-to-primary dark:via-primary pt-2 ':'border-neutral-300 dark:border-b-neutral-600 opacity-70 '}  p-1 px-4 relative border mt-6`}
                     key={index}
                     onClick={()=>{setSelectedVariant(index)}}
                     >
-                    {selectedVariant===index&&<IoMdCheckmark className='text-secondary rounded-bl-lg p-[1px] bg-yellow-600 absolute top-0 right-0'/>}
-                    <p className='uppercase -mb-1 font-medium'>
+                    {selectedVariant===index&&<IoMdCheckmark className='text-secondary rounded-bl-lg rounded-tr-lg  p-[1px] bg-yellow-600 absolute top-0 right-0'/>}
+                    <p className='uppercase -mb-1 text-sm font-medium'>
                         {variation}   
                     </p>
-                    <p className='text-yellow-600 text-[10px]'>
-                        {quantity} units 
+                    <p className='text-yellow-600 opacity-50 text-[10px]'>
+                        {quantity} units left
                     </p>
-                    <p className='text absolute right-1 -bottom-1 font-queens font-bold  '>
+                    <p className='text absolute opacity-0 right-2 bottom-0 font-serif '>
                         &#8358; {new Intl.NumberFormat('en-NG', { minimumFractionDigits: 0 }).format(price)}
                     </p>
                     </div>
@@ -172,7 +195,7 @@ const ProductDetail = () => {
             
             </div>}
 
-            {isAdmin&&<ImagePicker images={sdk.bestSellersAndNewArrivalsCoverImages} onPick={()=>{console.log("picked")}}/>}
+            {isAdmin&&<ImagePicker images={sdk.bestSellersAndNewArrivalsCoverImages} onPick={()=>{}}/>}
 
             {isAdmin?<Button onClick={handleEditMode} label='Edit'  size='large' extraClass='mt-16 font-thin bg-primary text-secondary py-3' loading={false} />:
             <Link
@@ -181,7 +204,7 @@ const ProductDetail = () => {
                 const currentlySelectedVariant = product.variations[currentVariation].variations[selectedVariant]
                 sdk.setCart({product,price:currentlySelectedVariant.price,quantity:1,variant:{type:product.variations[currentVariation].name,name:currentlySelectedVariant.variation}})
             }}
-            to={sdk.cartRoute+`/${product.name}`}>
+            to={sdk.cartRoute}>
             <Button label='Add to Cart'  size='large' extraClass=' font-thin bg-primary text-secondary py-3' loading={false} />
             </Link>}
         </div>

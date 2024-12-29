@@ -74,7 +74,7 @@ const NewArrivals = () => {
   return (
     <div className='mb-32'>
         <BestSellersAndNewArrivals 
-        title='Best Sellers' 
+        title='New Arrivals' 
         subtitle='From wigs to bundles. to waves to curlies, shop our best sellers' 
         store={mergeProductInDatabaseWithStaticImages(store,newArrivalInDatabase,statusPublic!=="succeeded")}/>
     </div>

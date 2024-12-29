@@ -32,7 +32,7 @@ const App: React.FC = () => {
             <Route path={sdk.shopRoute} element={<MainShop />} />
             <Route path={sdk.adminLoginRoute} element={<AdminLogin/>} />
             <Route path={sdk.productDetailRoute+'/:name'} element={<ProductDetail/>}/>
-            <Route path={sdk.cartRoute+'/:name'} element={<UserCart/>}/>
+            <Route path={sdk.cartRoute} element={<UserCart/>}/>
             <Route element={<AdminPrivateRoutes />}>
               <Route path={sdk.adminDashboardRoute} element={<AdminDashboard/>} />
               <Route path={sdk.addProductRoute} element={<AddProduct/>} />

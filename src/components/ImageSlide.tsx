@@ -7,18 +7,22 @@ interface Images {
 const Slideshow: React.FC<Images> = ({ images }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [slideDirection, setSlideDirection] = useState<'left' | 'right'>('right');
+  const[overrideAutoSlide, setOverrideAutoslide]=useState<boolean>(false)
+
 
   if(slideDirection){
     
   }
   // Change slide automatically every 3 seconds
   useEffect(() => {
+    if (overrideAutoSlide) return; // Stop auto slide if overrideAutoSlide is true
+
     const interval = setInterval(() => {
       goToNext();
     }, 3000);
 
     return () => clearInterval(interval); // Clean up the interval on component unmount
-  }, [currentIndex, images.length]);
+  }, [currentIndex, images.length, overrideAutoSlide]);
 
   const goToNext = () => {
     setSlideDirection('right');
@@ -71,13 +75,19 @@ const Slideshow: React.FC<Images> = ({ images }) => {
      
       {/* Navigation Buttons */}
       <button
-        onClick={goToPrevious}
+        onClick={()=>{
+          setOverrideAutoslide(true)
+          goToPrevious()
+        }}
         className="text-xs  z-10 bg-[rgba(255,255,255,.3)] dark:bg-[rgba(0,0,0,.2)]  px-2 py-2 rounded-full"
       >
         <FaArrowLeftLong/>
       </button>
       <button
-        onClick={goToNext}
+        onClick={()=>{
+          goToNext()
+          setOverrideAutoslide(true)
+        }}
         className="  z-10 bg-[rgba(255,255,255,.3)] dark:bg-[rgba(0,0,0,.2)] px-3 py-3 rounded-full"
       >
         <FaArrowRightLong/>

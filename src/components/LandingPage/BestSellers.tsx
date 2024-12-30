@@ -78,7 +78,8 @@ const BestSellers = () => {
     
   return (
     <div className='mt-32'>
-        <BestSellersAndNewArrivals 
+        <BestSellersAndNewArrivals
+        dataReady={statusPublic==="succeeded"} 
         title='Best Sellers' 
         subtitle='From wigs to bundles. to waves to curlies, shop our best sellers' 
         store={mergeProductInDatabaseWithStaticImages(store,bestsellersInDatabase,statusPublic!=="succeeded")}/>

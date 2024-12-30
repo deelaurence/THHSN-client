@@ -18,7 +18,8 @@ import ImagePicker from '../../components/ImagePicker.tsx'
 import { IoMdCheckmark } from "react-icons/io";
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md'
 import { GoHeart, GoHeartFill } from 'react-icons/go'
-
+import { FaShare } from 'react-icons/fa'
+import pattern from '../../assets/images/plant-5.png'
 
 
 
@@ -93,26 +94,50 @@ const ProductDetail = () => {
             
             
             
-            <div className='mt-10 flex justify-between items-start'>
+            <div className='pt-6 mt-8 border-t-2 border-t-neutral-200 dark:border-t-primary-light  flex justify-between items-start'>
                 {/* variation price */}
                 {/* variation price */}
-                {innerVariation&&<p className='text-3xl  font-queens '>
+                {innerVariation&&<p className='text-2xl font-semibold font-queens'>
                     &#8358;{new Intl.NumberFormat('en-NG', { minimumFractionDigits: 0 }).format(innerVariation[selectedVariant].price)}
                 </p>}
                 
+               
+               
                 {/* 💖 icon */}
-                <div 
-                onClick={()=>{setisFav(!isFav)}}
-                className={` ${isFav?'bg-red-200':'bg-neutral-200'} dark:bg-primary-light  w-fit p-2 rounded-full`}>
-                {!isFav?<GoHeart/>:
-                <GoHeartFill className='text-red-400'/>}
+               <div className='flex gap-2 items-center' >
+                    <div 
+                    onClick={()=>{setisFav(!isFav)}}
+                    className={`${isFav?'bg-red-200':'bg-neutral-200'} dark:bg-primary-light  w-fit p-2 rounded-full`}>
+                    {!isFav?<GoHeart/>:
+                    <GoHeartFill className='text-red-400'/>}
+                    </div>
+                    {/* Share button */}
+                    <div className='flex items-center gap-2'>
+                        <button 
+                            onClick={() => {
+                                if (navigator.share) {
+                                    navigator.share({
+                                        title: product.name,
+                                        text: product.description,
+                                        url: window.location.href,
+                                    }).catch((error) => console.error('Error sharing', error));
+                                } else {
+                                    // Fallback for browsers that do not support the Web Share API
+                                    alert('Web Share API is not supported in your browser.');
+                                }
+                            }}
+                            className='bg-yellow-600 text-secondary p-2 text-sm rounded-full'
+                        >
+                            <FaShare/>
+                        </button>
+                    </div>
                 </div>
             </div>
            
 
 
             {/* dropdown to toggle variation*/}
-            <div className='flex items-center mt-2'>
+            <div className='flex opacity-70 items-center'>
                 
                 <select 
                     value={currentVariation} 
@@ -122,7 +147,7 @@ const ProductDetail = () => {
                         setInnerVariation(product.variations[index].variations);
                         setSelectedVariant(0);
                     }}
-                    className='py-1 opacity-90 focus:outline-none capitalize bg-transparent w-fit gap-4'
+                    className='py-1  focus:outline-none capitalize bg-transparent w-fit gap-4'
                 >
                     {product.variations.map((variation, index) => (
                         <option key={index} value={index}>
@@ -130,9 +155,8 @@ const ProductDetail = () => {
                         </option>
                     ))}
                 </select>
-                <MdOutlineKeyboardArrowDown className='text-xl'/>
+                <MdOutlineKeyboardArrowDown className='text-xl opacity-70'/>
             </div>
-
 
 
             {/* Choose Variant to cart */}
@@ -141,15 +165,14 @@ const ProductDetail = () => {
                 innerVariation?.map(({variation,price,quantity},index)=>{
                 return(
                     <div
-                    className={`w-fit rounded-xl ${selectedVariant===index?'border-yellow-600 bg-gradient-to-t from-secondary-darker to-secondary via-secondary dark:bg-gradient-to-tr dark:from-primary-light dark-to-primary dark:via-primary pt-2 ':'border-neutral-300 dark:border-b-neutral-600 opacity-70 '}  p-1 px-4 relative border mt-6`}
+                    className={`w-fit  ${selectedVariant===index?' border-l shadow border-yellow-600 bg-gradient-to-t from-secondary-darker to-secondary via-secondary dark:bg-gradient-to-tr dark:from-primary-light dark-to-primary dark:via-primary  ':'border-neutral-300 dark:border-b-neutral-600 opacity-50 '}  p-[2px] px-4 relative  mt-6`}
                     key={index}
-                    onClick={()=>{setSelectedVariant(index)}}
-                    >
-                    {selectedVariant===index&&<IoMdCheckmark className='text-secondary rounded-bl-lg rounded-tr-lg  p-[1px] bg-yellow-600 absolute top-0 right-0'/>}
-                    <p className='uppercase -mb-1 text-sm font-medium'>
+                    onClick={()=>{setSelectedVariant(index)}}>
+                    {selectedVariant===index&&<IoMdCheckmark className='text-secondary text-xs rounded-bl-xl  p-[1px] bg-yellow-600 absolute opacity-90 top-0 right-0'/>}
+                    <p className='uppercase -mb-1 text-xs font-medium'>
                         {variation}   
                     </p>
-                    <p className='text-yellow-600 opacity-50 text-[10px]'>
+                    <p className='text-yellow-600 mt-1 opacity-50 text-[10px]'>
                         {quantity} units left
                     </p>
                     <p className='text absolute opacity-0 right-2 bottom-0 font-serif '>
@@ -160,6 +183,8 @@ const ProductDetail = () => {
                 })
             }
             </div>
+
+            
 
             {/* BESTSELLER AND NEW ARRIVAL TOGGLE */}
             
@@ -184,10 +209,7 @@ const ProductDetail = () => {
                 onClick={() => {
                 setIsBestSeller(!isBestSeller)
                 dispatch(addBestsellerAndNewArrival(
-                {bestSeller:!isBestSeller,newArrival:isNewArrival}
-                ))
-                }
-                }>
+                {bestSeller:!isBestSeller,newArrival:isNewArrival}))}}>
                 <BsStars className={`text-xl   ${isBestSeller ? 'text-yellow-600' : ' opacity-40'}`} />
                 <span className={`text-sm   ${isBestSeller ? ' text-yellow-600' : ' opacity-40'}`}>Make Best Seller</span>
                 </div>

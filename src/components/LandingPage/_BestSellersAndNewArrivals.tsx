@@ -4,8 +4,7 @@ import Button from "../Button";
 import { Link } from "react-router-dom";
 import { Sdk } from "../../utils/sdk";
 import { useTheme } from "../../contexts/AppContext"; 
-    
-
+import Skeleton from '@mui/material/Skeleton';
 
 interface StoreItem {
   text: string;
@@ -18,6 +17,7 @@ interface StoreItem {
 interface BestSellersProps {
   store: StoreItem[];
   title: string;
+  dataReady:boolean;
   subtitle: string;
 }
 
@@ -25,6 +25,7 @@ const BestSellersAndNewArrivals: React.FC<BestSellersProps> = ({
   store,
   title,
   subtitle,
+  dataReady
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
@@ -39,7 +40,7 @@ const BestSellersAndNewArrivals: React.FC<BestSellersProps> = ({
     }
   };
 
-  const {isAdmin}=useTheme()
+  const {isAdmin,theme}=useTheme()
 
   const scrollPrev = () => {
     if (containerRef.current) {
@@ -50,6 +51,13 @@ const BestSellersAndNewArrivals: React.FC<BestSellersProps> = ({
       });
     }
   };
+  const SkeletonLoader = () => (
+    <div className="h-64 sm:h-[24rem] relative overflow-hidden cursor-pointer">
+      <Skeleton  animation={theme=='dark'?"wave":"pulse"} className="rounded-lg dark:bg-primary-light" variant="rectangular" width={250} height={200} />
+      <Skeleton animation={theme=='dark'?"wave":"pulse"} className="dark:bg-primary-light" variant="text"  height={40} width={200} />
+      <Skeleton className="dark:bg-primary-light" animation="wave" variant="text" width={150} />
+    </div>
+  );
   return (
     <section>
       <h2 className="text-2xl mt-16 font-queens uppercase px-6 sm:px-16 mx-auto">
@@ -59,7 +67,7 @@ const BestSellersAndNewArrivals: React.FC<BestSellersProps> = ({
       <div className="relative">
         {/* Scrollable Container */}
         <div
-          className="flex no-scrollbar overflow-x-auto scroll-snap-x snap-mandatory sm:px-16"
+          className={`${dataReady?'':''} flex no-scrollbar overflow-x-auto scroll-snap-x snap-mandatory sm:px-16`}
           ref={containerRef}
         >
           {store.map((item, index) => (
@@ -68,6 +76,9 @@ const BestSellersAndNewArrivals: React.FC<BestSellersProps> = ({
             key={index}
             
             >
+
+
+            {dataReady?  
             <Link 
               onClick={()=>console.log(item.image)}
               to={`${new Sdk().productDetailRoute}/${item.text}`}>
@@ -108,25 +119,27 @@ const BestSellersAndNewArrivals: React.FC<BestSellersProps> = ({
                 label={isAdmin?"Edit item":"Add to Cart"}
                 loading={false}
                 />
-            </Link>
+            </Link>:
+            
+            <SkeletonLoader/>}
             </div>
           ))}
         </div>
 
         {/* Next Button */}
-        <button
+        {dataReady&&<button
           onClick={scrollNext}
           className="absolute right-4 top-1/2 -translate-y-1/2 bg-primary text-secondary h-8 w-8 rounded-full flex items-center justify-center"
         >
           <LiaLongArrowAltRightSolid />
-        </button>
+        </button>}
         {/* Previous Button */}
-        <button
+        {dataReady&&<button
           onClick={scrollPrev}
           className="absolute left-4 top-1/2 -translate-y-1/2 bg-primary text-secondary h-8 w-8 rounded-full flex items-center justify-center"
         >
           <LiaLongArrowAltLeftSolid />
-        </button>
+        </button>}
       </div>
     </section>
   );

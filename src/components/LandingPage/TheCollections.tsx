@@ -1,34 +1,10 @@
 import { LiaLongArrowAltLeftSolid, LiaLongArrowAltRightSolid } from "react-icons/lia";
 import { useRef } from 'react';
-import image1 from "../../assets/images/Collections/1.png"
-import image3 from "../../assets/images/Collections/3.png"
-import image4 from "../../assets/images/Collections/4.png"
-import image5 from "../../assets/images/Collections/7.png"
-import image6 from "../../assets/images/Collections/6.png"
+import { sdk, Sdk } from "../../utils/sdk";
+import { Link } from "react-router-dom";
+const {productCategories} = new Sdk()
 
-const store=[
-    {
-        text:"Curly",
-        image:image1
-    },
-    {
-        text:"Straight",
-        image:image3
-    },
-    {
-        text:"Lace Frontal",
-        image:image4
-    },
-    {
-        text:"Bundles",
-        image:image5
-    },
-    {
-        text:"Hair Care Products",
-        image:image6
-    },
-]
-
+const store=productCategories
 
 const TheCollections = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -63,19 +39,20 @@ const TheCollections = () => {
         >
           {store.map((item, index) => {
             return (
-              <div
+              <Link
+                to={sdk.shopRoute+"/"+item.label}
                 className="min-w-64 sm:min-w-[30vw] tablet:min-w-[50vw] snap-start"
                 key={index}
               >
-                <div className="h-64 sm:h-[32rem]">
+                <div className="h-72 sm:h-[32rem]">
                   <img
                     className="object-cover h-full w-full px-1"
-                    src={item.image}
+                    src={item.coverImage}
                     alt=""
                   />
                 </div>
-                <p className="px-6 flex gap-2  justify-center font-queens items-center sm:text-3xl py-4">{item.text}</p>
-              </div>
+                <p className="px-6 flex gap-2  justify-center font-queens items-center sm:text-3xl py-4">{item.label}</p>
+              </Link>
             );
           })}
         </div>

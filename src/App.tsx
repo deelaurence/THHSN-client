@@ -30,6 +30,7 @@ const App: React.FC = () => {
         <Routes>
             <Route path="/" element={<Home />} />
             <Route path={sdk.shopRoute} element={<MainShop />} />
+            <Route path={sdk.shopRoute+'/:name'} element={<MainShop />} />
             <Route path={sdk.adminLoginRoute} element={<AdminLogin/>} />
             <Route path={sdk.productDetailRoute+'/:name'} element={<ProductDetail/>}/>
             <Route path={sdk.cartRoute} element={<UserCart/>}/>

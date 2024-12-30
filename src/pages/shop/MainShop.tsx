@@ -5,10 +5,10 @@ import { useEffect } from 'react'
 import { AppDispatch,RootState } from '../../store/store'
 import DashboardNav from '../../components/DashboardNav'
 import { RxDragHandleDots2 } from 'react-icons/rx'
-
-  
+import { useParams } from 'react-router-dom'  
 
 const MainShop = () => {
+    const param = useParams()
     const dispatch = useDispatch<AppDispatch>()
     useEffect(()=>{
         dispatch(fetchProductsPublic())
@@ -21,13 +21,12 @@ const MainShop = () => {
     return {
       label:category,
       icon:<RxDragHandleDots2 className='opacity-60 text-xs' />,
-    //   component:<InventoryUnit filterProp={category}/>
+      component:<ProductListing filterProps={category} products={productsPublic}/>
     }
   })
   return (
     <section className='mt-12 px-6 flex flex-col gap-6'>
-        <DashboardNav menuItems={menuItems}/>
-        <ProductListing products={productsPublic}/>
+        <DashboardNav showNav={param.name==undefined} menuItems={menuItems}/>
     </section>
   )
 }

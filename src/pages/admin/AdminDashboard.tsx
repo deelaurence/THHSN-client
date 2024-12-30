@@ -80,7 +80,7 @@ const AdminDashboard = () => {
   return (
     <section className="px-6">
       <PageHeader heading="Hello Betran" accent="How are you today?"/>
-      <DashboardNav menuItems={menuItems}/>
+      <DashboardNav showNav={true} menuItems={menuItems}/>
       <div className="flex  mt-16 ">
         <PieChart 
         chartTitle="Sales By Category"

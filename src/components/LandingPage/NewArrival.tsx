@@ -74,6 +74,7 @@ const NewArrivals = () => {
   return (
     <div className='mb-32'>
         <BestSellersAndNewArrivals 
+        dataReady={statusPublic==="succeeded"}
         title='New Arrivals' 
         subtitle='From wigs to bundles. to waves to curlies, shop our best sellers' 
         store={mergeProductInDatabaseWithStaticImages(store,newArrivalInDatabase,statusPublic!=="succeeded")}/>

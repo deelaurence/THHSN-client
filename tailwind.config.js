@@ -23,9 +23,10 @@ module.exports = {
           // superlight:'#1B2723', // Lighter shade for hover or light mode
           // DEFAULT: '#000f0a', 
           // DEFAULT: '#292929', 
-          // DEFAULT: '#171717',
-            DEFAULT: '#1f271b',
-            light: '#222d1f',   // Slightly lighter shade
+          DEFAULT: '#151a13',
+            // DEFAULT: '#1f271b',
+            // light: '#222d1f',   // Slightly lighter shade
+            light: '#1b2218',   // Slightly lighter shade
             dark: '#1e3a8a',    // Darker shade for focus or dark mode
         },
         secondary: {

@@ -74,12 +74,32 @@ export class Sdk{
     ]
     
     productCategories=[
-      { label: 'Hair Products', value: 'Products' },
-      { label: 'Lace fronts', value: 'Lace Fronts' },
-      { label: 'Hair tools', value: 'Hair Tools' },
-      { label: 'Wigs', value: 'Wigs' },
-      { label: 'Bundles', value: 'Bundles' },
+      { 
+        label: 'Hair Products', 
+        value: 'Hair Products',
+        coverImage:this.bestSellersAndNewArrivalsCoverImages[6] 
+      },
+      { 
+        label: 'Lace fronts', 
+        value: 'Lace Fronts',
+        coverImage:this.bestSellersAndNewArrivalsCoverImages[3] 
+      },
+      { label: 'Hair tools', 
+        value: 'Hair Tools',
+        coverImage:this.bestSellersAndNewArrivalsCoverImages[2]
+      },
+      { label: 'Wigs', 
+        value: 'Wigs',
+        coverImage:this.bestSellersAndNewArrivalsCoverImages[10]},
+      { label: 'Bundles', 
+        value: 'Bundles',
+        coverImage:this.bestSellersAndNewArrivalsCoverImages[1]
+      },
     ]
+
+    formatNairaPrice(price:number):string{
+      return new Intl.NumberFormat('en-NG', { minimumFractionDigits: 0 }).format(price)
+    }
 
     settheme(theme:string){
         localStorage.setItem('theme',theme)
@@ -135,7 +155,25 @@ export class Sdk{
     setCart(object:Cart){
       const currentCart = localStorage.getItem('cart')
       if(currentCart){
+        
         const cart = JSON.parse(currentCart)
+        const productExists=cart.some((product:Cart) =>{
+          return product.product._id===object.product._id&&product.variant.name===object.variant.name
+        })
+        
+        if(productExists){
+          const updatedCart = cart.map((product:Cart)=>{
+            if(product.product._id===object.product._id&&product.variant.name===object.variant.name){
+              return{
+                ...product,
+                quantity:product.quantity+object.quantity
+              }
+            }
+            return product
+          })
+          localStorage.setItem('cart',JSON.stringify(updatedCart))
+          return;
+        }
         cart.push(object)
         localStorage.setItem('cart',JSON.stringify(cart))
         return;
@@ -164,3 +202,6 @@ export class Sdk{
 
     
 }
+
+
+export const sdk = new Sdk();

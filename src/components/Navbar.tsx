@@ -30,7 +30,7 @@ const Navbar = () => {
     setTimeoutId(time)
 
   };
-
+  
   useEffect(()=>{
     return()=>{
       if(timeoutId){

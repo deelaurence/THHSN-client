@@ -12,7 +12,8 @@ interface IMenu{
 }
 
 interface IMenuProps{
-    menuItems:IMenu[]
+    menuItems:IMenu[],
+    showNav:boolean
 }
 
 /**
@@ -25,12 +26,12 @@ interface IMenuProps{
  */
 
 
-const DashboardNav:React.FC<IMenuProps>= ({menuItems}) => {
+const DashboardNav:React.FC<IMenuProps>= ({menuItems,showNav}) => {
     const [currentIndex, setCurrentIndex]=useState(0)
   
     return (
     <>
-    <div className="flex gap-4 flex-wrap *:flex *:gap-1 *:items-center  *:w-fit">
+    {showNav&&<div className="flex gap-4 flex-wrap *:flex *:gap-1 *:items-center  *:w-fit">
         {/* Map through the menu items */}
         {menuItems.map((item, index) => (
           <Link 
@@ -43,7 +44,7 @@ const DashboardNav:React.FC<IMenuProps>= ({menuItems}) => {
             <span className="text-xs capitalize">{item.label}</span>
           </Link>
         ))}
-      </div>
+      </div>}
       {/* if component is supplied switch based on the current index */}
       {menuItems[currentIndex]?.component&&
       <div>      

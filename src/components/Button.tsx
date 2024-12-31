@@ -27,27 +27,28 @@ const Button: React.FC<ButtonProps> = ({
   
   // Base styles for the button
   const baseStyles = `
+  min-h-12
   uppercase  border border-2 
   border-primary text-primary 
   dark:radial-gradient-bg
   dark:bg-secondary dark:text-primary 
   focus:outline-none transition ease-in-out 
   duration-200 hover:opacity-90 
-  disabled:opacity-80 font-semibold 
+  disabled:opacity-70 font-semibold 
   disabled:cursor-not-allowed`;
 
   // Variant styles based on the variant prop
   const variantStyles = {
-    primary: 'bg-neutral-100  text-primary ',
+    primary: '',
     secondary: 'bg-gray-500 text-white',
     danger: 'bg-red-500 text-white',
   };
 
   // Size styles based on the size prop, with responsive considerations
   const sizeStyles = {
-    small: 'px-4 py-1 w-1/3 text-sm md:px-6',
-    medium: 'px-5 py-1 w-1/2 text-base md:px-8 ',
-    large: 'px-6 py-1 text-xl font-semibold w-full md:px-10 ',
+    small: 'px-4 py-2 w-1/3 text-sm md:px-6',
+    medium: 'px-5 py-2 w-1/2 text-base md:px-8 ',
+    large: 'px-6 py-2 text-xl font-semibold w-full md:px-10 ',
   };
 
   return (

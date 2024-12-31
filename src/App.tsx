@@ -17,6 +17,7 @@ import Footer from './components/Footer.tsx';
 import MainShop from './pages/shop/MainShop.tsx';
 import ScrollToTop from './components/ScrollToTop.tsx';
 import UserCart from './pages/cart/userCart.tsx';
+import DraftInventory from './pages/admin/Drafts.tsx';
 const sdk = new Sdk()
 
 const App: React.FC = () => {
@@ -40,7 +41,7 @@ const App: React.FC = () => {
               <Route path={sdk.manageInventoryRoute} element={<Inventory/>} />
               <Route path={sdk.singleInventoryRoute+'/:name'} element={<ProductDetail/>}/>
               <Route path={sdk.managePaymentsRoute} element={<Placeholder header='Payments' paragraph='something here later'/>} />
-              <Route path={sdk.productDraftsRoute} element={<Placeholder header='Drafts' paragraph='manage drafts'/>} />
+              <Route path={sdk.productDraftsRoute} element={<DraftInventory/>} />
               <Route path={sdk.salesRoute} element={<Placeholder header='Sales' paragraph='something here later'/>} />
               <Route path={sdk.manageUsersRoute} element={<Placeholder header='Users' paragraph='something here later'/>} />
               <Route path={sdk.randomFactsRoute} element={<RandomFacts/>} />

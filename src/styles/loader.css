@@ -30,8 +30,8 @@
 
   @keyframes scale-up4 {
     20% {
-      background-color: #444444;
-      transform: scaleY(1.5);
+      background-color: #4c4c4c;
+      transform: scaleY(1.3);
     }
   
     40% {

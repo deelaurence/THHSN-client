@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { apiClient } from '../utils/apiClient';
 import { Sdk } from '../utils/sdk';
-import { IProduct } from '../interfaces/productInterface';
+import { IProduct, IProductDraft } from '../interfaces/productInterface';
 
 
 const sdk = new Sdk();
@@ -18,6 +18,8 @@ const persistedAdmin = sdk.getAdminObject();
 interface ProductState {
   products: IProduct[];
   categories:string[]
+  productsDrafts:IProductDraft[];
+  draftCategories:string[]
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
   error: string | null;
   productsPublic: IProduct[];
@@ -29,6 +31,8 @@ interface ProductState {
 const initialState: ProductState = {
   products: [],
   categories:[],
+  productsDrafts:[],
+  draftCategories:[],
   status: 'idle',
   error: null,
   productsPublic: [],
@@ -46,6 +50,24 @@ export const fetchProducts = createAsyncThunk(
         'Authorization': `Bearer ${persistedAdmin?.token}`,
       };
       const response = await apiClient.get('/v1/admin/manage/products', { headers });
+      return response.data.payload;
+    } catch (error: any) {
+      if (error.response) {
+        return rejectWithValue(error.response.data.reason);
+      }
+      return rejectWithValue('Failed to connect, Try again');
+    }
+  }
+);
+// Async action to get all products draft by admin
+export const fetchProductsDraft = createAsyncThunk(
+  'product/fetchProducts/draft',
+  async (_, { rejectWithValue }) => {
+    try {
+      const headers = {
+        'Authorization': `Bearer ${persistedAdmin?.token}`,
+      };
+      const response = await apiClient.get('/v1/admin/manage/products-draft', { headers });
       return response.data.payload;
     } catch (error: any) {
       if (error.response) {
@@ -97,7 +119,23 @@ const productSlice = createSlice({
         state.error = action.payload as string;
       })
 
+      .addCase(fetchProductsDraft.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(fetchProductsDraft.fulfilled, (state, action: PayloadAction<any[]>) => {
+        state.status = 'succeeded';
+        state.productsDrafts = action.payload;
+        const categories = action.payload.map((product: IProduct) => product.category);
+        state.draftCategories = Array.from(new Set(categories));
 
+        //Add 'all' to the filter by category array
+        state.draftCategories.unshift('all')
+        state.error=''
+      })
+      .addCase(fetchProductsDraft.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.payload as string;
+      })
 
       .addCase(fetchProductsPublic.pending, (state) => {
         state.statusPublic = 'loading';

@@ -54,10 +54,11 @@ export class Sdk{
           link: "/blog",
         },
         {
-          label: "Logout",
+          label: `${this.getAdminObject()?"Logout":"Login"}`,
           link: "/logout",
         }
     ];
+    placeholderImage:string="https://placehold.co/800@3x.png"
 
     bestSellersAndNewArrivalsCoverImages:string[]=[
       "https://res.cloudinary.com/dy5xob0gn/image/upload/v1735384866/THHSN/static/ufyzdmh0u2ydsxqlzgya.png",

@@ -15,46 +15,60 @@ const { heroSectionImage } = new Sdk();
 
 
 
+import { useEffect, useState } from 'react';
 
 const HeroSection1 = () => {
+  const [opacity, setOpacity] = useState(0);
+  const [brightness, setBrightness] = useState(20);
+  const [translateY, setTranslateY] = useState(10);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setOpacity(1);
+      setBrightness(1);
+      setTranslateY(0);
+    }, 100); // Delay to ensure the transition effect is visible
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <div
-      // style={{ backgroundImage: `url(${heroSectionImage})` }}
-      className="relative bg-mygray-gradient dark:text-primary justify-between overflow-hidden  h-[80vh]  sm:h-[80vh] tablet:h-[50vh] -mt-12 flex flex-col sm:flex-row pt-16 "
+      style={{
+        opacity,
+        transition: 'opacity 1s, filter 1s, transform 1s ease-out',
+        filter: ` brightness(${brightness})`,
+        transform: `translateY(${translateY}px)`
+      }}
+      className="relative bg-mygray-gradient dark:text-primary justify-between overflow-hidden h-[80vh] sm:h-[80vh] tablet:h-[50vh] -mt-12 flex flex-col sm:flex-row pt-16"
     >
-      {/* <img src={heroSectionImage}  className="absolute -bottom-24  right-0  "/> */}
-      
-
       {/* Grain Effect */}
-      <div className="absolute inset-0 bg-noise mix-blend-overlay opacity-10"></div>
+      <div className="absolute inset-0 bg-noise mix-blend-overlay opacity-20"></div>
 
       {/* Content */}
       <div className="-mt-8 sm:-mt-16 sm:-mr-32 sm:w-1/2 p-6 flex flex-col justify-center z-1">
-        {/* <p className='cormorant-infant text-[4rem]'>The</p> */}
         <div className='flex  flex-col  sm:items-center  justify-end tablet:ml-44 '>
-           
           <div className='relative text-center  '>
             <div className="relative   mb-4">
-            <p className='absolute frunchy top-[7rem] sm:-left-14 sm:top-40 tablet:top-32 tablet:-left-8 -rotate-90 text-xl tablet:text-4xl sm:text-6xl tracking-widest'>
-              THE
-            </p>
-            <h1 className='frunchy uppercase -mt-12 text-[50vw] sm:text-[18rem] tablet:text-[14rem]'>
-              BEST
-            </h1>
+              <p className='absolute frunchy top-[7rem] sm:-left-14 sm:top-40 tablet:top-32 tablet:-left-8 -rotate-90 text-xl tablet:text-4xl sm:text-6xl tracking-widest'>
+                THE
+              </p>
+              <h1 className='frunchy uppercase -mt-12 text-[50vw] sm:text-[18rem] tablet:text-[14rem]'>
+                BEST
+              </h1>
             </div>
           </div>
-        <p className='text-[10vw] tablet:text-[3rem] overflow-visible sm:text-[3rem] opacity-90 tracking-[.5rem]  adelia font-thin -mt-32 text-center sm:-mt-48 tablet:-mt-36'>
-           exquisite
-        </p>
-        <p className='tracking-[0.5rem] text-center sm:tracking-[1rem] text-sm sm:text-base opacity-70 uppercase'>hair experience</p>
+          <p className='text-[10vw] tablet:text-[3rem] overflow-visible sm:text-[3rem] opacity-90 tracking-[.5rem]  adelia font-thin -mt-32 text-center sm:-mt-48 tablet:-mt-36'>
+            exquisite
+          </p>
+          <p className='tracking-[0.5rem] text-center sm:tracking-[1rem] text-sm sm:text-base opacity-70 uppercase'>hair experience</p>
         </div>
         <Link to={new Sdk().shopRoute}>
-          <Button loading={false} extraClass='opacity-80 mt-3 sm:mt-8 py-2 text-xs  tablet:ml-44'  label='shop now'/>
+          <Button loading={false} extraClass='opacity-80 mt-3 sm:mt-8 py-2 text-xs  tablet:ml-44' label='shop now' />
         </Link>
       </div>
-      <img src={heroSectionImage}  className="scale-[1.3] sm:scale-100 sm:w-[55%] tablet:scale-[1.3]  self-end"/>
+      <img src={heroSectionImage} className="scale-[1.3] sm:scale-100 sm:w-[55%] tablet:scale-[1.3]  self-end" />
     </div>
-  )
+  );
 }
 
 // const HeroSection2 = () => {

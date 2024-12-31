@@ -90,11 +90,11 @@ const Navbar = () => {
 
         {/* Desktop Links */}
         <div className='hidden md:flex items-center gap-4'>
-          {adminObject && (
-            <div onClick={handleAdminLogout} className='cursor-pointer'>
-              Logout
-            </div>
-          )}
+          
+          <div onClick={handleAdminLogout} className='cursor-pointer'>
+              {adminObject?"Logout":"Login"}
+          </div>
+          
           <Link to={sdk.adminDashboardRoute} className='hover:text-gray-500'>
             Dashboard
           </Link>
@@ -154,7 +154,7 @@ const Navbar = () => {
                 <Link
                   to={menu.link}
                   className='uppercase'
-                  onClick={menu.label==='Logout'?handleAdminLogout:toggleMenu}
+                  onClick={menu.label==='Logout'||"Login"?handleAdminLogout:toggleMenu}
                 >
                   {menu.label}
                 </Link>

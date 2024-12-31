@@ -2,6 +2,7 @@ import React from 'react';
 import { IProduct } from '../interfaces/productInterface';
 // import Button from './Button';
 import PageHeader from './PageHeader';
+import SkeletonLoader from './SkeletonLoader';
 import { sdk } from '../utils/sdk';
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
@@ -15,7 +16,6 @@ const ProductListing: React.FC<ProductsProps> = ({ products,filterProps }) => {
   const param = useParams()
   
   if(param?.name){
-    console.log(param.name)
     if(param.name.toLowerCase().includes("product")){
       filterProps='Products'
     }else{
@@ -37,10 +37,17 @@ const ProductListing: React.FC<ProductsProps> = ({ products,filterProps }) => {
     <section>
 
     <PageHeader heading="" accent={filterProps==="all"?"All Products":filterProps}/>
-    <div className="grid grid-cols-2 gap-6 -mt-8">
+    <div className="grid grid-cols-2 gap-6 -mt-8 mb-44" >
+      {filteredProducts.length === 0 && (
+        <>
+          {[...Array(6)].map((_, index) => (
+          <SkeletonLoader key={index} />
+          ))}
+        </>
+      )}
       {filteredProducts.map((product, index) => (
       <Link
-      to={`${sdk.singleInventoryRoute}/${product.name}`}>  
+      to={`${sdk.productDetailRoute}/${product.name}`}>  
         <div key={index} className=" overflow-hidden">
           <img 
             src={product.coverImage??product.images[0]} 

@@ -71,7 +71,7 @@ const Slideshow: React.FC<Images> = ({ images }) => {
       </div>
 
      {/* prev/next buttons */}
-     <div className='absolute flex items-center gap-1 bottom-12 left-2'>
+     {images.length>1&&<div className='absolute flex items-center gap-1 bottom-12 left-2'>
      
       {/* Navigation Buttons */}
       <button
@@ -79,7 +79,7 @@ const Slideshow: React.FC<Images> = ({ images }) => {
           setOverrideAutoslide(true)
           goToPrevious()
         }}
-        className="text-xs  z-10 bg-[rgba(255,255,255,.3)] dark:bg-[rgba(0,0,0,.2)]  px-2 py-2 rounded-full"
+        className="text-xs  z-10 bg-[rgba(255,255,255,.8)]  text-primary dark:bg-[rgba(0,0,0,.2)]  px-2 py-2 rounded-full"
       >
         <FaArrowLeftLong/>
       </button>
@@ -88,11 +88,11 @@ const Slideshow: React.FC<Images> = ({ images }) => {
           goToNext()
           setOverrideAutoslide(true)
         }}
-        className="  z-10 bg-[rgba(255,255,255,.3)] dark:bg-[rgba(0,0,0,.2)] px-3 py-3 rounded-full"
+        className="  z-10 bg-[rgba(255,255,255,.7)]  text-primary dark:bg-[rgba(0,0,0,.2)] px-3 py-3 rounded-full"
       >
         <FaArrowRightLong/>
       </button>
-     </div>
+     </div>}
       
     </div>
   );

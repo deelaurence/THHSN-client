@@ -1,19 +1,21 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchProducts } from '../store/fetchProductSlice';
-import { RootState, AppDispatch } from '../store/store';
+import { useDispatch } from 'react-redux';
+import { fetchProducts,fetchProductsDraft } from '../store/fetchProductSlice';
+import {  AppDispatch } from '../store/store';
 import { Sdk } from '../utils/sdk';
 import { Link } from 'react-router-dom';
+import { IProduct, IProductDraft } from '../interfaces/productInterface';
 
 const sdk = new Sdk();
  
-const InventoryUnit: React.FC<{ filterProp: string }> = ({ filterProp }) => {
+const InventoryUnit: React.FC<{ filterProp: string; products:IProduct[]|IProductDraft[],status:string}> = ({ filterProp,status,products}) => {
   const dispatch: AppDispatch = useDispatch();
-  const { products,status } = useSelector((state: RootState) => state.product);
+  // const { products,productsDrafts,status } = useSelector((state: RootState) => state.product);
   
   // Fetch products on component mount
   useEffect(() => {
     dispatch(fetchProducts());
+    dispatch(fetchProductsDraft());
   }, [dispatch]);
 
   // Filtered products based on category selection
@@ -26,7 +28,9 @@ const InventoryUnit: React.FC<{ filterProp: string }> = ({ filterProp }) => {
   }
 
   return (
-    <div className="container mx-auto">
+    
+
+    <div className="container min-h-screen mx-auto">
       {/* Product List */}
       
       <div className="">
@@ -43,7 +47,7 @@ const InventoryUnit: React.FC<{ filterProp: string }> = ({ filterProp }) => {
             className="flex border-b-[1px] relative border-b-gray-300 dark:border-b-neutral-700 justify-start items-center gap-4 pt-6"
           >
             <img
-              src={product.images[0]} 
+              src={product.images&&product?.images[0]?product?.images[0]:sdk.placeholderImage} 
               alt={product.name}
               className="w-[20%] h-12 object-cover mb-4"
             />

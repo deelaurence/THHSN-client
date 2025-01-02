@@ -25,7 +25,7 @@ const TheLuxeExperience = () => {
             Indulge in the art of flawless hair with collections crafted to elevate your everyday, offering beauty that feels as luxurious as it looks.
         </p>
         <p className='self-end mt-6 sm:mt-16 text-[1rem] overflow-visible opacity-50'>The Human Hair Shop NG by/</p>
-        <p className='text-xs mt-4 adelia self-end opacity-70'>Betran Bunds.</p>
+        <p className='text-xs py-2 mt-2 adelia self-end opacity-70'>Betran Bunds.</p>
     </div>
   </div>
   )

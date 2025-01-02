@@ -43,7 +43,7 @@ const userCart = () => {
     };
 
     return (
-        <div className="px-6">
+        <div className="px-6 tablet:px-16">
             {cartItems>0&&<h1 className="uppercase mt-16 mb-10 font-queens text-4xl">Your Cart</h1>}
             
             {cartItems>0?<section>

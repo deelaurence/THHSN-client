@@ -6,7 +6,7 @@ import { AppDispatch,RootState } from '../../store/store'
 import DashboardNav from '../../components/DashboardNav'
 import { RxDragHandleDots2 } from 'react-icons/rx'
 import { useParams } from 'react-router-dom'  
-
+import SkeletonLoader from '../../components/SkeletonLoader'
 const MainShop = () => {
     const param = useParams()
     const dispatch = useDispatch<AppDispatch>()
@@ -25,7 +25,14 @@ const MainShop = () => {
     }
   })
   return (
-    <section className='mt-12 px-6 flex flex-col gap-6'>
+    <section className='mt-20 px-6 sm:px-16 flex flex-col gap-6'>
+        {!productsPublic||!productsPublic[0]&&<div className="grid grid-cols-2 gap-6 -mt-8 mb-44" >
+          <>
+            {[...Array(6)].map((_, index) => (
+            <SkeletonLoader key={index} />
+            ))}
+          </>
+        </div>}
         <DashboardNav showNav={param.name==undefined} menuItems={menuItems}/>
     </section>
   )

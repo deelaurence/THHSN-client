@@ -19,7 +19,7 @@ import { useEffect, useState } from 'react';
 
 const HeroSection1 = () => {
   const [opacity, setOpacity] = useState(0);
-  const [brightness, setBrightness] = useState(20);
+  const [brightness, setBrightness] = useState(4);
   const [translateY, setTranslateY] = useState(10);
 
   useEffect(() => {
@@ -57,8 +57,8 @@ const HeroSection1 = () => {
               </h1>
             </div>
           </div>
-          <p className='text-[10vw] tablet:text-[3rem] overflow-visible sm:text-[3rem] opacity-90 tracking-[.5rem]  adelia font-thin -mt-32 text-center sm:-mt-48 tablet:-mt-36'>
-            exquisite
+          <p className='hero-adelia text-[10vw] tablet:text-[3rem] overflow-visible  sm:text-[3rem] opacity-90 tracking-[.5rem]  adelia font-thin -mt-32 text-center sm:-mt-48 tablet:-mt-36'>
+            luxury
           </p>
           <p className='tracking-[0.5rem] text-center sm:tracking-[1rem] text-sm sm:text-base opacity-70 uppercase'>hair experience</p>
         </div>

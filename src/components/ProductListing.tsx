@@ -35,7 +35,6 @@ const ProductListing: React.FC<ProductsProps> = ({ products,filterProps }) => {
   
   return (
     <section>
-
     <PageHeader heading="" accent={filterProps==="all"?"All Products":filterProps}/>
     <div className="grid grid-cols-2 gap-6 -mt-8 mb-44" >
       {filteredProducts.length === 0 && (
@@ -52,7 +51,7 @@ const ProductListing: React.FC<ProductsProps> = ({ products,filterProps }) => {
           <img 
             src={product.coverImage??product.images[0]} 
             alt={product.name} 
-            className="w-full h-40 rounded-xl object-cover  mb-2"
+            className="w-full h-40 sm:h-64 rounded-xl object-cover  mb-2"
           />
         <h2 className="uppercase text-xs">
         {product.name.length > 20 ? product.name.slice(0, 20) + '...' : product.name}

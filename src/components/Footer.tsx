@@ -18,8 +18,8 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="bg-primary mt-2 px-6 tablet:px-6 sm:px-20 pt-16 text-secondary ">
-        <h3 className="text-2xl dark:pt-16 gap-1 pb-12 leading-0 dark:border-t border-neutral-700 h-fit font-bold font-queens flex items-baseline">THE HUMAN HAIR SHOP NG<span className="text-8xl"></span></h3>
+    <footer className=" bg-primary mt-2 px-6 tablet:px-16 sm:px-20 pt-16 text-secondary ">
+        <h3 className="dark:pt-16 overflow-visible pt-12  font-bold font-queens adelia gap-1 pb-12 leading-0 dark:border-t border-neutral-700 h-fit  flex-col items-baseline  text-2xl">The Human Hair Shop.</h3>
         <div className=" grid grid-cols-1 md:grid-cols-3 gap-8">
         {links.map((linkGroup, index) => (
           <div key={index}>

@@ -20,7 +20,7 @@ import { MdOutlineKeyboardArrowDown } from 'react-icons/md'
 import { GoHeart, GoHeartFill } from 'react-icons/go'
 import { FaShare } from 'react-icons/fa'
 import { HelmetProvider, Helmet } from 'react-helmet-async';
-import { RiCheckboxBlankCircleLine } from 'react-icons/ri'
+// import { RiCheckboxBlankCircleLine, RiCircleFill } from 'react-icons/ri'
 
 
 
@@ -36,7 +36,7 @@ const ProductDetail = () => {
     const [innerVariation, setInnerVariation]=useState<VariationLevelOne[]>()
     const [selectedVariant,setSelectedVariant]=useState(0)
     const [isFav,setisFav]=useState(false)
-
+    const [showVariants, setShowVariants] = useState(false);    
 
     const {name}=useParams()
     const dispatch = useDispatch<AppDispatch>();
@@ -88,7 +88,9 @@ const ProductDetail = () => {
     }, [product]);
     return (
         <HelmetProvider>
-        <div className='px-6 pb-12 '>
+        <div 
+        
+        className='px-6 tablet:px-16 pb-12 '>
             <Helmet>
                 <title>{product.name}</title>
                 <meta property="og:title" content={product.name} />
@@ -125,7 +127,9 @@ const ProductDetail = () => {
                
                
                 {/* 💖 icon */}
-               <div className='flex gap-2 items-center' >
+               <div 
+               
+               className='flex gap-2 items-center' >
                     <div 
                     onClick={()=>{setisFav(!isFav)}}
                     className={`${isFav?'bg-red-200':'bg-neutral-200'} dark:bg-primary-light  w-fit p-2 rounded-full`}>
@@ -180,35 +184,44 @@ const ProductDetail = () => {
                 <MdOutlineKeyboardArrowDown className='text-xl opacity-70'/>
             </div>}
 
-
             {/* Choose Variant to cart */}
-            <div className=' flex gap-2 mt-6 flex-wrap'>
-            {
-                innerVariation?.map(({variation,price,quantity},index)=>{
-                return(
-                    <div
-                    className={`w-fit flex items-center gap-4  ${selectedVariant===index?' border shadow border-yellow-600 bg-gradient-to-t from-secondary-darker to-secondary via-secondary dark:bg-gradient-to-tr dark:from-primary-light dark-to-primary dark:via-primary  ':'border-neutral-400 border dark:border-neutral-600 opacity-80 '}  p-3 px-4 relative  `}
-                    key={index}
-                    onClick={()=>{setSelectedVariant(index)}}>
-                        <div>
-
-                            <p className='uppercase -mb-1 text-[10px] font-medium'>
-                                {variation}   
-                            </p>
-                            <p className='text-yellow-600 mt-1 hidden  opacity- text-[10px]'>
-                                {quantity} in stock
-                            </p>
-                            <p className='text absolute opacity-0 right-2 bottom-0 font-serif '>
-                                &#8358; {new Intl.NumberFormat('en-NG', { minimumFractionDigits: 0 }).format(price)}
-                            </p>
+            <div className='mt-6 relative'>
+                {/* <label htmlFor="variant-select" className='block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300'>
+                    Choose a Variant
+                </label> */}
+                <div className='relative'>
+                    <button
+                        onClick={() => setShowVariants(!showVariants)}
+                        className='py-2 px-4 border border-neutral-400 dark:border-neutral-600 bg-transparent w-full rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent flex justify-between items-center'
+                    >
+                        <p className='text-left text-xs'>
+                            {innerVariation && innerVariation[selectedVariant] ? innerVariation[selectedVariant].variation : 'Select a variant'}
+                        </p>
+                        <MdOutlineKeyboardArrowDown className='text-xl opacity-70' />
+                    </button>
+                    {showVariants && (
+                        <div className='absolute z-10 mt-2 w-full bg-white dark:bg-primary-light border border-neutral-400 dark:border-neutral-600 rounded-md shadow-lg'>
+                            <ul className='max-h-60  overflow-y-auto'>
+                                {innerVariation?.map(({ variation,  quantity }, index) => (
+                                    <div
+                                    className='flex items-center border-b dark:border-b-neutral-600 justify-between py-2 px-4 hover:bg-neutral-200 dark:hover:bg-neutral-700 cursor-pointer'
+                                    key={index}>
+                                        <li
+                                            onClick={() => {
+                                                setSelectedVariant(index);
+                                                setShowVariants(false);
+                                            }}
+                                            className='w-[90%] text-sm'>
+                                            {variation}
+                                            <span className=' text-[10px] opacity-40 italic'>  *{quantity} in stock</span>  
+                                        </li>
+                                        {index===selectedVariant&&<IoMdCheckmark className=''/>}
+                                    </div>
+                                ))}
+                            </ul>
                         </div>
-                        {selectedVariant===index&&<IoMdCheckmark className='text-secondary text-xs rounded-full  p-[1px] bg-yellow-600 opacity-90 top-0 right-0'/>}
-                        {selectedVariant!==index&&<RiCheckboxBlankCircleLine className=' text-xs rounded-full  p-[1px] opacity-90 top-0 right-0'/>}
-                        
-                    </div>
-                )
-                })
-            }
+                    )}
+                </div>
             </div>
 
             
@@ -243,6 +256,18 @@ const ProductDetail = () => {
             </section>
             
             </div>}
+
+
+            {/* additional information */}
+            <div className='py-6 mt-9 border-t  border-neutral-300 dark:border-neutral-700'>
+                <div className='flex gap-2 items-start'>
+                    <LiaShippingFastSolid className='opacity-60' />
+                    <p className='text-[10px] w-[90%] opacity-70'>Shipping costs will be calculated and added during the checkout process, ensuring transparency and accurate rates based on your delivery address and selected shipping method.</p>
+                </div>
+                
+            </div>
+
+
 
             {isAdmin&&<ImagePicker images={sdk.bestSellersAndNewArrivalsCoverImages} onPick={()=>{}}/>}
 

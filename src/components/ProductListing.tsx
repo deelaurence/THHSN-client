@@ -6,6 +6,7 @@ import SkeletonLoader from './SkeletonLoader';
 import { sdk } from '../utils/sdk';
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
+import PriceToast from './PriceToast';
 interface ProductsProps {
   products: IProduct[];
   filterProps: string;
@@ -56,7 +57,7 @@ const ProductListing: React.FC<ProductsProps> = ({ products,filterProps }) => {
         <h2 className="uppercase text-xs">
         {product.name.length > 20 ? product.name.slice(0, 20) + '...' : product.name}
         </h2>
-        <p className='text-[8px] text-yellow-600'> &#8358; {sdk.formatNairaPrice(product.variations[0].variations[0].price)}</p>
+        <PriceToast className='text-[8px] text-yellow-600' price={product.variations[0].variations[0].price}/>
         {/* <Button loading={false} extraClass='text-xs rounded-l bg-transparent  font-thin h-8 mt-2' label='View product' size='large' /> */}
         </div>
       </Link>  

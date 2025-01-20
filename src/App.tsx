@@ -9,6 +9,7 @@ import Navbar from './components/Navbar.tsx';
 import AdminPrivateRoutes from './components/ProtectedRoute.tsx';
 import { Sdk } from './utils/sdk.ts';
 import AddProduct from './pages/admin/AddProduct.tsx';
+import UserLogin from './pages/user/UserLogin.tsx';
 import { ThemeProvider } from './contexts/AppContext.tsx';
 import Inventory from './pages/admin/Inventory.tsx';
 import ProductDetail from './pages/product/ProductDetail.tsx';
@@ -18,13 +19,26 @@ import MainShop from './pages/shop/MainShop.tsx';
 import ScrollToTop from './components/ScrollToTop.tsx';
 import UserCart from './pages/cart/userCart.tsx';
 import DraftInventory from './pages/admin/Drafts.tsx';
+import ExchangeRate from './pages/admin/ExchangeRate.tsx';
+import UserRegistration from './pages/user/UserRegister.tsx';
+import NotFound from './pages/NotFound.tsx';
+import EmailSent from './pages/user/EmailSent.tsx';
+import AccountVerified from './pages/user/AccountVerified.tsx';
+import ForgotPassword from './pages/user/ForgotPassword.tsx';
+import UpdatePassword from './pages/user/UpdatePassword.tsx';
+import Notifications from './components/Notifications.tsx';
+
+
 const sdk = new Sdk()
 
 const App: React.FC = () => {
   
   return (
-    <div className='dark:bg-primary dark:text-secondary text-primary bg-secondary'>
+    <>
+  
+    <div className='dark:bg-primary sm:hidden dark:text-secondary text-primary bg-secondary'>
     <ThemeProvider>
+    <Notifications/>
     <Router>
       <ScrollToTop/>
       <Navbar/>
@@ -33,11 +47,18 @@ const App: React.FC = () => {
             <Route path={sdk.shopRoute} element={<MainShop />} />
             <Route path={sdk.shopRoute+'/:name'} element={<MainShop />} />
             <Route path={sdk.adminLoginRoute} element={<AdminLogin/>} />
+            <Route path={sdk.userLoginRoute} element={<UserLogin/>} />
+            <Route path={sdk.userRegistrationRoute} element={<UserRegistration/>} />
+            <Route path={sdk.emailSentRoute} element={<EmailSent/>} />
+            <Route path={sdk.accountVerifiedRoute} element={<AccountVerified/>} />
+            <Route path={sdk.forgotPasswordRoute} element={<ForgotPassword/>} />
+            <Route path={sdk.updatePasswordRoute} element={<UpdatePassword/>} />
             <Route path={sdk.productDetailRoute+'/:name'} element={<ProductDetail/>}/>
             <Route path={sdk.cartRoute} element={<UserCart/>}/>
             <Route element={<AdminPrivateRoutes />}>
               <Route path={sdk.adminDashboardRoute} element={<AdminDashboard/>} />
               <Route path={sdk.addProductRoute} element={<AddProduct/>} />
+              <Route path={sdk.exchangeRateRoute} element={<ExchangeRate/>} />
               <Route path={sdk.manageInventoryRoute} element={<Inventory/>} />
               <Route path={sdk.singleInventoryRoute+'/:name'} element={<ProductDetail/>}/>
               <Route path={sdk.managePaymentsRoute} element={<Placeholder header='Payments' paragraph='something here later'/>} />
@@ -46,11 +67,14 @@ const App: React.FC = () => {
               <Route path={sdk.manageUsersRoute} element={<Placeholder header='Users' paragraph='something here later'/>} />
               <Route path={sdk.randomFactsRoute} element={<RandomFacts/>} />
             </Route>
+             {/* 404 Route */}
+             <Route path="*" element={<NotFound />} />
         </Routes>
         <Footer/>
     </Router>
     </ThemeProvider>
     </div>
+    </>
   );
 };
 

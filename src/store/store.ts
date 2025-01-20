@@ -4,12 +4,15 @@ import adminReducer, {signOutAdmin} from './adminSlice';
 import { apiClient } from '../utils/apiClient';
 import productReducer from './fetchProductSlice'
 import factReducer from './randomFacts'
+import userReducer, { signOutUser } from './userSlice'
+
 // Configure the Redux store
 const store = configureStore({
   reducer: {
     admin: adminReducer,
     product:productReducer,
-    facts:factReducer
+    facts:factReducer,
+    user:userReducer
   },
   // Enabling Redux DevTools if they are available
   devTools: true, // Recommended way to enable DevTools only in development
@@ -20,11 +23,21 @@ export type AppDispatch = typeof store.dispatch;
 
 // Set up Axios interceptor AFTER creating the store
 apiClient.interceptors.response.use(
-  (response) => response,
+  (response) => {
+    return response
+  },
   (error) => {
     if (error.response && error.response.status === 401) {
-      // Dispatch sign-out action to Redux store
-      store.dispatch(signOutAdmin());
+      // Dispatch sign-out action to Redux store if 
+      //admin tries to access  a restricted page 
+      //and their token is expired or any other 401
+      if(error.response.config.url.includes("admin")){
+        store.dispatch(signOutAdmin());
+      }else{
+        store.dispatch(signOutUser());
+      }
+        
+      console.log(error.response.config.url)
     }
     return Promise.reject(error);
   }

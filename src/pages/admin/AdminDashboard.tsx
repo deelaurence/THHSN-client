@@ -10,6 +10,7 @@ import { GrAnalytics } from "react-icons/gr";
 // Menu configuration array
 import PieChart from "../../components/PieChart";
 import { BsGraphUpArrow } from "react-icons/bs";
+import { TbArrowsExchange2 } from "react-icons/tb"
 import { LuUsers2 } from "react-icons/lu";
 import { HiOutlineLightBulb } from "react-icons/hi";
 const data = [
@@ -49,6 +50,11 @@ const menuItems = [
     label: 'Manage Inventory',
     route: sdk.manageInventoryRoute, 
     icon: <GrAnalytics />,
+  },
+  {
+    label: 'Exchange Rate',
+    route: sdk.exchangeRateRoute, 
+    icon: <TbArrowsExchange2 />,
   },
   {
     label: 'Random Facts',

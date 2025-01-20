@@ -17,6 +17,7 @@ const persistedAdmin = sdk.getAdminObject();
 // Define the product state
 interface ProductState {
   products: IProduct[];
+  exchangeRate:number|null;
   categories:string[]
   productsDrafts:IProductDraft[];
   draftCategories:string[]
@@ -30,6 +31,7 @@ interface ProductState {
 
 const initialState: ProductState = {
   products: [],
+  exchangeRate:null,
   categories:[],
   productsDrafts:[],
   draftCategories:[],
@@ -78,12 +80,28 @@ export const fetchProductsDraft = createAsyncThunk(
   }
 );
 
-// Async action to get all products by admin for public
+// Async action to get all products for public
 export const fetchProductsPublic = createAsyncThunk(
   'product/fetchProductsPublic',
   async (_, { rejectWithValue }) => {
     try {
       const response = await apiClient.get('/v1/public/products');
+      return response.data.payload;
+    } catch (error: any) {
+      if (error.response) {
+        return rejectWithValue(error.response.data.reason);
+      }
+      return rejectWithValue('Failed to connect, Try again');
+    }
+  }
+);
+
+// Async action to get exchange rate
+export const fetchExchangeRate = createAsyncThunk(
+  'product/fetchExchangeRate',
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await apiClient.get('/v1/public/exchange-rate/Dollar To Naira');
       return response.data.payload;
     } catch (error: any) {
       if (error.response) {
@@ -151,6 +169,20 @@ const productSlice = createSlice({
         state.errorPublic=''
       })
       .addCase(fetchProductsPublic.rejected, (state, action) => {
+        state.statusPublic = 'failed';
+        state.errorPublic = action.payload as string;
+      })
+
+      //fetch exchange rate
+      .addCase(fetchExchangeRate.pending, (state) => {
+        state.statusPublic = 'loading';
+      })
+      .addCase(fetchExchangeRate.fulfilled, (state, action: PayloadAction<{_id:String;rate:number;currencyPair:string}>) => {
+        state.statusPublic = 'succeeded';
+        state.exchangeRate = action.payload.rate;
+        
+      })
+      .addCase(fetchExchangeRate.rejected, (state, action) => {
         state.statusPublic = 'failed';
         state.errorPublic = action.payload as string;
       })

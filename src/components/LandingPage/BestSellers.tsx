@@ -8,7 +8,7 @@ import image6 from "../../assets/images/BestSellers/6.png"
 import { useEffect } from 'react'
 import { AppDispatch,RootState } from '../../store/store'
 import { useSelector,useDispatch } from 'react-redux'
-import { fetchProductsPublic } from '../../store/fetchProductSlice'
+import { fetchProductsPublic, fetchExchangeRate } from '../../store/fetchProductSlice'
 import { Sdk } from '../../utils/sdk' 
 
 const{mergeProductInDatabaseWithStaticImages}=new Sdk()
@@ -68,6 +68,8 @@ const BestSellers = () => {
     const dispatch = useDispatch<AppDispatch>()
     useEffect(()=>{
         dispatch(fetchProductsPublic())
+        dispatch(fetchExchangeRate())
+        
     },[])
     const {productsPublic,statusPublic} = useSelector((state:RootState)=>{
         return state.product

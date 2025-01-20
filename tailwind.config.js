@@ -10,6 +10,21 @@ module.exports = {
       backgroundImage:{
         'mygray-gradient': 'linear-gradient(to bottom, #e8e8e8, #c8c8c8)',
       },
+      keyframes: {
+        slideIn: {
+          '0%': { transform: 'translateY(-100%)', opacity: 0 },
+          '100%': { transform: 'translateY(0)', opacity: 1 },
+        },
+        slideOut: {
+          '0%': { transform: 'translateY(0)', opacity: 1 },
+          '100%': { transform: 'translateY(-100%)', opacity: 0 },
+        },
+      },
+      animation: {
+        slideIn: 'slideIn 0.5s ease-out forwards',
+        slideOut: 'slideOut 0.5s ease-out forwards',
+      },
+
       screens: {
         tablet: { raw: '(min-width: 600px) and (max-width: 1025px) and (min-height: 800px) and (max-height: 1369px)' },
       },
@@ -55,20 +70,7 @@ module.exports = {
           dark: '#4b5563',
         },
       },
-      animation: {
-          'scale-up4': 'scale-up4 1s linear infinite',
-        },
-      keyframes: {
-          'scale-up4': {
-            '20%': {
-              backgroundColor: '#ffffff',
-              transform: 'scaleY(1.5)',
-            },
-            '40%': {
-              transform: 'scaleY(1)',
-            },
-          },
-    },}
+    }
   },
   plugins: [
     function ({ addUtilities, e }) {

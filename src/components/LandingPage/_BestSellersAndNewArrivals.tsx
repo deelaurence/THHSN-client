@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { Sdk } from "../../utils/sdk";
 import { useTheme } from "../../contexts/AppContext"; 
 import Skeleton from '@mui/material/Skeleton';
+import PriceToast from "../PriceToast";
 
 interface StoreItem {
   text: string;
@@ -111,7 +112,7 @@ const BestSellersAndNewArrivals: React.FC<BestSellersProps> = ({
                 <p className="px-2 flex gap-2 leading-4 font-queens text-sm sm:text-xl pt-4 capitalize">
                   {item.text}
                 </p>
-                <p className="font-queens px-2 mt-1 font-medium"> ${item.price}.00 </p>
+                <PriceToast price={item.price} className="font-queens px-2 mt-1 font-medium"/>
               </div>
               <Button
                 extraClass="text-xs mx-1  bg-transparent py-2 capitalize"

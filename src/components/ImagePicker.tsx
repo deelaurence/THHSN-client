@@ -39,7 +39,7 @@ const ImagePicker: React.FC<ImagePickerProps> = ({ images, onPick }) => {
         
         <div 
         
-        className={`h-screen w-screen p-6 pt-16 fixed gallery top-0 left-0 z-[9999999999999999] flex-wrap gap-4 overflow-auto`}>
+        className={`h-screen w-screen p-6 pt-16 fixed gallery top-0 left-0 z-[9999999] flex-wrap gap-4 overflow-auto`}>
         <h2 className='text-8xl font-queens text-secondary'>Gallery</h2>
         {adminStatus!=='loading'&&<div className='flex gap-4 items-center grayscale-[100%] justify-between py-16'>
             <img className=' opacity-100 w-44' src={leaf} alt="" />
@@ -49,7 +49,7 @@ const ImagePicker: React.FC<ImagePickerProps> = ({ images, onPick }) => {
             <img className=' opacity-50 w-12 rotate-180' src={leaf4} alt="" /> */}
         </div>}
         {adminStatus=='loading'?
-        <div className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center'><Loader/></div>
+        <div className='absolute h-screen left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center'><Loader/></div>
         :<div className=' flex justify-around sm:justify-start flex-wrap gap-4'>
         
         <h2 className='text-secondary opacity-50 sm:text-5xl font-queens mb-6 sm:my-16'>Choose Any of the pictures to be displayed as the cover image of the product.</h2>

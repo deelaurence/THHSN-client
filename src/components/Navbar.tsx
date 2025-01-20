@@ -6,11 +6,11 @@ import { signOutAdmin } from '../store/adminSlice';
 import { Link } from 'react-router-dom';
 import { Sdk } from '../utils/sdk';
 import { IoMenuOutline } from 'react-icons/io5';
-import {FiUser} from 'react-icons/fi'
 import { BsArrowRight} from 'react-icons/bs';
 import ThemeToggleButton from './ThemeToggleButton';
 import { PiBag} from 'react-icons/pi';
 import { useTheme } from '../contexts/AppContext';
+import { IoIosArrowDown } from 'react-icons/io';
 
 const sdk = new Sdk();
 
@@ -18,7 +18,10 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false); // State for mobile menu visibility
   const [timeoutId, setTimeoutId]= useState(0);
   const adminObject = useSelector((state: RootState) => state.admin.admin);
-  const {cartItems,isAdmin}=useTheme()
+  
+  const [isCurrencyDropdownOpen, setIsCurrencyDropdownOpen] = useState(false); // State for dropdown visibility
+ 
+  const {cartItems,isAdmin,toggleCurrency,isDollar}=useTheme()
   const dispatch = useDispatch<AppDispatch>();
 
   // Toggle mobile menu visibility
@@ -29,6 +32,20 @@ const Navbar = () => {
     //@ts-ignore
     setTimeoutId(time)
 
+  };
+
+  
+
+  const handleCurrencyToggle = (currency: string) => {
+    if(currency==="USD"){
+      toggleCurrency(true)
+      sdk.setIsDollarPersisted("true")
+    }
+    else{
+      sdk.setIsDollarPersisted("false")
+      toggleCurrency(false)
+    }
+    setIsCurrencyDropdownOpen(false); // Close the dropdown after selection
   };
   
   useEffect(()=>{
@@ -64,6 +81,40 @@ const Navbar = () => {
   }, []);
 
 
+  const CurrencyPair=()=>{
+      return(
+        <div className='relative font-queens  border-black p-0 '>
+            <button
+              className='flex text-sm opacity-60 font-bold items-center cursor-pointer'
+              onClick={() => setIsCurrencyDropdownOpen((prev) => !prev)}
+            >
+              <span className='p-0 m-0  leading-[0px]'>{isDollar ? 'USD' : 'NGN'}</span>
+              <IoIosArrowDown className='' />
+            </button>
+
+            {isCurrencyDropdownOpen && (
+              <div className='text-xs absolute w-32  right-0 bg-secondary dark:bg-primary-light shadow-lg rounded-md mt-2 '>
+                <button
+                  className='flex border-b dark:border-b-neutral-700 items-center  gap-2  p-2 '
+                  onClick={() => handleCurrencyToggle('NGN')}
+                >
+                  <img src={sdk.nigeriaFlagIcon} className='h-4'/>
+                  <p className=' whitespace-nowrap'>NGN &mdash; Naira</p>
+                </button>
+                <button
+                  className='flex items-center gap-2  p-2'
+                  onClick={() => handleCurrencyToggle('USD')}
+                >
+                  <img src={sdk.usaFlagIcon} className='h-4'/>
+                  <p className=''>USD &mdash; Dollars</p>
+                </button>
+              </div>
+            )}
+          </div>)
+  }
+
+
+
   return (
     <div className={`relative  pb-12 z-100 force-z`}>
       {/* Main Navbar */}
@@ -75,9 +126,15 @@ const Navbar = () => {
           </button>
           <Link to='/' className='font-bold cinzel-decorative'>The human hair shop</Link>
         </div>
+        
 
-        <div className='flex  items-center gap-4'>
-            <FiUser className='text-[1.5rem] ' />
+
+
+
+
+        <div className='flex  items-center gap-2'>
+            <CurrencyPair/>
+            {/* <FiUser className='text-[1.5rem] ' /> */}
             {/* <PiUserBold className=' text-[1.5rem]'/> */}
             <div className='relative'>
               <Link to={sdk.cartRoute}>
@@ -87,6 +144,9 @@ const Navbar = () => {
             </div>
             {/* <BsHandbag className=' text-[1.4rem]' /> */}
         </div>
+
+        
+
 
         {/* Desktop Links */}
         <div className='hidden md:flex items-center gap-4'>
@@ -154,7 +214,15 @@ const Navbar = () => {
                 <Link
                   to={menu.link}
                   className='uppercase'
-                  onClick={menu.label==='Logout'||"Login"?handleAdminLogout:toggleMenu}
+                  onClick={
+                    ()=>{
+                      if(menu.label==='Logout'||menu.label==="Login"){
+                        handleAdminLogout()
+                      }
+                      if(menu.label=='Dashboard')
+                        toggleMenu()
+                      }
+                    }
                 >
                   {menu.label}
                 </Link>

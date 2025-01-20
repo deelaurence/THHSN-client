@@ -8,6 +8,7 @@ interface AdminState {
   admin: { email: string, token: string, name:string}  | null;
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
   error: string | null;
+  successFeedback:string|null;
   editingProduct:boolean;
   formErrors:string[];
   productDraftOne?:{
@@ -28,6 +29,7 @@ const persistedAdmin = sdk.getAdminObject()
 const initialState: AdminState = {
   admin: persistedAdmin||null,
   status: 'idle',
+  successFeedback:null,
   editingProduct:false,
   error: null,
   formErrors:[],
@@ -154,6 +156,31 @@ export const addProductVariation = createAsyncThunk(
 );
 
 
+export const updateExchangeRate = createAsyncThunk(
+  'admin/updateExchangeRate',
+      async (exchangeRateBody:{},{}) => {      
+        try {
+          
+          const headers={
+            'Authorization':`Bearer ${persistedAdmin?.token}`,
+            'content-Type':"application/json"
+          }
+          
+          const response = await apiClient.put(`/v1/admin/manage/exchange-rate/update`,exchangeRateBody,{headers});
+          return response.data;
+      } catch (error:any) {
+
+          if(error.response){
+            throw error.response.data.reason
+          }
+          else{
+            console.log(error)
+            throw "Failed to connect, Try again"
+          }
+      }
+}
+);
+
 // Async action for adding bestseller and new arrival
 export const addBestsellerAndNewArrival = createAsyncThunk(
   'admin/addBestsellerAndNewArrival',
@@ -162,7 +189,6 @@ export const addBestsellerAndNewArrival = createAsyncThunk(
           newArrival:boolean
         },{}) => {       
         try {
-        
 
           
           const productId=sdk.getSingleProductDetail()._id
@@ -171,8 +197,6 @@ export const addBestsellerAndNewArrival = createAsyncThunk(
             'Authorization':`Bearer ${persistedAdmin?.token}`
           }
           let response = await apiClient.put(`/v1/admin/manage/product/bestseller-newarrival/${productId}`, productDetails,{headers});
-          
-          
           return response.data;
       } catch (error:any) {
           if(error.response){
@@ -221,7 +245,7 @@ const adminSlice = createSlice({
   reducers: {
     signOutAdmin(state) {
       state.admin = null;
-      window.location.href=sdk.adminLoginRoute
+      window.history.pushState({}, '', sdk.adminLoginRoute);
       sdk.clearAdminObject()
     },
     formIsValid(state,action){
@@ -240,13 +264,14 @@ const adminSlice = createSlice({
       .addCase(signInAdmin.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(signInAdmin.fulfilled, (state, action: PayloadAction<{ payload:{ email: string, name:string, token:string} }>) => {
+      .addCase(signInAdmin.fulfilled, (state, action: PayloadAction<{ message:string,payload:{ email: string, name:string, token:string} }>) => {
         state.status = 'succeeded';
         state.error=''
         const {payload} = action.payload
         state.admin = payload
         sdk.setAdminObject(payload)
-        window.location.href=sdk.adminDashboardRoute  // Redirect to admin dashboard after successful sign-in. Replace with your dashboard route.
+        state.successFeedback=action.payload.message
+        window.history.pushState({}, '', sdk.adminDashboardRoute);  // Redirect to admin dashboard after successful sign-in. Replace with your dashboard route.
       })
       .addCase(signInAdmin.rejected, (state, action) => {
         state.status = 'failed';
@@ -259,7 +284,7 @@ const adminSlice = createSlice({
       .addCase(addProductNameAndPrice.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(addProductNameAndPrice.fulfilled, (state, action: PayloadAction<{ payload:{ email: string, name:string, token:string} }>) => {
+      .addCase(addProductNameAndPrice.fulfilled, (state, action: PayloadAction<{ payload:{ email: string, name:string, token:string}, message:string }>) => {
         state.status = 'succeeded';
         state.error=''
         const {payload} = action.payload
@@ -267,6 +292,7 @@ const adminSlice = createSlice({
         if(state.addProductPage!==undefined){
           state.addProductPage+=1
         }
+        state.successFeedback=action.payload.message
         // window.location.href=sdk.adminDashboardRoute  // Redirect to admin dashboard after successful sign-in. Replace with your dashboard route.
       })
       .addCase(addProductNameAndPrice.rejected, (state, action) => {
@@ -280,7 +306,7 @@ const adminSlice = createSlice({
       .addCase(addProductImage.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(addProductImage.fulfilled, (state, action: PayloadAction<{ payload:{ email: string, name:string, token:string} }>) => {
+      .addCase(addProductImage.fulfilled, (state, action: PayloadAction<{ payload:{ email: string, name:string, token:string} ,message:string }>) => {
         state.status = 'succeeded';
         state.error=''
         const {payload} = action.payload
@@ -288,6 +314,7 @@ const adminSlice = createSlice({
         if(state.addProductPage!==undefined){
           state.addProductPage+=1
         }
+        state.successFeedback=action.payload.message
         // window.location.href=sdk.adminDashboardRoute  // Redirect to admin dashboard after successful sign-in. Replace with your dashboard route.
       })
       .addCase(addProductImage.rejected, (state, action) => {
@@ -298,15 +325,17 @@ const adminSlice = createSlice({
       })
 
 
+
       //ProductVariation
       .addCase(addProductVariation.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(addProductVariation.fulfilled, (state) => {
+      .addCase(addProductVariation.fulfilled, (state,action) => {
         state.status = 'succeeded';
         state.error=''
         // const {payload} = action.payload
         // state.productDraftOne = payload
+        state.successFeedback=action.payload.message
         if(state.addProductPage!==undefined){
           state.addProductPage=0
         }
@@ -321,16 +350,32 @@ const adminSlice = createSlice({
 
 
 
+      //Update exchange rate
+      .addCase(updateExchangeRate.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(updateExchangeRate.fulfilled, (state,action) => {
+        state.status = 'succeeded';
+        state.successFeedback=action.payload.message
+      })
+      .addCase(updateExchangeRate.rejected, (state, action) => {
+        console.log(action)
+        state.status = 'failed';
+        state.error = action.error.message || 'Adding Image Failed';
+      })
+      
+
 
       //BestSellerAndNewArrival
       .addCase(addBestsellerAndNewArrival.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(addBestsellerAndNewArrival.fulfilled, (state, action: PayloadAction<{ payload:{ email: string, name:string, token:string} }>) => {
+      .addCase(addBestsellerAndNewArrival.fulfilled, (state, action: PayloadAction<{ message:string,payload:{ email: string, name:string, token:string} }>) => {
         state.status = 'succeeded';
         state.error=''
         const {payload} = action.payload
         state.productDraftOne = payload
+        state.successFeedback=action.payload.message
       })
       .addCase(addBestsellerAndNewArrival.rejected, (state, action) => {
         state.status = 'failed';
@@ -343,10 +388,11 @@ const adminSlice = createSlice({
       .addCase(bestsellerAndNewArrivalCoverimage.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(bestsellerAndNewArrivalCoverimage.fulfilled, (state, action: PayloadAction<{ payload:{ email: string, name:string, token:string} }>) => {
+      .addCase(bestsellerAndNewArrivalCoverimage.fulfilled, (state, action: PayloadAction<{ message:string,payload:{ email: string, name:string, token:string} }>) => {
         state.status = 'succeeded';
         state.error=''
         const {payload} = action.payload
+        state.successFeedback=action.payload.message
         state.productDraftOne = payload
       })
       .addCase(bestsellerAndNewArrivalCoverimage.rejected, (state, action) => {

@@ -37,12 +37,12 @@ const Slideshow: React.FC<Images> = ({ images }) => {
   };
 
   return (
-    <div className="relative overflow-hidden slideshow h-[32rem]">
+    <div className="relative  overflow-hidden slideshow h-[40rem]">
       
 
       {/* Sliding Images Wrapper */}
       <div
-        className="relative h-full flex transition-transform duration-500 ease-in-out"
+        className="relative h-full flex transition-transform  duration-500 ease-in-out"
         style={{
           transform: `translateX(${-currentIndex * 100}%)`,
         }}
@@ -65,7 +65,7 @@ const Slideshow: React.FC<Images> = ({ images }) => {
       </div>
 
       {/* Indicators */}
-      <div className="flex items-baseline  absolute bottom-2 right-2  justify-center ">
+      <div className="flex items-baseline  absolute text-secondary bottom-2 right-2  justify-center ">
         <p className='text-sm font-semibold'>0{currentIndex+1}</p>
         <p className='text-[10px]'>/{images.length}</p>
       </div>
@@ -79,7 +79,7 @@ const Slideshow: React.FC<Images> = ({ images }) => {
           setOverrideAutoslide(true)
           goToPrevious()
         }}
-        className="text-xs  z-10 bg-[rgba(255,255,255,.8)]  text-primary dark:bg-[rgba(0,0,0,.2)]  px-2 py-2 rounded-full"
+        className="text-xs  z-10 bg-[rgba(255,255,255,.8)]  text-primary dark:text-secondary dark:bg-[rgba(0,0,0,.2)]  px-2 py-2 rounded-full"
       >
         <FaArrowLeftLong/>
       </button>
@@ -88,7 +88,7 @@ const Slideshow: React.FC<Images> = ({ images }) => {
           goToNext()
           setOverrideAutoslide(true)
         }}
-        className="  z-10 bg-[rgba(255,255,255,.7)]  text-primary dark:bg-[rgba(0,0,0,.2)] px-3 py-3 rounded-full"
+        className="  z-10 bg-[rgba(255,255,255,.7)]  text-primary dark:text-secondary dark:bg-[rgba(0,0,0,.2)] px-3 py-3 rounded-full"
       >
         <FaArrowRightLong/>
       </button>

@@ -29,7 +29,7 @@ const AdminLogin: React.FC = () => {
   //Redirect to admin dashboard if still logged in
   useEffect(()=>{
     if(getAdminObject()?.token){
-      window.location.href=adminDashboardRoute
+      window.history.pushState({}, '', adminDashboardRoute);
     }
   },[])
 

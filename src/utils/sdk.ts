@@ -1,4 +1,5 @@
 import { AdminObject } from "../interfaces/adminInterfaces";
+import { UserObject } from "../interfaces/userInterface";
 import threeMogels from '../assets/images/LUX_BEAUTE_Banner-1_3024x (1).png'
 import {StaticBestSellerAndArrival} from "../interfaces/bestSellerAndNewArrival";
 import { IProduct } from "../interfaces/productInterface";
@@ -6,12 +7,20 @@ import { Cart } from "../interfaces/cart";
 export class Sdk{
 
     private adminObjectKey:string='admin_object';
+    private userObjectKey:string='user_object';
     adminLoginRoute:string='/admin/login'
+    userLoginRoute:string='/user/login'
+    userRegistrationRoute:string='/user/register'
     shopRoute:string='/shop'
     cartRoute:string='/cart'
+    updatePasswordRoute:string="/update/password"
+    emailSentRoute:string='/email/sent'
+    forgotPasswordRoute:string='/forgot/password'
+    accountVerifiedRoute:string='/account/verified'
     adminDashboardRoute:string='/admin/dashboard'
     addProductRoute:string='/admin/add-product'
     managePaymentsRoute:string='/admin/payments'
+    exchangeRateRoute:string='/admin/exchange-rate'
     productDraftsRoute:string='/admin/drafts'
     salesRoute:string='/admin/sales'
     manageUsersRoute:string='/admin/users'
@@ -19,7 +28,10 @@ export class Sdk{
     randomFactsRoute:string='/admin/random-facts'
     singleInventoryRoute:string='/admin/inventory'
     productDetailRoute:string='/product/details'
+    usaFlagIcon="https://cdn-icons-png.flaticon.com/128/197/197484.png"
+    nigeriaFlagIcon="https://cdn-icons-png.flaticon.com/128/11849/11849096.png"
     theme:string|null=localStorage.getItem('theme')
+    persistedIsDollar=localStorage.getItem('isDollar')
     heroSectionImage=threeMogels
     navbarData = [
         {
@@ -120,6 +132,22 @@ export class Sdk{
         localStorage.setItem(this.adminObjectKey,JSON.stringify(object))
     }
 
+
+
+    getUserObject():UserObject|undefined{
+        const userObject:(string|null)=localStorage.getItem('user_object');
+        if(userObject){
+            return JSON.parse(userObject);
+        }
+    }
+    clearUserObject(){
+        localStorage.removeItem(this.userObjectKey);
+    }
+
+    setUserObject(object:UserObject){
+        localStorage.setItem(this.userObjectKey,JSON.stringify(object))
+    }
+
     mergeProductInDatabaseWithStaticImages(
       staticData:StaticBestSellerAndArrival[],
       dataInDatabase:IProduct[],
@@ -184,6 +212,10 @@ export class Sdk{
 
     modifyExistingCartArray(cart:Cart[]){
       localStorage.setItem('cart',JSON.stringify(cart))
+    }
+
+    setIsDollarPersisted(isDollar:string){
+      localStorage.setItem('isDollar',isDollar)
     }
 
     getCart(){

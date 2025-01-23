@@ -131,11 +131,17 @@ const userSlice = createSlice({
   reducers: {
     signOutUser(state) {
       state.user = null;
-      window.history.pushState({}, '', sdk.userLoginRoute);
       sdk.clearUserObject()
+    },
+    setUserAfterGoogleAuth(state) {
+      state.user = sdk.getUserObject() 
+      console.log(state.user)
     },
     user_formIsValid(state,action){
         state.formErrors.push(action.payload)
+        if(state.formErrors.length>2){
+          state.formErrors.shift()
+        }
     }
   },
   extraReducers: (builder) => {
@@ -218,5 +224,5 @@ const userSlice = createSlice({
   },
 });
 
-export const { signOutUser,user_formIsValid } = userSlice.actions;
+export const { signOutUser,user_formIsValid,setUserAfterGoogleAuth } = userSlice.actions;
 export default userSlice.reducer;

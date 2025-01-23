@@ -33,8 +33,8 @@ const Button: React.FC<ButtonProps> = ({
   dark:radial-gradient-bg
   dark:bg-secondary dark:text-primary 
   focus:outline-none transition ease-in-out 
-  duration-200 hover:opacity-90 
-  disabled:opacity-70 font-semibold 
+  duration-200  
+  font-semibold 
   disabled:cursor-not-allowed`;
 
   // Variant styles based on the variant prop

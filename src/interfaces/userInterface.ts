@@ -1,7 +1,7 @@
 export interface UserObject{
-    token?:string;
-    email:string;
-    firstName:string;
-    lastName:string;
+    token?:string|undefined;
+    email:string|undefined;
+    firstName:string|undefined;
+    lastName:string|undefined;
     password?:string;
 }

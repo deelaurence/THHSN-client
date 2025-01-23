@@ -2,25 +2,26 @@ import { useEffect, useState } from 'react';
 import { IoCloseOutline } from 'react-icons/io5';
 import { RootState, AppDispatch } from '../store/store';
 import { useDispatch, useSelector } from 'react-redux';
-import { signOutAdmin } from '../store/adminSlice';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Sdk } from '../utils/sdk';
 import { IoMenuOutline } from 'react-icons/io5';
 import { BsArrowRight} from 'react-icons/bs';
 import ThemeToggleButton from './ThemeToggleButton';
-import { PiBag} from 'react-icons/pi';
+import { PiBag } from 'react-icons/pi';
 import { useTheme } from '../contexts/AppContext';
 import { IoIosArrowDown } from 'react-icons/io';
+import { signOutUser } from '../store/userSlice';
 
 const sdk = new Sdk();
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false); // State for mobile menu visibility
   const [timeoutId, setTimeoutId]= useState(0);
-  const adminObject = useSelector((state: RootState) => state.admin.admin);
-  
+  // const adminObject = useSelector((state: RootState) => state.admin.admin);
+  const userObject = useSelector((state: RootState) => state.user.user);
+  const navigate = useNavigate()
   const [isCurrencyDropdownOpen, setIsCurrencyDropdownOpen] = useState(false); // State for dropdown visibility
- 
+  const [loginOrLogoutText, setLoginOrLogoutText] = useState("Login")
   const {cartItems,isAdmin,toggleCurrency,isDollar}=useTheme()
   const dispatch = useDispatch<AppDispatch>();
 
@@ -56,10 +57,19 @@ const Navbar = () => {
     }
   },[timeoutId])
 
-  // Handle admin logout
-  const handleAdminLogout = () => {
-    dispatch(signOutAdmin());
-  };
+  useEffect(()=>{
+    if(sdk.getUserObject()){
+      setLoginOrLogoutText("Logout")
+    }
+    else{
+      setLoginOrLogoutText("Login")
+    }
+  },[sdk.getUserObject()])
+
+
+  const handleUserLogout = ()=>{
+    dispatch(signOutUser())
+  }
 
 
   const [scrolled, setScrolled] = useState(false);
@@ -85,10 +95,12 @@ const Navbar = () => {
       return(
         <div className='relative font-queens  border-black p-0 '>
             <button
-              className='flex text-sm opacity-60 font-bold items-center cursor-pointer'
+              className='flex text-sm opacity-80 items-center cursor-pointer'
               onClick={() => setIsCurrencyDropdownOpen((prev) => !prev)}
             >
-              <span className='p-0 m-0  leading-[0px]'>{isDollar ? 'USD' : 'NGN'}</span>
+              <span className='p-0 m-0 mr-1 leading-[0px]'>{isDollar ? 'USD' : 'NGN'}</span>
+              {isDollar?<img src={sdk.usaFlagIcon} className='h-4 grayscale-[40%]'/>:
+              <img src={sdk.nigeriaFlagIcon} className='h-4 grayscale-[40%]'/>}
               <IoIosArrowDown className='' />
             </button>
 
@@ -132,15 +144,15 @@ const Navbar = () => {
 
 
 
-        <div className='flex  items-center gap-2'>
+        <div className='flex  items-center opacity-90 gap-4'>
             <CurrencyPair/>
             {/* <FiUser className='text-[1.5rem] ' /> */}
             {/* <PiUserBold className=' text-[1.5rem]'/> */}
             <div className='relative'>
               <Link to={sdk.cartRoute}>
-                <PiBag className='text-[1.7rem]'/>
+                <PiBag className='text-[1.5rem]'/>
               </Link>
-              <p className='absolute bg-yellow-600 rounded-full h-4 w-4 text-white flex items-center justify-center text-[8px] p-1 top-0 -right-1'>{cartItems}</p>
+              <p className='absolute bg-yellow-600 rounded-full h-3 w-3 text-white flex items-center justify-center text-[7px] p-1 top-0 -right-1'>{cartItems}</p>
             </div>
             {/* <BsHandbag className=' text-[1.4rem]' /> */}
         </div>
@@ -151,8 +163,8 @@ const Navbar = () => {
         {/* Desktop Links */}
         <div className='hidden md:flex items-center gap-4'>
           
-          <div onClick={handleAdminLogout} className='cursor-pointer'>
-              {adminObject?"Logout":"Login"}
+          <div onClick={handleUserLogout} className='cursor-pointer'>
+              {userObject?"Logout":"Login"}
           </div>
           
           <Link to={sdk.adminDashboardRoute} className='hover:text-gray-500'>
@@ -217,14 +229,16 @@ const Navbar = () => {
                   onClick={
                     ()=>{
                       if(menu.label==='Logout'||menu.label==="Login"){
-                        handleAdminLogout()
+                        handleUserLogout();
+                        setIsMenuOpen(false);
+                        navigate(sdk.userLoginRoute);
                       }
                       if(menu.label=='Dashboard')
                         toggleMenu()
                       }
                     }
                 >
-                  {menu.label}
+                  {menu.label.startsWith("Log")?loginOrLogoutText:menu.label}
                 </Link>
                 )}
                 {menu.imgUrl &&                  

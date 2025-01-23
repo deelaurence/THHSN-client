@@ -9,6 +9,7 @@ import { SlInfo } from 'react-icons/sl';
 import { Sdk } from '../../utils/sdk.ts';
 import PageHeader from '../../components/PageHeader.tsx';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { FcGoogle } from 'react-icons/fc';
 const sdk = new Sdk()
 const UserLogin: React.FC = () => {
@@ -19,22 +20,26 @@ const UserLogin: React.FC = () => {
   const userStatus = useSelector((state: RootState) => state.user.status);
   const userError = useSelector((state: RootState) => state.user.error);
   const userFormErrors = useSelector((state: RootState) => state.user.formErrors);
-  
+  const navigate = useNavigate()
   
   const handleSignIn = (e: React.FormEvent) => {
     e.preventDefault();
-    dispatch(signInUser({email,password}));
+    dispatch(signInUser({email,password})).then((result: any) => {
+          if (result.meta.requestStatus === 'fulfilled') {
+            navigate(sdk.cartRoute)
+          }
+        });
   };
 
-//   const {getUserObject}= new Sdk()
+  const {getUserObject,cartRoute}= new Sdk()
 
 
   //Redirect to user dashboard if still logged in
-//   useEffect(()=>{
-//     if(getUserObject()?.token){
-//       window.location.href=userDashboardRoute
-//     }
-//   },[])
+  useEffect(()=>{
+    if(getUserObject()?.token){
+      navigate(cartRoute)
+    }
+  },[])
 
 
   useEffect(()=>{

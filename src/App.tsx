@@ -1,5 +1,5 @@
 // src/App.tsx
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import AdminLogin from './pages/admin/AdminLogin';
 import AdminDashboard from './pages/admin/AdminDashboard';
@@ -27,12 +27,19 @@ import AccountVerified from './pages/user/AccountVerified.tsx';
 import ForgotPassword from './pages/user/ForgotPassword.tsx';
 import UpdatePassword from './pages/user/UpdatePassword.tsx';
 import Notifications from './components/Notifications.tsx';
-
-
+import { fetchExchangeRate} from './store/fetchProductSlice.ts';
+import { AppDispatch } from './store/store.ts';
+import { useDispatch } from 'react-redux';
+import GoogleSignInSuccess from './pages/user/GoogleSignInSuccess.tsx';
+import Checkout from './pages/checkout/Checkout.tsx';
+import ShippingOptions from './pages/admin/ShippingOptions.tsx';
 const sdk = new Sdk()
 
 const App: React.FC = () => {
-  
+  const dispatch = useDispatch<AppDispatch>();
+  useEffect(()=>{
+    dispatch(fetchExchangeRate())
+  },[])
   return (
     <>
   
@@ -44,6 +51,7 @@ const App: React.FC = () => {
       <Navbar/>
         <Routes>
             <Route path="/" element={<Home />} />
+            <Route path={sdk.checkoutRoute} element={<Checkout/>}/>
             <Route path={sdk.shopRoute} element={<MainShop />} />
             <Route path={sdk.shopRoute+'/:name'} element={<MainShop />} />
             <Route path={sdk.adminLoginRoute} element={<AdminLogin/>} />
@@ -55,7 +63,10 @@ const App: React.FC = () => {
             <Route path={sdk.updatePasswordRoute} element={<UpdatePassword/>} />
             <Route path={sdk.productDetailRoute+'/:name'} element={<ProductDetail/>}/>
             <Route path={sdk.cartRoute} element={<UserCart/>}/>
+            <Route path={sdk.googleDashboard} element={<GoogleSignInSuccess/>}/>
             <Route element={<AdminPrivateRoutes />}>
+
+              <Route path={sdk.shippingOptionsRoute} element={<ShippingOptions/>} />
               <Route path={sdk.adminDashboardRoute} element={<AdminDashboard/>} />
               <Route path={sdk.addProductRoute} element={<AddProduct/>} />
               <Route path={sdk.exchangeRateRoute} element={<ExchangeRate/>} />

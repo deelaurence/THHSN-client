@@ -37,9 +37,8 @@ const Slideshow: React.FC<Images> = ({ images }) => {
   };
 
   return (
-    <div className="relative  overflow-hidden slideshow h-[40rem]">
+    <div className="relative  overflow-hidden slideshow h-[32rem]">
       
-
       {/* Sliding Images Wrapper */}
       <div
         className="relative h-full flex transition-transform  duration-500 ease-in-out"

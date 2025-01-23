@@ -9,10 +9,13 @@ export class Sdk{
     private adminObjectKey:string='admin_object';
     private userObjectKey:string='user_object';
     adminLoginRoute:string='/admin/login'
+    googleDashboard:string='/dashboard'
     userLoginRoute:string='/user/login'
+    shippingOptionsRoute:string='/admin/shipping'
     userRegistrationRoute:string='/user/register'
     shopRoute:string='/shop'
     cartRoute:string='/cart'
+    checkoutRoute:string='/checkout'
     updatePasswordRoute:string="/update/password"
     emailSentRoute:string='/email/sent'
     forgotPasswordRoute:string='/forgot/password'
@@ -66,8 +69,8 @@ export class Sdk{
           link: "/blog",
         },
         {
-          label: `${this.getAdminObject()?"Logout":"Login"}`,
-          link: "/logout",
+          label: `Login`,
+          link: "/user/login",
         }
     ];
     placeholderImage:string="https://placehold.co/800@3x.png"
@@ -134,7 +137,7 @@ export class Sdk{
 
 
 
-    getUserObject():UserObject|undefined{
+    getUserObject(){
         const userObject:(string|null)=localStorage.getItem('user_object');
         if(userObject){
             return JSON.parse(userObject);

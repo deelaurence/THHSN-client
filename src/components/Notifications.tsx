@@ -11,36 +11,62 @@ interface NotificationsProps {
 const Notifications: React.FC<NotificationsProps> = ({ messageProps }) => {
   const {successFeedback,setSuccessFeedback} = useTheme()
   const adminStatus = useSelector((state: RootState) => state.admin.status);
+  const userStatus = useSelector((state: RootState) => state.user.status);
   const successMessage = useSelector((state: RootState) => state.admin.successFeedback);
   const adminError = useSelector((state: RootState) => state.admin.error);
+  const userError = useSelector((state: RootState) => state.user.error);
+  
+  const shippingStatus=useSelector((state: RootState)=> state.shipping.status);
+  const shippingSuccess=useSelector((state: RootState)=> state.shipping.successFeedback);
+  const shippingError=useSelector((state: RootState)=> state.shipping.error);
+
   const [visible, setVisible] = useState(false);
   const [notification, setNotification] = useState<{ type: "success" | "error" | null; message: string[] }>({
     type: null,
     message: []
   });
   
+  
   useEffect(() => {
-    if (adminStatus==="failed"||adminStatus === "succeeded"||successFeedback) {
+    if ([adminStatus, userStatus,shippingStatus].includes("failed") || [adminStatus, userStatus,shippingStatus].includes("succeeded") || successFeedback) {
         setVisible(true);
         
-        //coming from admin slice
-        if(adminStatus==='succeeded'){
-          const newMessages = [...notification.message, successMessage || ""];
-          if (newMessages.length > 2) newMessages.shift();
-          setNotification({type:"success", message: newMessages});
+        const newMessages = [...notification.message];
+        
+        if (adminStatus === 'succeeded') {
+          newMessages.push(successMessage || "");
         }
-        //coming from client side
-        if(successFeedback){
-          const newMessages = [...notification.message, successFeedback || ""];
-          if (newMessages.length > 2) newMessages.shift();
-          setNotification({type:"success", message: newMessages});
+        
+        if (userStatus === 'succeeded') {
+          newMessages.push(successMessage || "");
         }
-        //coming from admin slice
-        if(adminStatus=="failed"){
-          const newMessages = [...notification.message, adminError || ""];
-          if (newMessages.length > 2) newMessages.shift();
-          setNotification({type:"error", message: newMessages});
+        
+        if (successFeedback) {
+          newMessages.push(successFeedback || "");
         }
+        
+        if (adminStatus === "failed") {
+          newMessages.push(adminError || "");
+        }
+        
+        if (userStatus === "failed") {
+          newMessages.push(userError || "");
+        }
+        
+        if (shippingStatus === 'succeeded') {
+          newMessages.push(shippingSuccess || "");
+        }
+        
+        if (shippingStatus === "failed") {
+          newMessages.push(shippingError || "");
+        }
+        
+        if (newMessages.length > 2) newMessages.shift();
+        
+        setNotification({
+          type: newMessages.some(msg => msg.includes("failed")) ? "error" : "success",
+          message: newMessages
+        });
         const timer = setTimeout(() => {
         setVisible(false);
         setSuccessFeedback("")
@@ -48,7 +74,7 @@ const Notifications: React.FC<NotificationsProps> = ({ messageProps }) => {
         return () => clearTimeout(timer);
     }
     
-  }, [adminStatus,successFeedback]);
+  }, [adminStatus,userStatus,successFeedback,shippingStatus]);
 
   return (
     notification.message&&notification.message.length>0&&

@@ -6,10 +6,11 @@ import { RootState, AppDispatch } from '../../store/store.ts';
 import FormInput from '../../components/FormInput.tsx';
 import Button from '../../components/Button.tsx'
 import { SlInfo } from 'react-icons/sl';
-import { Sdk } from '../../utils/sdk.ts';
+import { sdk, Sdk } from '../../utils/sdk.ts';
 import PageHeader from '../../components/PageHeader.tsx';
+import { useNavigate } from 'react-router-dom';
 const AdminLogin: React.FC = () => {
-
+  const navigate = useNavigate()
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -20,7 +21,11 @@ const AdminLogin: React.FC = () => {
   const adminFormErrors = useSelector((state: RootState) => state.admin.formErrors);
   const handleSignIn = (e: React.FormEvent) => {
     e.preventDefault();
-    dispatch(signInAdmin({email,password}));
+    dispatch(signInAdmin({ email, password })).then((result: any) => {
+      if (result.meta.requestStatus === 'fulfilled') {
+        navigate(sdk.adminDashboardRoute)
+      }
+    });
   };
 
   const {getAdminObject,adminDashboardRoute}= new Sdk()

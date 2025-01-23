@@ -245,7 +245,7 @@ const ProductDetail = () => {
                                                 }}
                                                 className='w-[90%] text-sm'>
                                                 {variation}
-                                                <span className=' text-[10px] opacity-40 italic'>  *{quantity} in stock</span>  
+                                                {isAdmin&&<span className=' text-[10px] opacity-40 italic'>  *{quantity} in stock</span>}  
                                             </li>
                                             {index===selectedVariant&&<IoMdCheckmark className=''/>}
                                         </div>

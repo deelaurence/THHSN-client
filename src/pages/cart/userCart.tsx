@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Sdk } from "../../utils/sdk";
 import { Cart } from "../../interfaces/cart";
+
 import { IoAddCircleOutline, IoRemoveCircleOutline } from "react-icons/io5";
 import { AiOutlineDelete } from "react-icons/ai";
 import Button from "../../components/Button";
@@ -10,7 +11,7 @@ import { MdOutlineRemoveShoppingCart } from "react-icons/md";
 import { Link } from "react-router-dom";
 import PriceToast from "../../components/PriceToast";
 const userCart = () => {
-    const {cartItems,updateCartcount}=useTheme()
+    const {cartItems,updateCartcount,setCartTotal}=useTheme()
     const [cart, setCart] = useState<Cart[]>(sdk.getCart());
 
     const increaseQuantity = (id: string, variantName: string) => {
@@ -40,7 +41,9 @@ const userCart = () => {
     }, [cart]); 
 
     const getTotal = () => {
-        return cart.reduce((total, item) => total + item.price * item.quantity, 0);
+        const total = cart.reduce((total, item) => total + item.price * item.quantity, 0);
+        setCartTotal(total)
+        return total
     };
 
     return (
@@ -50,10 +53,14 @@ const userCart = () => {
             {cartItems>0?<section>
                 <div className=" flex flex-col gap-12">
                     {cart.map(item => (
+                        
                         <div className="pb-4 flex gap-4 border-b border-b-neutral-300 dark:border-b-neutral-600" key={`${item.product._id}-${item.variant.name}`}>
-                            <div className="w-32 h-44 flex-shrink-0 overflow-hidden">
-                                <img className="object-cover w-full h-full" src={item.product.coverImage ?? item.product.images[0]} alt={item.product.name} />
-                            </div>
+                            <Link
+                              to={`${sdk.productDetailRoute}/${item.product.name}`}> 
+                                    <div className="w-32 h-44 flex-shrink-0 overflow-hidden">
+                                        <img className="object-cover w-full h-full" src={item.product.coverImage ?? item.product.images[0]} alt={item.product.name} />
+                                    </div>
+                            </Link>
                             
                             <div className=" flex flex-col gap-2">
                                 <h3 className="font-queens opacity-90 leading-7 text-xl capitalize">{item.product.name}</h3>
@@ -73,7 +80,9 @@ const userCart = () => {
                     <h2 className="font-queens text-3xl opacity-80">Estimated Total</h2>
                     <PriceToast price={getTotal()} className="text-2xl font-queens opacity-90"/>
                 </div>
-                <Button extraClass="my-12 text-secondary bg-primary" label="checkout" size="large" loading={false}/>
+                <Link to={sdk.checkoutRoute}>
+                    <Button extraClass="my-12 text-secondary bg-primary" label="checkout" size="large" loading={false}/>
+                </Link>
             </section>:
             <div className="flex flex-col items-center justify-center h-[70vh]">
                 <h2 className="font-queens text-3xl opacity-80">Cart Empty</h2>

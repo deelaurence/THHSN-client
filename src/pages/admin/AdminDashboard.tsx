@@ -13,6 +13,7 @@ import { BsGraphUpArrow } from "react-icons/bs";
 import { TbArrowsExchange2 } from "react-icons/tb"
 import { LuUsers2 } from "react-icons/lu";
 import { HiOutlineLightBulb } from "react-icons/hi";
+import { LiaShippingFastSolid } from "react-icons/lia";
 const data = [
   { color: '#FF6384', percentage: 80,label:"Hair Products" }, // 40% - Red
   { color: '#36A2EB', percentage: 10 ,label:"Wig Bundles" }, // 30% - Blue
@@ -55,6 +56,11 @@ const menuItems = [
     label: 'Exchange Rate',
     route: sdk.exchangeRateRoute, 
     icon: <TbArrowsExchange2 />,
+  },
+  {
+    label: 'Shipping',
+    route: sdk.shippingOptionsRoute, 
+    icon: <LiaShippingFastSolid/>,
   },
   {
     label: 'Random Facts',

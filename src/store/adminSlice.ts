@@ -245,11 +245,14 @@ const adminSlice = createSlice({
   reducers: {
     signOutAdmin(state) {
       state.admin = null;
-      window.history.pushState({}, '', sdk.adminLoginRoute);
+      window.location.href=sdk.adminLoginRoute
       sdk.clearAdminObject()
     },
     formIsValid(state,action){
       state.formErrors.push(action.payload)
+      if(state.formErrors.length>2){
+        state.formErrors.shift()
+      }
     },
     setEditProductMode(state,action){
       state.editingProduct=action.payload

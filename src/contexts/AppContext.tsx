@@ -9,10 +9,14 @@ interface ThemeContextType{
     cartItems: number;
     isDollar:boolean;
     successFeedback:string;
+    cartTotal:number;
+    totalToCheckout:number;
+    setCartTotal: React.Dispatch<React.SetStateAction<number>>
     setSuccessFeedback:(payload:string)=>void;
     toggleCurrency:(payload:boolean)=>void
     setCartItems: (cartItems:number)=>void;
     updateCartcount: ()=>void;
+    setTotalToCheckout:React.Dispatch<React.SetStateAction<number>>
     setIsAdmin: (isAdmin:boolean)=>void;
     toggleTheme: ()=>void;
 }
@@ -28,7 +32,8 @@ export const ThemeProvider:React.FC<{children: React.ReactNode}> = ({children})=
     const [isAdmin, setIsAdmin]=React.useState(sdk.getAdminObject()?true:false)
     const [isDollar, setIsDollar]=React.useState(sdk.persistedIsDollar==="true"?true:false)
     const [successFeedback, setSuccessFeedback]=React.useState<string>("")
-    
+    const [cartTotal,setCartTotal]=React.useState(0)    
+    const [totalToCheckout, setTotalToCheckout] = React.useState(0)
 
     document.documentElement.classList.add(theme)
     
@@ -69,7 +74,7 @@ export const ThemeProvider:React.FC<{children: React.ReactNode}> = ({children})=
 
 
     return (
-        <ThemeContext.Provider value={{ theme,isAdmin,setIsAdmin,successFeedback,setSuccessFeedback, toggleTheme,cartItems,setCartItems,updateCartcount, toggleCurrency, isDollar }}>
+        <ThemeContext.Provider value={{ totalToCheckout,setTotalToCheckout,cartTotal,setCartTotal,theme,isAdmin,setIsAdmin,successFeedback,setSuccessFeedback, toggleTheme,cartItems,setCartItems,updateCartcount, toggleCurrency, isDollar }}>
           {children}
         </ThemeContext.Provider>
     );

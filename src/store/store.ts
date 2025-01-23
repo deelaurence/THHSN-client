@@ -5,14 +5,15 @@ import { apiClient } from '../utils/apiClient';
 import productReducer from './fetchProductSlice'
 import factReducer from './randomFacts'
 import userReducer, { signOutUser } from './userSlice'
-
+import shippingReducer from './shippingSlice'
 // Configure the Redux store
 const store = configureStore({
   reducer: {
     admin: adminReducer,
     product:productReducer,
     facts:factReducer,
-    user:userReducer
+    user:userReducer,
+    shipping:shippingReducer
   },
   // Enabling Redux DevTools if they are available
   devTools: true, // Recommended way to enable DevTools only in development

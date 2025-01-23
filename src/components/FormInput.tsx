@@ -94,6 +94,7 @@ const FormInput: React.FC<FormInputProps> = ({
         />
       ) : type === 'password' ? (
         <div className="relative">
+          <label className="block mb-2 text-[10px] opacity-80">{placeholder}</label>
           <input
             placeholder={placeholder}
             type={showPassword ? 'text' : 'password'} // Toggle between text and password type
@@ -112,16 +113,19 @@ const FormInput: React.FC<FormInputProps> = ({
           </span>
         </div>
       ) : (
-        <input
-          placeholder={placeholder}
-          type={type}
-          name={name}
-          disabled={disabled}
-          value={value}
-          required={required}
-          onChange={handleSanitize}
-          className="w-full pl-1 py-2 border-b dark:border-neutral-600 bg-secondary border-neutral-700 shadow-sm focus:outline-none focus:dark:border-b-neutral-100 dark:bg-primary dark:text-neutral-300"
-        />
+        <div>
+          <label className="block mb-2 text-[10px] opacity-80">{placeholder}</label>
+          <input
+            placeholder={placeholder}
+            type={type}
+            name={name}
+            disabled={disabled}
+            value={value}
+            required={required}
+            onChange={handleSanitize}
+            className="w-full pl-1 py-2 border-b dark:border-neutral-600 bg-secondary border-neutral-700 shadow-sm focus:outline-none focus:dark:border-b-neutral-100 dark:bg-primary dark:text-neutral-300"
+          />
+        </div>
       )}
       {fieldTip && (
         <p className="text-primary dark:opacity-30 opacity-50 dark:text-secondary text-[10px] py-2 flex gap-1 items-center input-errors">

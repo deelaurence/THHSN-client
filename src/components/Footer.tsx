@@ -1,5 +1,13 @@
+import { useLocation } from 'react-router-dom';
+import { sdk } from '../utils/sdk';
 
 const Footer = () => {
+  const location = useLocation();
+
+  if (location.pathname === sdk.checkoutRoute) {
+    return null;
+  }
+
   const links = [
     { category: "Say Hello", items: [
         { name: "About Us", url: "/about" },

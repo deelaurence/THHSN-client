@@ -11,7 +11,7 @@ import { MdOutlineRemoveShoppingCart } from "react-icons/md";
 import { Link } from "react-router-dom";
 import PriceToast from "../../components/PriceToast";
 const userCart = () => {
-    const {cartItems,updateCartcount,setCartTotal}=useTheme()
+    const {cartItems,updateCartcount,updateCartSum}=useTheme()
     const [cart, setCart] = useState<Cart[]>(sdk.getCart());
 
     const increaseQuantity = (id: string, variantName: string) => {
@@ -42,7 +42,8 @@ const userCart = () => {
 
     const getTotal = () => {
         const total = cart.reduce((total, item) => total + item.price * item.quantity, 0);
-        setCartTotal(total)
+        updateCartSum(total)
+        // setCartTotal(total)
         return total
     };
 

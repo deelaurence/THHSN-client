@@ -5,65 +5,64 @@ import FormInput from '../../components/FormInput';
 import { SlInfo } from 'react-icons/sl';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState, AppDispatch } from '../../store/store.ts';
-import { fetchShippingOptions, createShippingOption} from '../../store/shippingSlice.ts';
+import { fetchShippingOptions, createShippingOption } from '../../store/shippingSlice.ts';
 import { sdk } from '../../utils/sdk.ts';
 
 const ShippingOptions = () => {
     const dispatch = useDispatch<AppDispatch>();
 
+    // Redux state
     const shippingOptions = useSelector((state: RootState) => state.shipping.shippingOptions);
     const shippingStatus = useSelector((state: RootState) => state.shipping.status);
     const shippingError = useSelector((state: RootState) => state.shipping.error);
     const successFeedback = useSelector((state: RootState) => state.shipping.successFeedback);
 
+    // Component state
     const [shippingType, setShippingType] = useState<'local' | 'international'>('local');
-    const [states, setStates] = useState<{ location: string; price: number }[]>(shippingOptions);
+    const [states, setStates] = useState<{ location: string; price: number }[]>([]);
     const [internationalPrice, setInternationalPrice] = useState<number | ''>('');
 
-    // Fetch all 36 states in Nigeria
-    // useEffect(() => {
-    //     if (shippingType === 'local' && shippingOptions.length===0) {
-    //         console.log("fetching states")
-    //         fetch('https://nga-states-lga.onrender.com/fetch') // Replace with your actual API endpoint
-    //             .then((response) => response.json())
-    //             .then((data) =>
-    //                 setStates(data.map((state: string) => ({ location: state, price: 0 })))
-    //             )
-    //             .catch((error) => console.error('Error fetching states:', error));
-    //     }
-    // }, [shippingType]);
-    // Fetch existing shipping options
+    // Fetch shipping options on mount
     useEffect(() => {
-        dispatch(fetchShippingOptions());
-        setStates(shippingOptions)
-    }, [dispatch]);
+        if (shippingOptions.length === 0) {
+            dispatch(fetchShippingOptions());
+        }
+    }, [dispatch, shippingOptions]);
+
+    // Sync states with shipping options from Redux
+    useEffect(() => {
+        if (shippingType === 'local') {
+            setStates(shippingOptions.filter(option => option.location !== 'international'));
+        } else {
+            const intlOption = shippingOptions.find(option => option.location === 'international');
+            console.log(internationalPrice)
+            console.log(intlOption)
+            setInternationalPrice(internationalPrice||intlOption?.price||'');
+        }
+    }, [shippingType, shippingOptions]);
 
     const handleStatePriceChange = (index: number, price: number) => {
-        setStates((prevStates) => {
-            const updatedStates = [...prevStates];
-            updatedStates[index].price = price;
-            return updatedStates;
-        });
+        setStates((prevStates) =>
+            prevStates.map((state, i) =>
+                i === index ? { ...state, price } : state
+            )
+        );
     };
-
+    
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        setStates([...states,{location:"international",price:Number(internationalPrice)}])
-        // return
-        dispatch(createShippingOption({states}))
 
-        // if (shippingType === 'local') {
-        //     // Dispatch local shipping options
-        //     dispatch(updateShippingOption({ type: 'local', states }));
-        // } else {
-        //     // Dispatch international shipping option
-        //     dispatch(updateShippingOption({ type: 'international', price: internationalPrice }));
-        // }
+        // Prepare the payload
+        const payload ={ states: [...states, { location: 'international', price: Number(internationalPrice) }] };
+
+
+        dispatch(createShippingOption(payload));
     };
 
+    const isSubmitDisabled = false
     return (
-        <div className="min-h-screen pb-4 px-6 sm-px-16">
+        <div className="min-h-screen pb-4 px-6 sm:px-16">
             <form onSubmit={handleSubmit}>
                 {/* Page Header */}
                 <CategoryHeader
@@ -72,21 +71,29 @@ const ShippingOptions = () => {
                 />
 
                 {/* Shipping Type Selector */}
-                <div className="mt-12 mb-16 gap-2 flex  [&>*]:px-4 border-b">
+                <div className="mt-12 [&>*]:w-1/2 mb-16 gap-2 flex [&>*]:px-2 ">
                     <div
-                        className={`flex gap-2 items-center ${shippingType === 'local' ? 'border-b border-b-neutral-600 ' : 'border-b border-b-neutral-600 opacity-30'}`}
+                        className={`flex gap-2 pb-1 border-b border-neutral-600 items-center cursor-pointer ${
+                            shippingType === 'local'
+                                ? ''
+                                : 'opacity-30'
+                        }`}
                         onClick={() => setShippingType('local')}
                     >
-                        <img className='h-4' src={sdk.nigeriaFlagIcon} alt="" />
+                        <img className="h-4" src={sdk.nigeriaFlagIcon} alt="Nigeria Flag" />
                         Local
-                    </div>    
+                    </div>
                     <div
-                        className={`flex gap-2 items-center ${shippingType === 'international' ? 'border-b border-b-neutral-600 ' : 'border-b border-b-neutral-600 opacity-30'}`}
+                        className={`flex gap-2 border-b border-neutral-600  pb-1 items-center cursor-pointer ${
+                            shippingType === 'international'
+                                ? ''
+                                : 'opacity-30'
+                        }`}
                         onClick={() => setShippingType('international')}
                     >
-                        <img className='h-4' src={sdk.usaFlagIcon} alt="" />
+                        <img className="h-4" src={sdk.usaFlagIcon} alt="USA Flag" />
                         International
-                    </div>    
+                    </div>
                 </div>
 
                 {/* Shipping Form */}
@@ -94,18 +101,13 @@ const ShippingOptions = () => {
                     <div className="space-y-4">
                         {states.map((state, index) => (
                             <div key={state.location} className="flex items-center gap-4">
-                                <p className="w-1/3">{state.location}</p>
+                                <p className="w-1/3 dark:bg-primary-light bg-neutral-300">{state.location}</p>
                                 <FormInput
                                     type="number"
                                     required={false}
-                                    placeholder="Shipping Price In NGN"
-                                    value={
-                                        state.price ||
-                                        shippingOptions.find(
-                                            (option) => option.location === state.location
-                                        )?.price || ''
-                                    }
-                                    onChange={(e) =>
+                                    placeholder="Shipping Price in NGN"
+                                    value={state.price || ''}
+                                    onChange={e =>
                                         handleStatePriceChange(index, Number(e.target.value))
                                     }
                                 />
@@ -119,8 +121,8 @@ const ShippingOptions = () => {
                         <FormInput
                             type="number"
                             placeholder="International Shipping Price in NGN"
-                            value={internationalPrice||states.find(item=> item.location=="international")?.price || ''}
-                            onChange={(e) => setInternationalPrice(Number(e.target.value))}
+                            value={internationalPrice}
+                            onChange={e => setInternationalPrice(Number(e.target.value))}
                             required
                         />
                     </div>
@@ -129,7 +131,7 @@ const ShippingOptions = () => {
                 {/* Submit Button */}
                 <Button
                     extraClass="bg-primary fixed bottom-0 text-secondary"
-                    disabled={shippingStatus === 'loading'}
+                    disabled={isSubmitDisabled || shippingStatus === 'loading'}
                     size="large"
                     label="Save Changes"
                     loading={shippingStatus === 'loading'}

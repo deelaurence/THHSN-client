@@ -1,12 +1,12 @@
 // src/App.tsx
-import React, { useEffect } from 'react';
+import React, { useEffect,useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import AdminLogin from './pages/admin/AdminLogin';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import Home from './pages/Home';
 import Placeholder from './components/PlaceHolderComponent.tsx'; 
 import Navbar from './components/Navbar.tsx';
-import AdminPrivateRoutes from './components/ProtectedRoute.tsx';
+import {AdminPrivateRoutes,UserPrivateRoutes} from './components/ProtectedRoute.tsx';
 import { Sdk } from './utils/sdk.ts';
 import AddProduct from './pages/admin/AddProduct.tsx';
 import UserLogin from './pages/user/UserLogin.tsx';
@@ -33,6 +33,10 @@ import { useDispatch } from 'react-redux';
 import GoogleSignInSuccess from './pages/user/GoogleSignInSuccess.tsx';
 import Checkout from './pages/checkout/Checkout.tsx';
 import ShippingOptions from './pages/admin/ShippingOptions.tsx';
+import Receipt from './pages/receipt/Receipt.tsx';
+//@ts-ignore
+import FontFaceObserver from 'fontfaceobserver'
+import Loader from './components/Loader.tsx';
 const sdk = new Sdk()
 
 const App: React.FC = () => {
@@ -40,10 +44,25 @@ const App: React.FC = () => {
   useEffect(()=>{
     dispatch(fetchExchangeRate())
   },[])
+
+  
+  
+  const [fontLoaded, setFontLoaded] = useState(false);
+  
+
+  useEffect(() => {
+    const font = new FontFaceObserver("Frunchy"); // Replace with your actual font name
+    font.load().then(() => {
+      setFontLoaded(true);
+    }).catch(() => {
+      console.error("Font failed to load.");
+    });
+  }, []);
+  
   return (
     <>
   
-    <div className='dark:bg-primary sm:hidden dark:text-secondary text-primary bg-secondary'>
+    {fontLoaded?<div className='dark:bg-primary sm:hidden dark:text-secondary text-primary bg-secondary'>
     <ThemeProvider>
     <Notifications/>
     <Router>
@@ -51,7 +70,9 @@ const App: React.FC = () => {
       <Navbar/>
         <Routes>
             <Route path="/" element={<Home />} />
-            <Route path={sdk.checkoutRoute} element={<Checkout/>}/>
+            <Route element={<UserPrivateRoutes/>}>
+              <Route path={sdk.checkoutRoute} element={<Checkout/>}/>
+            </Route>
             <Route path={sdk.shopRoute} element={<MainShop />} />
             <Route path={sdk.shopRoute+'/:name'} element={<MainShop />} />
             <Route path={sdk.adminLoginRoute} element={<AdminLogin/>} />
@@ -63,6 +84,8 @@ const App: React.FC = () => {
             <Route path={sdk.updatePasswordRoute} element={<UpdatePassword/>} />
             <Route path={sdk.productDetailRoute+'/:name'} element={<ProductDetail/>}/>
             <Route path={sdk.cartRoute} element={<UserCart/>}/>
+            <Route path={sdk.receiptRoute} element={<Receipt/>}/>
+            
             <Route path={sdk.googleDashboard} element={<GoogleSignInSuccess/>}/>
             <Route element={<AdminPrivateRoutes />}>
 
@@ -84,7 +107,11 @@ const App: React.FC = () => {
         <Footer/>
     </Router>
     </ThemeProvider>
+    </div>:
+    <div className='w-screen h-screen flex items-center justify-center'>
+      <Loader/>
     </div>
+    }
     </>
   );
 };

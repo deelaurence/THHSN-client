@@ -6,6 +6,7 @@ import productReducer from './fetchProductSlice'
 import factReducer from './randomFacts'
 import userReducer, { signOutUser } from './userSlice'
 import shippingReducer from './shippingSlice'
+import { sdk } from '../utils/sdk';
 // Configure the Redux store
 const store = configureStore({
   reducer: {
@@ -32,7 +33,7 @@ apiClient.interceptors.response.use(
       // Dispatch sign-out action to Redux store if 
       //admin tries to access  a restricted page 
       //and their token is expired or any other 401
-      if(error.response.config.url.includes("admin")){
+      if(sdk.getAdminObject()){
         store.dispatch(signOutAdmin());
       }else{
         store.dispatch(signOutUser());

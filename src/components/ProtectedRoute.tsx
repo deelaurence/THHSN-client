@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from "../store/store";
 import { Sdk } from "../utils/sdk";
 const sdk = new Sdk();
-const AdminPrivateRoutes = () => {
+export const AdminPrivateRoutes = () => {
     
     const adminObject = useSelector((state: RootState) =>{
         return state.admin.admin
@@ -15,4 +15,15 @@ const AdminPrivateRoutes = () => {
     </>
     : <Navigate to={sdk.adminLoginRoute} />;
 };
-export default AdminPrivateRoutes;
+export const UserPrivateRoutes = () => {
+    
+    const userObject = useSelector((state: RootState) =>{
+        return state.user.user
+    }) 
+    return userObject?.token? 
+    <>
+    
+    <Outlet /> 
+    </>
+    : <Navigate to={sdk.userLoginRoute} />;
+};

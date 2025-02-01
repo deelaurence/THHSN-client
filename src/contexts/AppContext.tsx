@@ -16,6 +16,7 @@ interface ThemeContextType{
     toggleCurrency:(payload:boolean)=>void
     setCartItems: (cartItems:number)=>void;
     updateCartcount: ()=>void;
+    updateCartSum: (total:number)=>void;
     setTotalToCheckout:React.Dispatch<React.SetStateAction<number>>
     setIsAdmin: (isAdmin:boolean)=>void;
     toggleTheme: ()=>void;
@@ -49,6 +50,10 @@ export const ThemeProvider:React.FC<{children: React.ReactNode}> = ({children})=
     }
 
 
+    const updateCartSum = (total:number)=>{
+        setCartTotal(total)
+    }
+
     
     useEffect(()=>{
         const savedTheme = sdk.theme
@@ -74,7 +79,7 @@ export const ThemeProvider:React.FC<{children: React.ReactNode}> = ({children})=
 
 
     return (
-        <ThemeContext.Provider value={{ totalToCheckout,setTotalToCheckout,cartTotal,setCartTotal,theme,isAdmin,setIsAdmin,successFeedback,setSuccessFeedback, toggleTheme,cartItems,setCartItems,updateCartcount, toggleCurrency, isDollar }}>
+        <ThemeContext.Provider value={{ totalToCheckout,setTotalToCheckout,updateCartSum,cartTotal,setCartTotal,theme,isAdmin,setIsAdmin,successFeedback,setSuccessFeedback, toggleTheme,cartItems,setCartItems,updateCartcount, toggleCurrency, isDollar }}>
           {children}
         </ThemeContext.Provider>
     );

@@ -3,6 +3,7 @@ import { UserObject } from '../interfaces/userInterface';
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { apiClient } from '../utils/apiClient';
 import { Sdk } from '../utils/sdk';
+import { IPayment } from '../interfaces/paymentPayload';
 const sdk = new Sdk()
 
 interface UserState {
@@ -122,6 +123,26 @@ export const updatePassword = createAsyncThunk(
 );
 
 
+export const makePayment = createAsyncThunk(
+    'user/makePayment',
+        async (paymentDetails:IPayment) => {       
+        try {
+            const headers={ Authorization: `Bearer ${sdk.getUserObject()?.token}` }
+            const response = await apiClient.post(`/v1/payment/${paymentDetails.merchant}/initiate`,  
+              paymentDetails,{headers});
+            return response.data;
+        } catch (error:any) {
+            if(error.response){
+              throw error.response.data.reason
+            }
+            else{
+              throw "Failed to connect, Try again"
+            }
+        }
+  }
+);
+
+
 
 
 
@@ -190,6 +211,21 @@ const userSlice = createSlice({
         state.status = 'failed';
         console.log(action.error.message)
         state.error = action.error.message || 'Sign-in failed';
+      })
+
+      .addCase(makePayment.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(makePayment.fulfilled, (state,action) => {
+        state.status = 'succeeded';
+        state.error=''
+        console.log(action.payload)
+        window.location.href=action.payload.payload.redirect
+      })
+      .addCase(makePayment.rejected, (state, action) => {
+        state.status = 'failed';
+        console.log(action.error.message)
+        state.error = action.error.message || 'Payment Failed';
       })
 
       .addCase(forgotPassword.pending, (state) => {

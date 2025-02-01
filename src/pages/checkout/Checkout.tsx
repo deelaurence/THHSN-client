@@ -9,24 +9,29 @@ import PriceToast from '../../components/PriceToast';
 import { useNavigate } from 'react-router-dom';
 import { sdk } from '../../utils/sdk';
 import { BsArrowRight } from 'react-icons/bs';
+import SelectMerchant from './SelectMerchant';
+import { IPayment } from '../../interfaces/paymentPayload';
 const Checkout = () => {
-    const [shippingType, setShippingType] = useState('local'); // local or international
+    const availableShippingLocations = useSelector((state:RootState)=>state.shipping.availableShippingOptions)
+    const user = useSelector((state:RootState)=>state.user.user)
+    const [shippingType, setShippingType] = useState<"local"|"international">('local'); // local or international
     const [shippingFees,setShippingFees] = useState(0)
     const [states, setStates] = useState<{ location: string; price: number }[]>([]);
     const [cities, setCities] = useState([]);
     const {cartTotal}=useTheme()
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [address, setAddress] = useState('');
+    const [firstName, setFirstName] = useState(user?.firstName||user?.name?.split(' ')[0]||'');
+    const [lastName, setLastName] = useState(user?.lastName||'');
+    const [address, setAddress] = useState(user?.address||'');
     const [country, setCountry] = useState('');
     const [internationalCity, setInternationalCity] = useState('');
     const [stateOrProvince, setStateOrProvince] = useState('');
     const [postcode, setPostcode] = useState('');
-    const [telephone, setTelephone] = useState('');
-
+    const [telephone, setTelephone] = useState(user?.phonenumber||'');
+    const [showMerchants,setShowMerchants]=useState(false)
     const [selectedState, setSelectedState] = useState('');
+    const [selectedCity, setSelectedCity] = useState('');
     const dispatch = useDispatch<AppDispatch>()
-    const availableShippingLocations = useSelector((state:RootState)=>state.shipping.availableShippingOptions) 
+     
     const navigate  = useNavigate()
 //   // Fetch all 36 states in Nigeria
 //   useEffect(() => {
@@ -66,34 +71,68 @@ useEffect(() => {
     }
   }, [selectedState]);
 
-  const handleShippingTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleShippingTypeChange = (e:any) => {
     setShippingType(e.target.value);
-    
     setSelectedState(''); // Reset state selection for local shipping
     setCities([]); // Reset cities
   };
 
   useEffect(()=>{
-    console.log(shippingType)
     if(shippingType==='international'){
         setShippingFees(availableShippingLocations.find(item => item.location === 'international')?.price || 0)
     }
   },[shippingType])
 
-  console.log(shippingFees,cartTotal)
+  let selectMerchant = (e:any)=>{
+    e.preventDefault()
+    // console.log(sdk.getCart())
+    // return
+    setShowMerchants(true)
+  }
+
 
   const handleStateChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedState(e.target.value); // This will trigger city fetching
     if(availableShippingLocations.length===0) return
     setShippingFees(availableShippingLocations.find(item => item.location === selectedState)?.price || 0)
   };
+  const handleCityChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedCity(e.target.value); // This will trigger city fetching
+  };
+
+
+
+
+
+  const shippingDetails:IPayment = {
+    shippingType,
+    shippingFees,
+    cartTotal,
+    firstName,
+    lastName,
+    address,
+    country,
+    internationalCity,
+    stateOrProvince,
+    selectedState,
+    selectedCity,
+    postcode,
+    telephone,
+    grandTotal:shippingFees+cartTotal
+  };
+
+
+
   return (
-    <div className="py-12 mb-44">
+    <div className="py-12 relative mb-44">
+      {showMerchants&&<SelectMerchant setShowMerchants={setShowMerchants} shippingDetails={shippingDetails}/>}
       <div className='px-6'>
             <h2 className="uppercase mb-2">Supply your billing address</h2>
             <p className="text-xs opacity-60">To place your order, you must supply your billing address</p>
 
-            <form className='pt-16'>
+            <form 
+            onSubmit={selectMerchant}
+            className='pt-16'>
             {/* First Name and Last Name */}
             <FormInput type="text" value={firstName} required={true} onChange={(e) => {setFirstName(e.target.value)}} placeholder="First Name" />
             <FormInput type="text" value={lastName} required={true} onChange={(e) => {setLastName(e.target.value)}} placeholder="Last Name" />
@@ -138,6 +177,7 @@ useEffect(() => {
                 <label className="block mb-2 text-[10px] opacity-80">City</label>
                 <select 
                 required={true}
+                onChange={handleCityChange}
                 className="border-b dark:border-b-neutral-600 border-neutral-600 pl-1 p-2 w-full bg-transparent focus:outline-none focus:border-b-2 focus:border-primary">
                     
                     <option value="">Select a city</option>
@@ -169,8 +209,8 @@ useEffect(() => {
             <FormInput type="text" value={address} required={true} onChange={(e) => {setAddress(e.target.value)}} placeholder="Address" />
             <FormInput type="number" value={telephone} required={true} onChange={(e) => {setTelephone(e.target.value)}} placeholder="Telephone" />
             <div className='w-screen fixed left-0  bottom-0'>
-                <div className='px-6 pt-4 pb-2  flex flex-col gap-1 bg-secondary text-primary border-t border-t-neutral-700'>
-                    <h3 className='text-xl font-bold mb-2'>Price Details</h3>
+                <div className='px-6 pt-4 pb-2 flex flex-col gap-1 bg-secondary text-primary dark:bg-primary dark:text-secondary border-t border-t-neutral-700 dark:border-t-neutral-800 shadow-sm'>
+                    <h3 className='font-bold'>Price Details</h3>
                     <div className='flex items-end justify-between text-xs'>
                         <p className='opacity-70'>Product price &nbsp; </p>
                         <PriceToast className='text-sm' price={cartTotal}/>
@@ -180,12 +220,14 @@ useEffect(() => {
                         <PriceToast className='text-sm' price={shippingFees}/>
                     </div>
                 </div>
-                <div className='dark:bg-secondary border-t border-t-neutral-400 bg-secondary text-primary dark:text-primary flex px-6 py-5  justify-between '>
+                <div className='dark:bg-primary border-t border-t-neutral-400 dark:border-t-neutral-800 bg-secondary text-primary dark:text-secondary flex px-6 py-2  justify-between '>
                     <div className='flex'>
                         <p className='opacity-70'>Total &nbsp;</p>
                         <PriceToast className='' price={shippingFees+cartTotal}/>
                     </div>
-                    <div className='flex items-center gap-2'>
+                    <div 
+                    onClick={()=>{}}
+                    className='flex items-center gap-2'>
                         <button className='uppercase'>Continue </button>
                         <BsArrowRight/>
                     </div>

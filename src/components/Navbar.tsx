@@ -95,7 +95,7 @@ const Navbar = () => {
       return(
         <div className='relative font-queens  border-black p-0 '>
             <button
-              className='flex text-sm opacity-80 items-center cursor-pointer'
+              className='flex text-sm opacity-80 gap-[2px] items-center cursor-pointer'
               onClick={() => setIsCurrencyDropdownOpen((prev) => !prev)}
             >
               <span className='p-0 m-0 mr-1 leading-[0px]'>{isDollar ? 'USD' : 'NGN'}</span>

@@ -72,49 +72,49 @@ const Navbar = () => {
   }
 
 
-  const [scrolled, setScrolled] = useState(false);
+  // const [scrolled, setScrolled] = useState(false);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 0) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
-    };
+  // useEffect(() => {
+  //   const handleScroll = () => {
+  //     if (window.scrollY > 0) {
+  //       setScrolled(true);
+  //     } else {
+  //       setScrolled(false);
+  //     }
+  //   };
 
-    window.addEventListener('scroll', handleScroll);
+  //   window.addEventListener('scroll', handleScroll);
 
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
+  //   return () => {
+  //     window.removeEventListener('scroll', handleScroll);
+  //   };
+  // }, []);
 
 
   const CurrencyPair=()=>{
       return(
-        <div className='relative font-queens  border-black p-0 '>
+        <div className='relative font-queens no-fade  border-black p-0 '>
             <button
-              className='flex text-sm opacity-80 gap-[2px] items-center cursor-pointer'
+              className='flex text-sm no-fade opacity-80 gap-[2px] items-center cursor-pointer'
               onClick={() => setIsCurrencyDropdownOpen((prev) => !prev)}
             >
-              <span className='p-0 m-0 mr-1 leading-[0px]'>{isDollar ? 'USD' : 'NGN'}</span>
-              {isDollar?<img src={sdk.usaFlagIcon} className='h-4 grayscale-[40%]'/>:
-              <img src={sdk.nigeriaFlagIcon} className='h-4 grayscale-[40%]'/>}
-              <IoIosArrowDown className='' />
+              <span className='p-0 no-fade m-0 mr-1 leading-[0px]'>{isDollar ? 'USD' : 'NGN'}</span>
+              {isDollar?<img src={sdk.usaFlagIcon} className='h-4 no-fade grayscale-[40%]'/>:
+              <img src={sdk.nigeriaFlagIcon} className='h-4 no-fade grayscale-[40%]'/>}
+              <IoIosArrowDown className='no-fade' />
             </button>
 
             {isCurrencyDropdownOpen && (
-              <div className='text-xs absolute w-32  right-0 bg-secondary dark:bg-primary-light shadow-lg rounded-md mt-2 '>
+              <div className='text-xs no-fade absolute w-32  right-0 bg-secondary dark:bg-primary-light shadow-lg rounded-md mt-2 '>
                 <button
-                  className='flex border-b dark:border-b-neutral-700 items-center  gap-2  p-2 '
+                  className='flex no-fade border-b dark:border-b-neutral-700 items-center  gap-2  p-2 '
                   onClick={() => handleCurrencyToggle('NGN')}
                 >
                   <img src={sdk.nigeriaFlagIcon} className='h-4'/>
                   <p className=' whitespace-nowrap'>NGN &mdash; Naira</p>
                 </button>
                 <button
-                  className='flex items-center gap-2  p-2'
+                  className='flex no-fade items-center gap-2  p-2'
                   onClick={() => handleCurrencyToggle('USD')}
                 >
                   <img src={sdk.usaFlagIcon} className='h-4'/>
@@ -130,13 +130,15 @@ const Navbar = () => {
   return (
     <div className={`relative  pb-12 z-100 force-z`}>
       {/* Main Navbar */}
-      <div className={`${scrolled?'bg-secondary dark:bg-primary':'bg-secondary dark:bg-primary'} px-6 tablet:px-16 sm:px-16 py-4 sm:py-8 border-b  border-b-primary fixed w-full   dark:border-b-neutral-500 justify-between flex items-center  dark:text-secondary`}>
+      {/* <div className={`${scrolled?'bg-secondary dark:bg-primary':'bg-secondary dark:bg-primary'} px-6 tablet:px-16 sm:px-16 py-4 sm:py-8 border-b  border-b-primary fixed w-full   dark:border-b-neutral-500 justify-between flex items-center  dark:text-secondary`}> */}
+      <div className={`bg-secondary dark:bg-primary  px-6 tablet:px-16 sm:px-16 py-4 sm:py-8 border-b  border-b-primary fixed w-full   dark:border-b-neutral-500 justify-between flex items-center  dark:text-secondary`}>
         <div className='flex items-center gap-3'>
           {/* Hamburger Icon */}
           <button onClick={toggleMenu} className='focus:outline-none md:hidden'>
             <IoMenuOutline className='text-2xl' />
           </button>
-          <Link to='/' className='font-bold cinzel-decorative'>The human hair shop</Link>
+          {/* <Link to='/' className='font-bold cinzel-decorative text-sm'>The human hair shop NG </Link> */}
+          <Link to='/' className='font-bold cinzel-decorative text-sm'>THE human hair shop</Link>
         </div>
         
 
@@ -144,7 +146,7 @@ const Navbar = () => {
 
 
 
-        <div className='flex  items-center opacity-90 gap-4'>
+        <div className='flex no-fade  items-center opacity-90 gap-4'>
             <CurrencyPair/>
             {/* <FiUser className='text-[1.5rem] ' /> */}
             {/* <PiUserBold className=' text-[1.5rem]'/> */}

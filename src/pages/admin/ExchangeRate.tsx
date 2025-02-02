@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import CategoryHeader from '../../components/CategoryHeader';
 import FormInput from '../../components/FormInput';
 import Button from '../../components/Button';
 import { SlInfo } from 'react-icons/sl';
@@ -7,6 +6,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState, AppDispatch } from '../../store/store.ts';
 import { fetchExchangeRate } from '../../store/fetchProductSlice.ts';
 import { updateExchangeRate } from '../../store/adminSlice.ts';
+import PageHeader from '../../components/PageHeader.tsx';
+import { sdk } from '../../utils/sdk.ts';
 // import { addProductVariation,setEditProductMode } from '../../store/adminSlice.ts';
 // import { Sdk } from '../../utils/sdk.ts';
 // import { useNavigate } from 'react-router-dom';
@@ -55,7 +56,7 @@ const ExchangeRate = () => {
             onSubmit={handleSubmitRate}
             >
             {/* Input Variation details */}
-            <CategoryHeader heading='Update Exchange Rate!' subheading='Update a fair dollar price'/>
+            <PageHeader heading='' accent='Update Exchange Rate!' backToLabel='Dashboard' backToRoute={sdk.adminDashboardRoute} />
             <FormInput onChange={(e)=>{setRate(Number(e.target.value))}} type='number' placeholder='Rate' value={rate||''} required={true} name='description' fieldTip={`How much is a dollar now in naira?`} />
             
             

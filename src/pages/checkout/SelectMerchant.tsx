@@ -36,11 +36,15 @@ const SelectMerchant: React.FC<SelectMerchantProps> = ({ setShowMerchants,shippi
     })
     console.log(streamlinedCart)
     const proceedWithPayment =()=>{
+        if(!shippingDetails.shippingFees){
+            alert("You have not selected your shipping location")
+            return setShowMerchants(false)
+        }
         dispatch(makePayment({...shippingDetails,cart:streamlinedCart}))
     }
 
   return (
-    <div className="fixed flex items-center justify-center top-1/2 left-1/2 h-full w-full -translate-x-1/2 -translate-y-1/2 bg-[rgba(60,60,60,.5)]  z-[999999]">
+    <div className="fixed text-primary flex items-center justify-center top-1/2 left-1/2 h-full w-full -translate-x-1/2 -translate-y-1/2 bg-[rgba(60,60,60,.5)]  z-[999999]">
       <div className="bg-white relative rounded-2xl p-6 pt-20  shadow-lg text-center w-80">
         <h2 className="text-2xl font-bold mb-10 font-queens">Select Payment Option</h2>
 

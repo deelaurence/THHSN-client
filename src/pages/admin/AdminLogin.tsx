@@ -40,8 +40,6 @@ const AdminLogin: React.FC = () => {
 
 
   useEffect(()=>{
-    const errorElements = document.querySelectorAll('.input-errors')
-    console.log(errorElements)
     setDisableSubmit(adminFormErrors[adminFormErrors.length-1]!=='')
     
   },[adminFormErrors])

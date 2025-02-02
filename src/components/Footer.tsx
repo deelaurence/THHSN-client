@@ -4,7 +4,9 @@ import { sdk } from '../utils/sdk';
 const Footer = () => {
   const location = useLocation();
 
-  if (location.pathname === sdk.checkoutRoute) {
+
+  const exemptedRoutes = [sdk.checkoutRoute,sdk.adminDashboardRoute,sdk.adminLoginRoute]
+  if (exemptedRoutes.includes(location.pathname)||location.pathname.includes('admin')) {
     return null;
   }
 
@@ -26,9 +28,14 @@ const Footer = () => {
   ];
 
   return (
-    <footer className=" bg-primary mt-2 px-6 tablet:px-16 sm:px-20 pt-16 text-secondary ">
-        <h3 className="dark:pt-16 overflow-visible pt-12  font-bold font-queens adelia gap-1 pb-12 leading-0 dark:border-t border-neutral-700 h-fit  flex-col items-baseline  text-2xl">The Human Hair Shop.</h3>
-        <div className=" grid grid-cols-1 md:grid-cols-3 gap-8">
+    <footer
+      className={`bg-primary mt-2 px-6 tablet:px-16 sm:px-20 pt-16 text-secondary transition-opacity duration-1000 `}
+    >
+      <h3 className="dark:pt-16 overflow-visible pt-12 font-bold font-queens adelia gap-1 pb-12 leading-0 dark:border-t border-neutral-700 h-fit flex-col items-baseline text-2xl">
+        The Human Hair Shop.
+      </h3>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {links.map((linkGroup, index) => (
           <div key={index}>
             <h4 className="text-lg font-semibold font-queens mb-4">{linkGroup.category}</h4>
@@ -49,6 +56,7 @@ const Footer = () => {
           </div>
         ))}
       </div>
+
       <div className="text-center mt-8 border-t border-gray-700 pt-4">
         <p className="text-sm">&copy; {new Date().getFullYear()} Your Company. All rights reserved.</p>
       </div>

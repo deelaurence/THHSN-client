@@ -1,7 +1,6 @@
 import CryptoJS from 'crypto-js';
-console.log(import.meta.env.VITE_SECRET)
-const SECRET_KEY = "your-secure-secret";
 
+const SECRET_KEY = import.meta.env.VITE_SECRET||"6ghjknjbhvffxrd$%$%34##gjnhlhih";
 // Encrypt data before storing in local storage
 export const encryptData = (data: any): string => {
   const encrypted = CryptoJS.AES.encrypt(data, SECRET_KEY).toString();
@@ -16,7 +15,9 @@ export const decryptData = (encryptedData: string | null): any => {
     const decryptedData = bytes.toString(CryptoJS.enc.Utf8);
     return decryptedData;
   } catch (error) {
+
     console.error("Decryption error:", error);
+    window.location.reload()
     return null;
   }
 };

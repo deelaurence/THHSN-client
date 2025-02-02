@@ -30,7 +30,7 @@ const InventoryUnit: React.FC<{ filterProp: string; products:IProduct[]|IProduct
   return (
     
 
-    <div className="container min-h-screen mx-auto">
+    <div className="container mx-auto">
       {/* Product List */}
       
       <div className="">
@@ -44,7 +44,7 @@ const InventoryUnit: React.FC<{ filterProp: string; products:IProduct[]|IProduct
             onDoubleClick={()=>{
               console.log('dragging')
             }}
-            className="flex border-b-[1px] relative border-b-gray-300 dark:border-b-neutral-700 justify-start items-center gap-4 pt-6"
+            className="flex  border-b-[1px] relative border-b-gray-300 dark:border-b-neutral-700 justify-start items-center gap-4 pt-6"
           >
             <img
               src={product.images&&product?.images[0]?product?.images[0]:sdk.placeholderImage} 

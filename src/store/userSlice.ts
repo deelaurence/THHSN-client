@@ -14,11 +14,10 @@ interface UserState {
 }
 
 
-const persistedUser = sdk.getUserObject()
 
 
 const initialState: UserState = {
-  user: persistedUser||null,
+  user: sdk.getUserObject()||null,
   status: 'idle',
   error: null,
   formErrors:[],

@@ -8,9 +8,10 @@ import { IoCloseOutline } from "react-icons/io5";
 import { useDispatch, useSelector } from 'react-redux';
 import { AiTwotoneTags } from "react-icons/ai";
 import { RootState, AppDispatch } from '../../store/store.ts';
-import { addProductVariation,setEditProductMode } from '../../store/adminSlice.ts';
+import { addProductVariation,setEditProductMode} from '../../store/adminSlice.ts';
 import { Sdk } from '../../utils/sdk.ts';
 import { useNavigate } from 'react-router-dom';
+import { CancelProductEditProgress } from './snippets/CancelProductEditProgress.tsx';
 const sdk = new Sdk()
 interface Variants{
   name:string,
@@ -127,7 +128,7 @@ const ProductStepThree = () => {
   return (
     <div className='min-h-screen pb-4'>
       
-        
+        <CancelProductEditProgress/>
         <form 
         onSubmit={handleSubmitVariation}
         >

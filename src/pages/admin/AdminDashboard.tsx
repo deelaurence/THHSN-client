@@ -1,6 +1,6 @@
 import { Sdk } from "../../utils/sdk";
-import { FaBagShopping } from "react-icons/fa6";
-import { IoWalletOutline } from "react-icons/io5";
+import { AppDispatch } from "../../store/store";
+import { FaBagShopping, FaPowerOff } from "react-icons/fa6";
 import BarChart from "../../components/BarChart";
 import { PiPenDuotone } from "react-icons/pi";
 import DashboardNav from "../../components/DashboardNav";
@@ -14,6 +14,8 @@ import { TbArrowsExchange2 } from "react-icons/tb"
 import { LuUsers2 } from "react-icons/lu";
 import { HiOutlineLightBulb } from "react-icons/hi";
 import { LiaShippingFastSolid } from "react-icons/lia";
+import { useDispatch } from "react-redux";
+import { signOutAdmin } from "../../store/adminSlice";
 const data = [
   { color: '#FF6384', percentage: 80,label:"Hair Products" }, // 40% - Red
   { color: '#36A2EB', percentage: 10 ,label:"Wig Bundles" }, // 30% - Blue
@@ -27,11 +29,11 @@ const menuItems = [
     route: sdk.addProductRoute,
     icon: <FaBagShopping />,
   },
-  {
-    label: 'Payments',
-    route: sdk.managePaymentsRoute, 
-    icon: <IoWalletOutline />,
-  },
+  // {
+  //   label: 'Payments',
+  //   route: sdk.managePaymentsRoute, 
+  //   icon: <IoWalletOutline />,
+  // },
   {
     label: 'Drafts',
     route: sdk.productDraftsRoute, 
@@ -53,14 +55,14 @@ const menuItems = [
     icon: <GrAnalytics />,
   },
   {
-    label: 'Exchange Rate',
-    route: sdk.exchangeRateRoute, 
-    icon: <TbArrowsExchange2 />,
-  },
-  {
     label: 'Shipping',
     route: sdk.shippingOptionsRoute, 
     icon: <LiaShippingFastSolid/>,
+  },
+  {
+    label: 'Exchange Rate',
+    route: sdk.exchangeRateRoute, 
+    icon: <TbArrowsExchange2 />,
   },
   {
     label: 'Random Facts',
@@ -86,11 +88,21 @@ const salesData = [
   { label: 'Dec', value: 2400, color: '#34495e' },
 ];
 const AdminDashboard = () => {
+  const dispatch = useDispatch<AppDispatch>()
+  
   // const [currentMenu, setCurrentMenu] = useState<number >(0);
   // const adminObject = useSelector((state: RootState) => state.admin.admin);
   // const firstName = adminObject?.name.split(' ')[0];
   return (
-    <section className="px-6">
+    <section className="px-6 relative">
+      <div 
+      onClick={() => {
+        dispatch(signOutAdmin());
+      }}
+      className=" z-10 shadow bg-red-500 dark:bg-neutral-700 fixed   px-4 py-1 flex items-center gap-2 text-xs text-secondary top-16 opacity-70 right-0 mr-4 cursor-pointer">
+        <FaPowerOff />
+        <p >Logout</p>
+      </div>
       <PageHeader heading="Hello Betran" accent="How are you today?"/>
       <DashboardNav showNav={true} menuItems={menuItems}/>
       <div className="flex  mt-16 ">

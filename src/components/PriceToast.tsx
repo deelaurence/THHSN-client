@@ -5,7 +5,7 @@ import { RootState } from '../store/store';
 import Loader from './Loader';
 interface PriceProps {
     price: number;
-    className: string;
+    className?: string;
 }
 
 const PriceToast: React.FC<PriceProps> = ({ price, className }) => {

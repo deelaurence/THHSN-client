@@ -35,8 +35,6 @@ const ShippingOptions = () => {
             setStates(shippingOptions.filter(option => option.location !== 'international'));
         } else {
             const intlOption = shippingOptions.find(option => option.location === 'international');
-            console.log(internationalPrice)
-            console.log(intlOption)
             setInternationalPrice(internationalPrice||intlOption?.price||'');
         }
     }, [shippingType, shippingOptions]);

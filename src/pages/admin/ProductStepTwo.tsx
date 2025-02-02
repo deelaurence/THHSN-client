@@ -6,7 +6,7 @@ import ImageInput from '../../components/ImageInput.tsx';
 import { addProductImage, jumpToProductPage } from '../../store/adminSlice.ts';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState, AppDispatch } from '../../store/store.ts';
-
+import { CancelProductEditProgress } from './snippets/CancelProductEditProgress.tsx';
 
 const ProductStepTwo = () => {
   const dispatch = useDispatch<AppDispatch>()
@@ -26,6 +26,7 @@ const ProductStepTwo = () => {
   };
   
 
+
   
   // Handle adding product to the list
   const handleUpload = (e:React.FormEvent) => {
@@ -38,13 +39,14 @@ const ProductStepTwo = () => {
 
   return (
     <div className='min-h-screen pb-12'>
-      
         <form 
         onSubmit={handleUpload}
         >
         {/* category for name and description */}
         
         <CategoryHeader heading='Adding some fierce new looks!' subheading='You can upload upto five images right now.'/>
+        
+        <CancelProductEditProgress/>
         <ImageInput required={false} type='file' placeholder='image' multiple={true}  onChange={handleFileChange}/>
         <Button extraClass='bg-primary text-secondary' disabled={adminStatus==="loading"} size="large" label="continue" loading={adminStatus==='loading'} />
           </form>

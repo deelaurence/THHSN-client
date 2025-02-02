@@ -12,13 +12,18 @@ const GoogleSignInSuccess = () => {
     const queryParams = new URLSearchParams(location.search);
     const payload = queryParams.get('payload');
     const email = queryParams.get('email');
-    const name = queryParams.get('name');
+    const name = queryParams.get('firstName')||queryParams.get('name')?.split(" ")[0];
+    const lastName = queryParams.get('lastName');
+    const address = queryParams.get('address')
+    const phonenumber = queryParams.get('phonenumber')
     if(payload&&email){
         sdk.setUserObject({
             token:payload,
             email,
-            lastName: name ?? "",
-            firstName: "",
+            address: address ?? undefined,
+            phonenumber:phonenumber?parseInt(phonenumber):undefined,
+            lastName: lastName??"",
+            firstName: name??"",
         })
     }
     useEffect(()=>{

@@ -1,5 +1,5 @@
 // src/App.tsx
-import React, { useEffect,useState } from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import AdminLogin from './pages/admin/AdminLogin';
 import AdminDashboard from './pages/admin/AdminDashboard';
@@ -30,13 +30,15 @@ import Notifications from './components/Notifications.tsx';
 import { fetchExchangeRate} from './store/fetchProductSlice.ts';
 import { AppDispatch } from './store/store.ts';
 import { useDispatch } from 'react-redux';
+import UserInventory from './pages/admin/Users.tsx';
 import GoogleSignInSuccess from './pages/user/GoogleSignInSuccess.tsx';
 import Checkout from './pages/checkout/Checkout.tsx';
 import ShippingOptions from './pages/admin/ShippingOptions.tsx';
 import Receipt from './pages/receipt/Receipt.tsx';
+import SalesInventory from './pages/admin/Sales.tsx';
 //@ts-ignore
 import FontFaceObserver from 'fontfaceobserver'
-import Loader from './components/Loader.tsx';
+// import Loader from './components/Loader.tsx';
 const sdk = new Sdk()
 
 const App: React.FC = () => {
@@ -45,24 +47,23 @@ const App: React.FC = () => {
     dispatch(fetchExchangeRate())
   },[])
 
-  
-  
-  const [fontLoaded, setFontLoaded] = useState(false);
+  // const [fontLoaded, setFontLoaded] = useState(false);
   
 
-  useEffect(() => {
-    const font = new FontFaceObserver("Frunchy"); // Replace with your actual font name
-    font.load().then(() => {
-      setFontLoaded(true);
-    }).catch(() => {
-      console.error("Font failed to load.");
-    });
-  }, []);
+  // useEffect(() => {
+  //   const font = new FontFaceObserver("Frunchy"); // Replace with your actual font name
+  //   font.load().then(() => {
+  //     setFontLoaded(true);
+  //   }).catch(() => {
+  //     console.error("Font failed to load.");
+  //   });
+  // }, []);
   
   return (
     <>
   
-    {fontLoaded?<div className='dark:bg-primary sm:hidden dark:text-secondary text-primary bg-secondary'>
+    <div 
+    className='dark:bg-primary  sm:hidden dark:text-secondary text-primary  bg-secondary'>
     <ThemeProvider>
     <Notifications/>
     <Router>
@@ -97,8 +98,8 @@ const App: React.FC = () => {
               <Route path={sdk.singleInventoryRoute+'/:name'} element={<ProductDetail/>}/>
               <Route path={sdk.managePaymentsRoute} element={<Placeholder header='Payments' paragraph='something here later'/>} />
               <Route path={sdk.productDraftsRoute} element={<DraftInventory/>} />
-              <Route path={sdk.salesRoute} element={<Placeholder header='Sales' paragraph='something here later'/>} />
-              <Route path={sdk.manageUsersRoute} element={<Placeholder header='Users' paragraph='something here later'/>} />
+              <Route path={sdk.salesRoute} element={<SalesInventory/>} />
+              <Route path={sdk.manageUsersRoute} element={<UserInventory />} />
               <Route path={sdk.randomFactsRoute} element={<RandomFacts/>} />
             </Route>
              {/* 404 Route */}
@@ -107,11 +108,8 @@ const App: React.FC = () => {
         <Footer/>
     </Router>
     </ThemeProvider>
-    </div>:
-    <div className='w-screen h-screen flex items-center justify-center'>
-      <Loader/>
     </div>
-    }
+    
     </>
   );
 };

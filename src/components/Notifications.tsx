@@ -15,7 +15,8 @@ const Notifications: React.FC<NotificationsProps> = ({ messageProps }) => {
   const successMessage = useSelector((state: RootState) => state.admin.successFeedback);
   const adminError = useSelector((state: RootState) => state.admin.error);
   const userError = useSelector((state: RootState) => state.user.error);
-  
+
+
   const shippingStatus=useSelector((state: RootState)=> state.shipping.status);
   const shippingSuccess=useSelector((state: RootState)=> state.shipping.successFeedback);
   const shippingError=useSelector((state: RootState)=> state.shipping.error);
@@ -75,11 +76,12 @@ const Notifications: React.FC<NotificationsProps> = ({ messageProps }) => {
     }
     
   }, [adminStatus,userStatus,successFeedback,shippingStatus]);
-
+  console.log(visible)
+  console.log(notification.message)
   return (
     notification.message&&notification.message.length>0&&
-    <div className={`fixed z-[99999999] text-center p-4 w-screen bg-yellow-600 text-white ${
-      visible ? "animate-slideIn" : "animate-slideOut"
+    <div className={`fixed no-fade z-[99999999] text-center p-4 w-screen bg-yellow-600 text-white ${
+      visible ? "animate-slideIn no-fade" : "no-fade animate-slideOut"
     }`}>
       {messageProps??notification.message[notification.message.length-1]}
     </div>

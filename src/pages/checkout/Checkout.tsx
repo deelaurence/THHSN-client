@@ -158,7 +158,7 @@ useEffect(() => {
                     <label className="block text-[10px] opacity-80 mb-2">Select a state</label>
                     <select
                 value={selectedState}
-                required={true}
+                required={true} 
                 onChange={handleStateChange}
                 className="border-b dark:border-b-neutral-600 border-neutral-600 p-2 pl-1 w-full bg-transparent focus:outline-none focus:border-b-2 focus:border-primary"
                     >

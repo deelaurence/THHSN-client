@@ -138,7 +138,7 @@ export class Sdk{
     getAdminObject():AdminObject|undefined{
         const adminObject:(string|null)=localStorage.getItem('admin_object');
         if(adminObject){
-            return JSON.parse(adminObject);
+            return JSON.parse(decryptData(adminObject));
         }
     }
     clearAdminObject(){
@@ -146,7 +146,7 @@ export class Sdk{
     }
 
     setAdminObject(object:AdminObject){
-        localStorage.setItem(this.adminObjectKey,JSON.stringify(object))
+        localStorage.setItem(this.adminObjectKey,encryptData(JSON.stringify(object)))
     }
 
 
@@ -154,7 +154,7 @@ export class Sdk{
     getUserObject(){
         const userObject:(string|null)=localStorage.getItem('user_object');
         if(userObject){
-            return JSON.parse(userObject);
+            return JSON.parse(decryptData(userObject));
         }
     }
     clearUserObject(){
@@ -162,7 +162,7 @@ export class Sdk{
     }
 
     setUserObject(object:UserObject){
-        localStorage.setItem(this.userObjectKey,JSON.stringify(object))
+        localStorage.setItem(this.userObjectKey,encryptData(JSON.stringify(object)))
     }
 
     mergeProductInDatabaseWithStaticImages(

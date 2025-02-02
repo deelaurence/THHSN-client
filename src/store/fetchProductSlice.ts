@@ -5,7 +5,7 @@ import { IProduct, IProductDraft } from '../interfaces/productInterface';
 
 
 const sdk = new Sdk();
-const persistedAdmin = sdk.getAdminObject();
+let persistedAdmin = sdk.getAdminObject();
 
 /**
  * 
@@ -48,6 +48,9 @@ export const fetchProducts = createAsyncThunk(
   'product/fetchProducts',
   async (_, { rejectWithValue }) => {
     try {
+      if(!persistedAdmin){
+        persistedAdmin=sdk.getAdminObject()
+      }
       const headers = {
         'Authorization': `Bearer ${persistedAdmin?.token}`,
       };
@@ -66,6 +69,9 @@ export const fetchProductsDraft = createAsyncThunk(
   'product/fetchProducts/draft',
   async (_, { rejectWithValue }) => {
     try {
+      if(!persistedAdmin){
+        persistedAdmin=sdk.getAdminObject()
+      }
       const headers = {
         'Authorization': `Bearer ${persistedAdmin?.token}`,
       };

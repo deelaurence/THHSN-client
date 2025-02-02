@@ -2,13 +2,16 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { apiClient } from '../utils/apiClient';
 import { Sdk } from '../utils/sdk';
+import { Order } from '../interfaces/order';
 const sdk = new Sdk()
 
 interface AdminState {
   admin: { email: string, token: string, name:string}  | null;
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
   error: string | null;
+  users:{name:(string|null),lastName:(string|null),firstName:(string|null),verified:boolean,phoneNumber:(string|null),country:(string|null),address:(string|null),city:(string|null),email:string}[];
   successFeedback:string|null;
+  orders:Order[];
   editingProduct:boolean;
   formErrors:string[];
   productDraftOne?:{
@@ -29,6 +32,8 @@ const persistedAdmin = sdk.getAdminObject()
 const initialState: AdminState = {
   admin: persistedAdmin||null,
   status: 'idle',
+  users:[],
+  orders:[],
   successFeedback:null,
   editingProduct:false,
   error: null,
@@ -237,7 +242,47 @@ export const bestsellerAndNewArrivalCoverimage = createAsyncThunk(
 );
 
 
+// Async action to get all users by admin
+export const fetchUsers = createAsyncThunk(
+  'product/fetchUsers',
+  async (_, { rejectWithValue }) => {
+    try {
+      
+      const headers = {
+        'Authorization': `Bearer ${sdk.getAdminObject()?.token}`,
+      };
+      const response = await apiClient.get('/v1/profile/fetch/all', { headers });
+      return response.data.payload;
+    } catch (error: any) {
+      if (error.response) {
+        return rejectWithValue(error.response.data.reason);
+      }
+      return rejectWithValue('Failed to connect, Try again');
+    }
+  }
+);
 
+
+
+// Async action to get all orders by admin
+export const fetchPayments = createAsyncThunk(
+  'product/fetchPayments',
+  async (_, { rejectWithValue }) => {
+    try {
+      
+      const headers = {
+        'Authorization': `Bearer ${sdk.getAdminObject()?.token}`,
+      };
+      const response = await apiClient.get('/v1/payment/all', { headers });
+      return response.data.payload;
+    } catch (error: any) {
+      if (error.response) {
+        return rejectWithValue(error.response.data.reason);
+      }
+      return rejectWithValue('Failed to connect, Try again');
+    }
+  }
+);
 
 const adminSlice = createSlice({
   name: 'admin',
@@ -385,6 +430,41 @@ const adminSlice = createSlice({
         console.log(action.error.message)
         state.error = action.error.message || 'Adding Product name failed';
       })
+
+
+
+
+      .addCase(fetchUsers.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(fetchUsers.fulfilled, (state, action: PayloadAction<any[]>) => {
+        state.status = 'succeeded';
+        state.users = action.payload;
+        state.successFeedback="Fetched Users"
+        state.error=''
+      })
+      .addCase(fetchUsers.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.payload as string;
+      })
+
+
+
+
+      .addCase(fetchPayments.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(fetchPayments.fulfilled, (state, action: PayloadAction<any[]>) => {
+        state.status = 'succeeded';
+        state.orders = action.payload;
+        state.successFeedback="Fetched Orders"
+        state.error=''
+      })
+      .addCase(fetchPayments.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.payload as string;
+      })
+      
 
 
       //BestSellerAndNewArrival

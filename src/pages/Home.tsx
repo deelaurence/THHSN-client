@@ -1,12 +1,12 @@
 import React from 'react';
-import { Sdk } from '../utils/sdk';
+import { sdk, Sdk } from '../utils/sdk';
 import Button from '../components/Button';
 import TheCollections from '../components/LandingPage/TheCollections';
 import NewArrivals from '../components/LandingPage/NewArrival';
 import IndulgeInLuxury from '../components/LandingPage/IndulgeInLuxury';
 import FAQs from '../components/LandingPage/FAQs';
 import BestSellers from '../components/LandingPage/BestSellers';
-import { Link } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 import Marquee from '../components/LandingPage/Marquee';
 import TheLuxeExperience from '../components/LandingPage/LuxuryNotBasic';
 const { heroSectionImage } = new Sdk();
@@ -16,12 +16,13 @@ const { heroSectionImage } = new Sdk();
 
 
 import { useEffect, useState } from 'react';
+import SecretClick from './admin/SecretTouch';
 
 const HeroSection1 = () => {
   const [opacity, setOpacity] = useState(0);
   const [brightness, setBrightness] = useState(4);
   const [translateY, setTranslateY] = useState(10);
-
+  const navigate = useNavigate();
   useEffect(() => {
     const timer = setTimeout(() => {
       setOpacity(1);
@@ -39,10 +40,11 @@ const HeroSection1 = () => {
         filter: ` brightness(${brightness})`,
         transform: `translateY(${translateY}px)`
       }}
-      className="relative bg-mygray-gradient dark:text-primary justify-between overflow-hidden h-[80vh] sm:h-[80vh] tablet:h-[50vh] -mt-12 flex flex-col sm:flex-row pt-16"
+      className="relative no-fade bg-mygray-gradient dark:text-primary justify-between overflow-hidden h-[80vh] sm:h-[80vh] tablet:h-[50vh] -mt-12 flex flex-col sm:flex-row pt-16"
     >
       {/* Grain Effect */}
       <div className="absolute inset-0 bg-noise mix-blend-overlay opacity-20"></div>
+      <SecretClick onAdminUnlock={() => navigate(sdk.adminDashboardRoute)} />
 
       {/* Content */}
       <div className="-mt-8 sm:-mt-16 sm:-mr-32 sm:w-1/2 p-6 flex flex-col justify-center z-1">

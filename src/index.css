@@ -42,8 +42,14 @@
 }
 
 /* Apply fadeIn to all elements except the element with class 'no-fade' */
-*:not(.no-fade) {
+
+
+.fade-in,section:not(.no-fade){
   animation: fadeIn .3s ease-in-out;
+}
+
+img{
+  animation: fadeIn .7s ease-in-out;
 }
 
 @keyframes fadeIn {

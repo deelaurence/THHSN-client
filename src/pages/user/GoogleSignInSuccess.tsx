@@ -20,10 +20,10 @@ const GoogleSignInSuccess = () => {
         sdk.setUserObject({
             token:payload,
             email,
-            address: address ?? undefined,
+            address: address ?address:undefined,
             phonenumber:phonenumber?parseInt(phonenumber):undefined,
-            lastName: lastName??"",
-            firstName: name??"",
+            lastName: lastName?lastName:"",
+            firstName: name?name:"",
         })
     }
     useEffect(()=>{

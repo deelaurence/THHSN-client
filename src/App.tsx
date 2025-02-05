@@ -62,9 +62,10 @@ const App: React.FC = () => {
   return (
     <>
   
-    <div 
-    className='dark:bg-primary  sm:hidden dark:text-secondary text-primary  bg-secondary'>
+    <div className='dark:bg-primary   sm:hidden dark:text-secondary text-primary  bg-secondary'>
+    
     <ThemeProvider>
+
     <Notifications/>
     <Router>
       <ScrollToTop/>

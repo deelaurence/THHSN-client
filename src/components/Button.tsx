@@ -24,13 +24,15 @@ const Button: React.FC<ButtonProps> = ({
 
   
 
+
+  // let gradient = "dark:radial-gradient-bg"
+
   
   // Base styles for the button
   const baseStyles = `
   min-h-12
   uppercase  border border-2 
-  border-primary text-primary 
-  dark:radial-gradient-bg
+  text-primary 
   dark:bg-secondary dark:text-primary 
   focus:outline-none transition ease-in-out 
   duration-200  

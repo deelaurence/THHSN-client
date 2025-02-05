@@ -72,7 +72,7 @@ const ProductDetail = () => {
     //Try and get product from either the drafts, 
     //products or productsPublic arrays
     useEffect(()=>{
-        for (let list of [products, productsPublic, productsDrafts]){
+        for (let list of [productsDrafts, products, productsPublic,]){
             const foundProduct = getSingleProduct(list);
             if (foundProduct) setProduct(foundProduct)
             if (product) break    
@@ -128,9 +128,7 @@ const ProductDetail = () => {
                 </Helmet>
                 <PageHeader 
                 heading='' 
-                accent='' 
-                backToLabel={isAdmin?`Inventory List`:'Back'} 
-                backToRoute={isAdmin?sdk.manageInventoryRoute:'/'}/>
+                accent='' />
                 {!product.images||!product.images[0]&&<Slideshow images={[sdk.placeholderImage]}/>}
                 {product.images&&product.images[0]&&<Slideshow images={product.coverImage ? [product.coverImage, ...product.images] : product.images}/>}
                 
@@ -303,7 +301,7 @@ const ProductDetail = () => {
 
                 {isAdmin&&<ImagePicker images={sdk.bestSellersAndNewArrivalsCoverImages} onPick={()=>{}}/>}
 
-                {isAdmin?<Button onClick={handleEditMode} label='Edit'  size='large' extraClass='mt-16 font-thin bg-primary text-secondary py-3' loading={false} />:
+                {isAdmin?<Button onClick={handleEditMode} label='Edit This Product'  size='large' extraClass='mt-16 capitalize font-thin dark:radial-gradient-bg bg-primary text-secondary py-2' loading={false} />:
                 <Link
                 className='mt-16 block'
                 onClick={()=>{
@@ -314,7 +312,7 @@ const ProductDetail = () => {
                     setSuccessFeedback(`${product.name} Added to cart`)
                 }}
                 to={sdk.cartRoute}>
-                <Button label='Add to Cart'  size='large' extraClass=' font-thin bg-primary text-secondary py-3' loading={false} />
+                <Button label='Add to Cart'  size='large' extraClass=' font-thin  bg-primary text-secondary py-3' loading={false} />
                 </Link>}
                 </section>
             </div>:

@@ -14,6 +14,7 @@ import { IPayment } from '../../interfaces/paymentPayload';
 const Checkout = () => {
     const availableShippingLocations = useSelector((state:RootState)=>state.shipping.availableShippingOptions)
     const user = useSelector((state:RootState)=>state.user.user)
+    console.log(user)
     const [shippingType, setShippingType] = useState<"local"|"international">('local'); // local or international
     const [shippingFees,setShippingFees] = useState(0)
     const [states, setStates] = useState<{ location: string; price: number }[]>([]);

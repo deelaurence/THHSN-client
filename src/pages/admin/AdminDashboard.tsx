@@ -40,7 +40,7 @@ const menuItems = [
     icon: <PiPenDuotone />,
   },
   {
-    label: 'Sales',
+    label: 'Orders/Sales',
     route: sdk.salesRoute, 
     icon: <BsGraphUpArrow />,
   },

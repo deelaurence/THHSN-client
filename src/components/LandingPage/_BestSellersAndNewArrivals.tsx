@@ -115,7 +115,7 @@ const BestSellersAndNewArrivals: React.FC<BestSellersProps> = ({
                 <PriceToast price={item.price} className="font-queens px-2 mt-1 font-medium"/>
               </div>
               <Button
-                extraClass="text-xs mx-1  bg-transparent py-2 capitalize"
+                extraClass="text-xs mx-1 dark:radial-gradient-bg bg-transparent py-2 capitalize"
                 size="large"
                 label={isAdmin?"Edit item":"Add to Cart"}
                 loading={false}

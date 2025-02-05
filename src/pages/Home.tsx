@@ -17,6 +17,7 @@ const { heroSectionImage } = new Sdk();
 
 import { useEffect, useState } from 'react';
 import SecretClick from './admin/SecretTouch';
+import { PiWhatsappLogoDuotone } from 'react-icons/pi';
 
 const HeroSection1 = () => {
   const [opacity, setOpacity] = useState(0);
@@ -32,6 +33,9 @@ const HeroSection1 = () => {
     return () => clearTimeout(timer);
   }, []);
 
+
+  
+
   return (
     <div
       style={{
@@ -42,6 +46,9 @@ const HeroSection1 = () => {
       }}
       className="relative no-fade bg-mygray-gradient dark:text-primary justify-between overflow-hidden h-[80vh] sm:h-[80vh] tablet:h-[50vh] -mt-12 flex flex-col sm:flex-row pt-16"
     >
+
+        
+
       {/* Grain Effect */}
       <div className="absolute inset-0 bg-noise mix-blend-overlay opacity-20"></div>
       <SecretClick onAdminUnlock={() => navigate(sdk.adminDashboardRoute)} />
@@ -65,7 +72,7 @@ const HeroSection1 = () => {
           <p className='tracking-[0.5rem] text-center sm:tracking-[1rem] text-sm sm:text-base opacity-70 uppercase'>hair experience</p>
         </div>
         <Link to={new Sdk().shopRoute}>
-          <Button loading={false} extraClass='opacity-80 mt-3 sm:mt-8 py-2 text-xs  tablet:ml-44' label='shop now' />
+          <Button loading={false} extraClass='opacity-80 border-primary mt-3 sm:mt-8 py-2 text-xs  tablet:ml-44' label='shop now' />
         </Link>
       </div>
       <img src={heroSectionImage} className="scale-[1.3] sm:scale-100 sm:w-[55%] tablet:scale-[1.3]  self-end" />
@@ -99,8 +106,22 @@ const HeroSection1 = () => {
 
 
 const Home: React.FC = () => {
+  const phoneNumber = "2347068051696"; // WhatsApp number in international format (without +)
+  const message = encodeURIComponent("Hello, I am chatting from your website.");
+
+  const handleRedirect = () => {
+    window.open(`https://wa.me/${phoneNumber}?text=${message}`, "_blank");
+  };
+  
   return (
     <section>
+    {<div 
+      onClick={handleRedirect}
+      className='fixed filter grayscale-[50%] border-2 border-green-100 z-[999999] flex text-green-600 shadow-lg  bg-secondary px-2 py-1 rounded-full bottom-12 right-6'>
+        <p>Chat</p>
+        {/* 07068051696 */}
+        <PiWhatsappLogoDuotone className=''/>
+    </div>}  
     <HeroSection1/>
     <Marquee text="Experience the best luxury hair" speed={6} />
     <TheCollections/>

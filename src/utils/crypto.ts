@@ -15,9 +15,14 @@ export const decryptData = (encryptedData: string | null): any => {
     const decryptedData = bytes.toString(CryptoJS.enc.Utf8);
     return decryptedData;
   } catch (error) {
-
     console.error("Decryption error:", error);
-    window.location.reload()
+    localStorage.removeItem('admin_object');
+    localStorage.removeItem('user_object');
+    localStorage.removeItem('cart');
+    if (!sessionStorage.getItem('reloaded')) {
+      sessionStorage.setItem('reloaded', 'true');
+      window.location.reload();
+    }
     return null;
   }
 };

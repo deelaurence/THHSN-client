@@ -26,11 +26,10 @@ interface AdminState {
 }
 
 
-const persistedAdmin = sdk.getAdminObject()
 
 
 const initialState: AdminState = {
-  admin: persistedAdmin||null,
+  admin: sdk.getAdminObject()||null,
   status: 'idle',
   users:[],
   orders:[],
@@ -75,7 +74,7 @@ export const addProductNameAndPrice = createAsyncThunk(
       try {
           const headers={
             'content-Type':'application/json',
-            'Authorization':`Bearer ${persistedAdmin?.token}`
+            'Authorization':`Bearer ${sdk.getAdminObject()?.token}`
           }
           const state = getState() as any
           
@@ -115,10 +114,33 @@ export const addProductImage = createAsyncThunk(
           } 
 
           const headers={
-            'Authorization':`Bearer ${persistedAdmin?.token}`
+            'Authorization':`Bearer ${sdk.getAdminObject()?.token}`
           }
           const productId=state?.admin.productDraftOne?._id
           const response = await apiClient.put(`/v1/admin/manage/product/image/${productId}`,formData,{headers});
+          return response.data;
+      } catch (error:any) {
+
+          if(error.response){
+            throw error.response.data.reason
+          }
+          else{
+            console.log(error)
+            throw "Failed to connect, Try again"
+          }
+      }
+}
+);
+// Async action for deleting product
+export const deleteProduct = createAsyncThunk(
+  'admin/deleteProduct',
+      async (productId:string,{}) => {      
+        try {
+          
+          const headers={
+            'Authorization':`Bearer ${sdk.getAdminObject()?.token}`
+          }
+          const response = await apiClient.delete(`/v1/admin/manage/products/${productId}`,{headers});
           return response.data;
       } catch (error:any) {
 
@@ -141,7 +163,7 @@ export const addProductVariation = createAsyncThunk(
           const state=getState() as any
 
           const headers={
-            'Authorization':`Bearer ${persistedAdmin?.token}`,
+            'Authorization':`Bearer ${sdk.getAdminObject()?.token}`,
             'content-Type':"application/json"
           }
           const productId=state?.admin.productDraftOne?._id
@@ -167,7 +189,7 @@ export const updateExchangeRate = createAsyncThunk(
         try {
           
           const headers={
-            'Authorization':`Bearer ${persistedAdmin?.token}`,
+            'Authorization':`Bearer ${sdk.getAdminObject()?.token}`,
             'content-Type':"application/json"
           }
           
@@ -199,7 +221,7 @@ export const addBestsellerAndNewArrival = createAsyncThunk(
           const productId=sdk.getSingleProductDetail()._id
           const headers={
             'content-Type':'application/json',
-            'Authorization':`Bearer ${persistedAdmin?.token}`
+            'Authorization':`Bearer ${sdk.getAdminObject()?.token}`
           }
           let response = await apiClient.put(`/v1/admin/manage/product/bestseller-newarrival/${productId}`, productDetails,{headers});
           return response.data;
@@ -225,7 +247,7 @@ export const bestsellerAndNewArrivalCoverimage = createAsyncThunk(
           const productId=sdk.getSingleProductDetail()._id
           const headers={
             'content-Type':'application/json',
-            'Authorization':`Bearer ${persistedAdmin?.token}`
+            'Authorization':`Bearer ${sdk.getAdminObject()?.token}`
           }
           let response = await apiClient.put(`/v1/admin/manage/product/bestseller-newarrival-coverimage/${productId}`, productDetails,{headers});
           return response.data;
@@ -366,6 +388,23 @@ const adminSlice = createSlice({
         // window.location.href=sdk.adminDashboardRoute  // Redirect to admin dashboard after successful sign-in. Replace with your dashboard route.
       })
       .addCase(addProductImage.rejected, (state, action) => {
+        console.log(action)
+        state.status = 'failed';
+        console.log(action.error.message)
+        state.error = action.error.message || 'Adding Image Failed';
+      })
+
+      //Delete product
+      .addCase(deleteProduct.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(deleteProduct.fulfilled, (state, action: PayloadAction<{ payload:{ } ,message:string }>) => {
+        state.status = 'succeeded';
+        state.error=''
+        state.successFeedback=action.payload.message
+        // window.location.href=sdk.adminDashboardRoute  // Redirect to admin dashboard after successful sign-in. Replace with your dashboard route.
+      })
+      .addCase(deleteProduct.rejected, (state, action) => {
         console.log(action)
         state.status = 'failed';
         console.log(action.error.message)

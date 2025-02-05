@@ -13,14 +13,14 @@ interface PageHeaderProps{
 
 const PageHeader:React.FC<PageHeaderProps> = ({heading,accent,backToRoute,backToLabel}) => {
   return (
-    <div className=' text-3xl mt-8 mb-14 font-queens relative z-[0] opacity-80 '>
+    <div className=' text-3xl mt-8 mb-24 font-queens relative z-[0] opacity-80 '>
         {/* <img className='absolute star-pattern top-0 w-[94vw] opacity-[.04] grayscale-[100%]' src={pattern} alt="" /> */}
         <p className='opacity-80 font-queens font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#de8500]  to-[#fc00ff]'>{heading}</p>
         <p className='font-queens'>{accent}</p>
         
         {backToRoute&&
           <Link 
-          className="px-6 pt-[100px] text-xs right-0 absolute flex items-center gap-2 -top-8"
+          className="px-6 pt-[100px] text-xs -right-5 absolute flex items-center gap-2 -top-8"
           to={backToRoute}>
           <FaArrowLeftLong/> {backToLabel??''}
         </Link>

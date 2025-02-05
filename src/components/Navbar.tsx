@@ -93,15 +93,15 @@ const Navbar = () => {
 
   const CurrencyPair=()=>{
       return(
-        <div className='relative font-queens no-fade  border-black p-0 '>
+        <div className='relative  font-queens no-fade  border-black p-0 '>
             <button
-              className='flex text-sm no-fade opacity-80 gap-[2px] items-center cursor-pointer'
+              className='flex  text-sm no-fade opacity-80 gap-[2px] items-center cursor-pointer'
               onClick={() => setIsCurrencyDropdownOpen((prev) => !prev)}
             >
-              <span className='p-0 no-fade m-0 mr-1 leading-[0px]'>{isDollar ? 'USD' : 'NGN'}</span>
-              {isDollar?<img src={sdk.usaFlagIcon} className='h-4 no-fade grayscale-[40%]'/>:
-              <img src={sdk.nigeriaFlagIcon} className='h-4 no-fade grayscale-[40%]'/>}
-              <IoIosArrowDown className='no-fade' />
+              {/* {isDollar?<img src={sdk.usaFlagIcon} className='h-3  no-fade grayscale-[40%]'/>:
+              <img src={sdk.nigeriaFlagIcon} className='h-3 no-fade grayscale-[40%]'/>} */}
+              <span className='p-0 no-fade text-sm m-0 ml-[2px] '>{isDollar ? 'USD' : 'NGN'}</span>
+              <IoIosArrowDown className='no-fade text-xs' />
             </button>
 
             {isCurrencyDropdownOpen && (

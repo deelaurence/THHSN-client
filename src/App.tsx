@@ -35,9 +35,14 @@ import GoogleSignInSuccess from './pages/user/GoogleSignInSuccess.tsx';
 import Checkout from './pages/checkout/Checkout.tsx';
 import ShippingOptions from './pages/admin/ShippingOptions.tsx';
 import Receipt from './pages/receipt/Receipt.tsx';
-import SalesInventory from './pages/admin/Sales.tsx';
+import SalesInventory from './pages/admin/sales/Sales.tsx';
 //@ts-ignore
 import FontFaceObserver from 'fontfaceobserver'
+import ContactUs from './pages/staticpages/ContactUs.tsx';
+import PrivacyPolicy from './pages/staticpages/Policy.tsx';
+import TermsOfService from './pages/staticpages/TermsOfService.tsx';
+import SalesCategory from './pages/admin/sales/SalesCategories.tsx';
+import TrackProduct from './pages/user/TrackProduct.tsx';
 // import Loader from './components/Loader.tsx';
 const sdk = new Sdk()
 
@@ -63,17 +68,17 @@ const App: React.FC = () => {
     <>
   
     <div className='dark:bg-primary   sm:hidden dark:text-secondary text-primary  bg-secondary'>
-    
     <ThemeProvider>
 
-    <Notifications/>
     <Router>
+      <Notifications/>
       <ScrollToTop/>
       <Navbar/>
         <Routes>
             <Route path="/" element={<Home />} />
             <Route element={<UserPrivateRoutes/>}>
               <Route path={sdk.checkoutRoute} element={<Checkout/>}/>
+              <Route path={sdk.trackingPage} element={<TrackProduct/>}/>
             </Route>
             <Route path={sdk.shopRoute} element={<MainShop />} />
             <Route path={sdk.shopRoute+'/:name'} element={<MainShop />} />
@@ -87,7 +92,11 @@ const App: React.FC = () => {
             <Route path={sdk.productDetailRoute+'/:name'} element={<ProductDetail/>}/>
             <Route path={sdk.cartRoute} element={<UserCart/>}/>
             <Route path={sdk.receiptRoute} element={<Receipt/>}/>
-            
+            <Route path={sdk.contactUsPage} element={<ContactUs/>}/>
+            <Route path={sdk.policyPage} element={<PrivacyPolicy/>}/>
+            <Route path={sdk.tosPage} element={<TermsOfService/>}/>
+
+
             <Route path={sdk.googleDashboard} element={<GoogleSignInSuccess/>}/>
             <Route element={<AdminPrivateRoutes />}>
 
@@ -99,7 +108,7 @@ const App: React.FC = () => {
               <Route path={sdk.singleInventoryRoute+'/:name'} element={<ProductDetail/>}/>
               <Route path={sdk.managePaymentsRoute} element={<Placeholder header='Payments' paragraph='something here later'/>} />
               <Route path={sdk.productDraftsRoute} element={<DraftInventory/>} />
-              <Route path={sdk.salesRoute} element={<SalesInventory/>} />
+              <Route path={sdk.salesRoute} element={<SalesCategory/>} />
               <Route path={sdk.manageUsersRoute} element={<UserInventory />} />
               <Route path={sdk.randomFactsRoute} element={<RandomFacts/>} />
             </Route>

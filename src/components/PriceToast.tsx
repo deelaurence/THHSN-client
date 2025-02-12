@@ -9,6 +9,7 @@ interface PriceProps {
 }
 
 const PriceToast: React.FC<PriceProps> = ({ price, className }) => {
+
     const {isDollar}=useTheme()
     const exchangeRate = useSelector((state:RootState)=>{
         return state.product.exchangeRate

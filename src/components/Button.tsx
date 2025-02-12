@@ -31,7 +31,7 @@ const Button: React.FC<ButtonProps> = ({
   // Base styles for the button
   const baseStyles = `
   min-h-12
-  uppercase  border border-2 
+  uppercase border-primary border border-2 
   text-primary 
   dark:bg-secondary dark:text-primary 
   focus:outline-none transition ease-in-out 

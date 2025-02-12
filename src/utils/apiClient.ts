@@ -1,7 +1,7 @@
 import axios from 'axios';
 export const apiClient = axios.create({
     baseURL:window.location.protocol.startsWith('https')?
-    'https://thhsn-api.onrender.com':
+    'https://api.thehumanhairshopng.com':
     'http://localhost:3000'
 })
 

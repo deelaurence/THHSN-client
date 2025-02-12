@@ -40,6 +40,13 @@ interface Variant {
     date: string;
     status: string;
     id: string;
+    deliveryMessage?:string;
+    deliveryStatus:string;
+    deliveryTimeline:[
+      { status: string, time: string },
+      { status: string, time: string }, 
+      { status: string, time: string }, 
+    ],
     __v: number;
   }
   

@@ -3,7 +3,6 @@ import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import { useTheme } from "../contexts/AppContext";
 import React from "react";
-
 interface NotificationsProps {
   messageProps?: string;
 }
@@ -76,14 +75,13 @@ const Notifications: React.FC<NotificationsProps> = ({ messageProps }) => {
     }
     
   }, [adminStatus,userStatus,successFeedback,shippingStatus]);
-  console.log(visible)
-  console.log(notification.message)
   return (
-    notification.message&&notification.message.length>0&&
+    notification.message&&notification.message.length>0
+    &&(messageProps||notification.message[notification.message.length-1])&&
     <div className={`fixed no-fade z-[99999999] text-center p-4 w-screen bg-yellow-600 text-white ${
       visible ? "animate-slideIn no-fade" : "no-fade animate-slideOut"
     }`}>
-      {messageProps??notification.message[notification.message.length-1]}
+      {messageProps||notification.message[notification.message.length-1]}
     </div>
   );
 };

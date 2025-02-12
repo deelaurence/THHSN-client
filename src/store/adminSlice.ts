@@ -99,6 +99,36 @@ export const addProductNameAndPrice = createAsyncThunk(
 }
 );
 
+
+export const editTrackingStatus = createAsyncThunk(
+  'admin/editTrackingStatus',
+      async (trackingDetails: { 
+          reference: string; 
+          deliveryStatus?:string;
+          deliveryMessage?:string; 
+        }) => {       
+      try {
+          const headers={
+            'content-Type':'application/json',
+            'Authorization':`Bearer ${sdk.getAdminObject()?.token}`
+          }
+          
+          let response = await apiClient.post('/v1/payment/shipping-status', trackingDetails,{headers});
+          return response.data;
+      } catch (error:any) {
+          if(error.response){
+            throw error.response.data.reason
+          }
+          else{
+            console.log(error)
+            throw "Failed to connect, Try again"
+          }
+      }
+}
+);
+
+
+
 // Async action for adding product name, description, category, quantity and price
 export const addProductImage = createAsyncThunk(
   'admin/addProductImage',
@@ -371,6 +401,20 @@ const adminSlice = createSlice({
         state.error = action.error.message || 'Adding Product name failed';
       })
 
+      //TrackingStatus
+      .addCase(editTrackingStatus.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(editTrackingStatus.fulfilled, (state, action: PayloadAction<{ payload:{}, message:string }>) => {
+        state.status = 'succeeded';
+        state.error=''
+        state.successFeedback=action.payload.message
+      })
+      .addCase(editTrackingStatus.rejected, (state, action) => {
+        state.status = 'failed';
+        console.log(action.error.message)
+        state.error = action.error.message || 'Editing status failed';
+      })
 
       //ProductImage
       .addCase(addProductImage.pending, (state) => {

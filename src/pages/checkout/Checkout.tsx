@@ -13,9 +13,9 @@ import SelectMerchant from './SelectMerchant';
 import { IPayment } from '../../interfaces/paymentPayload';
 const Checkout = () => {
     const availableShippingLocations = useSelector((state:RootState)=>state.shipping.availableShippingOptions)
-    const user = useSelector((state:RootState)=>state.user.user)
+    const user = useSelector((state:RootState)=>state.user.user) 
     console.log(user)
-    const [shippingType, setShippingType] = useState<"local"|"international">('local'); // local or international
+    const [shippingType, setShippingType] = useState<"local"|"international"|"">(""); // local or international
     const [shippingFees,setShippingFees] = useState(0)
     const [states, setStates] = useState<{ location: string; price: number }[]>([]);
     const [cities, setCities] = useState([]);
@@ -146,8 +146,9 @@ useEffect(() => {
                 onChange={handleShippingTypeChange}
                 className="border-b dark:border-b-neutral-600 border-neutral-600 bg-transparent p-2 pl-1 w-full focus:outline-none focus:border-b-2 focus:border-primary"
                 >
+                <option value="">Select a destination</option>
                 <option className='text-primary bg-white' value="local">Nigeria</option>
-                <option className='text-primary bg-white ' value="international">International</option>
+                <option className='text-primary bg-white ' value="international">International </option>
                 </select>
             </div>
 
@@ -200,7 +201,7 @@ useEffect(() => {
             {/* Conditional Fields for International Shipping */}
             {shippingType === 'international' && (
                 <>
-                <FormInput type="number" value={shippingFees} required={true} onChange={() => {}} placeholder="Shipping Fees in USD" />
+                <FormInput type="number" value={shippingFees} required={true} onChange={() => {}} placeholder="Shipping Fees" />
                 <FormInput type="text" value={country} required={true} onChange={(e) => {setCountry(e.target.value)}} placeholder="Country" />
                 <FormInput type="text" value={internationalCity} required={true} onChange={(e) => {setInternationalCity(e.target.value)}} placeholder="City" />
                 <FormInput type="text" value={postcode} required={true} onChange={(e) => {setPostcode(e.target.value)}} placeholder="Postcode" />

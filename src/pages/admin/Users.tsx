@@ -7,7 +7,7 @@ import { Sdk } from '../../utils/sdk';
 import Loader from '../../components/Loader';
 import SingleLineError from '../../components/errors/SingleLineError';
 import { FiChevronDown, FiChevronUp, FiMail, FiPhone, FiMapPin, FiGlobe, FiHome, FiCheckCircle, FiXCircle } from 'react-icons/fi';
-import { RiUser4Fill } from 'react-icons/ri';
+// import { RiUser4Fill } from 'react-icons/ri';
 
 const sdk = new Sdk();
 
@@ -35,12 +35,13 @@ const UserInventory: React.FC = () => {
           onClick={() => handleToggle(user.email)}
         >
           <div className="flex gap-3 items-center justify-between">
-            <div className="flex items-center gap-2">
+            <div className="flex gap-2 items-center ">
               
-              <RiUser4Fill className="text-lg" />
+              {/* <FiUser className="text-lg bg-primary-light p-[2px] rounded-sm" /> */}
+              {/* <RiUser4Fill className="text-lg" /> */}
 
-              <h1 className="text-sm">{user.firstName || user.lastName || user.name || 'Not supplied'}</h1>
-              <h1 className="text-xs opacity-50">/{user.email}</h1>
+              <h1 className="text-sm font-semibold no-underline">{user.firstName || user.lastName || user.name || 'Not supplied'}</h1>
+              <h1 className="text-xs opacity-50 no-underline"> {user.email}</h1>
             
             </div>
             {expandedUser === user.email ? (

@@ -4,6 +4,7 @@ import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { apiClient } from '../utils/apiClient';
 import { Sdk } from '../utils/sdk';
 import { IPayment } from '../interfaces/paymentPayload';
+import { Order } from '../interfaces/order';
 const sdk = new Sdk()
 
 interface UserState {
@@ -11,6 +12,8 @@ interface UserState {
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
   error: string | null;
   formErrors:string[];
+  order?:Order;
+  allOrders?:Order[];
 }
 
 
@@ -141,6 +144,44 @@ export const makePayment = createAsyncThunk(
   }
 );
 
+export const getOrder = createAsyncThunk(
+    'user/getOrder',
+        async (orderDetails:{reference:string}) => {       
+        try {
+            const headers={ Authorization: `Bearer ${sdk.getUserObject()?.token}` }
+            const response = await apiClient.post(`/v1/payment/single`,  
+              orderDetails,{headers});
+            return response.data;
+        } catch (error:any) {
+            if(error.response){
+              throw error.response.data.reason
+            }
+            else{
+              throw "Failed to connect, Try again"
+            }
+        }
+  }
+);
+
+export const getAllUserOrders = createAsyncThunk(
+    'user/getAllUserOrder',
+        async () => {       
+        try {
+            const headers={ Authorization: `Bearer ${sdk.getUserObject()?.token}` }
+            const response = await apiClient.get(`/v1/payment/all-user`,  
+              {headers});
+            return response.data;
+        } catch (error:any) {
+            if(error.response){
+              throw error.response.data.reason
+            }
+            else{
+              throw "Failed to connect, Try again"
+            }
+        }
+  }
+);
+
 
 
 
@@ -222,6 +263,37 @@ const userSlice = createSlice({
         window.location.href=action.payload.payload.redirect
       })
       .addCase(makePayment.rejected, (state, action) => {
+        state.status = 'failed';
+        console.log(action.error.message)
+        state.error = action.error.message || 'Payment Failed';
+      })
+
+
+      // get order
+      .addCase(getAllUserOrders.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(getAllUserOrders.fulfilled, (state,action) => {
+        state.status = 'succeeded';
+        state.allOrders=action.payload.payload
+      })
+      .addCase(getAllUserOrders.rejected, (state, action) => {
+        state.status = 'failed';
+        console.log(action.error.message)
+        state.error = action.error.message || 'Payment Failed';
+      })
+
+
+      // get all orders
+      .addCase(getOrder.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(getOrder.fulfilled, (state,action) => {
+        state.status = 'succeeded';
+        state.order=action.payload.payload
+        console.log(action.payload)
+      })
+      .addCase(getOrder.rejected, (state, action) => {
         state.status = 'failed';
         console.log(action.error.message)
         state.error = action.error.message || 'Payment Failed';

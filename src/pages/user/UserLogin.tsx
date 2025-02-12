@@ -25,9 +25,14 @@ const UserLogin: React.FC = () => {
   const handleSignIn = (e: React.FormEvent) => {
     e.preventDefault();
     dispatch(signInUser({email,password})).then((result: any) => {
+          console.log(result)
           if (result.meta.requestStatus === 'fulfilled') {
             navigate(sdk.cartRoute)
           }
+          if(result.error?.message==='Email not registered, Sign up'){
+            navigate(sdk.userRegistrationRoute)
+          }
+
         });
   };
 

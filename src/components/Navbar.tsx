@@ -230,9 +230,9 @@ const Navbar = () => {
                   className='uppercase'
                   onClick={
                     ()=>{
+                      setIsMenuOpen(false);
                       if(menu.label==='Logout'||menu.label==="Login"){
                         handleUserLogout();
-                        setIsMenuOpen(false);
                         navigate(sdk.userLoginRoute);
                       }
                       if(menu.label=='Dashboard')

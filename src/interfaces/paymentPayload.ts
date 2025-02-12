@@ -10,7 +10,7 @@ export interface IPayment {
     selectedCity: string;
     selectedState: string;
     shippingFees: number;
-    shippingType: "local" | "international";
+    shippingType: "local" | "international"|"";
     stateOrProvince: string;
     telephone: string|number;
     merchant?:string;

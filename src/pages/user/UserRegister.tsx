@@ -35,10 +35,15 @@ const UserRegistration: React.FC = () => {
         return
     }
     
-    dispatch(registerUser({email,password,firstName,lastName}))
-    .unwrap()  
-      .then(() => {
-        navigate(sdk.emailSentRoute); 
+    dispatch(registerUser({email,password,firstName,lastName})) 
+        .then((result: any) => {
+          if(result.error?.message==='You are already registered, Log in'){
+            navigate(sdk.userLoginRoute)
+            return
+          }
+          if (result.meta.requestStatus === 'fulfilled') {
+            navigate(sdk.emailSentRoute); 
+          }
       })
   };
 
@@ -77,12 +82,12 @@ const UserRegistration: React.FC = () => {
       if(password==password2){
           setPasswordUnmatch("")
       }
-    },[password,password2])
+  },[password,password2])
 
   return (
-    <div className="flex px-6 flex-col items-center justify-center h-screen dark:bg-primary dark:text-secondary">
+    <div className="flex px-6 flex-col items-center justify-center min-h-screen dark:bg-primary dark:text-secondary">
       <PageHeader heading='' accent='Create Your Account.'/>
-      <div className='flex gap-1 text-xs mb-4 opacity-60 -mt-12'>
+      <div className='flex gap-1 text-xs mb-4 opacity-60 -mt-20'>
             <p >Already have an account?</p>
             <Link className='text-yellow-600' to={sdk.userLoginRoute}>
                 Login
@@ -109,17 +114,11 @@ const UserRegistration: React.FC = () => {
             <FcGoogle/>
           </div>
 
-          <div className='flex gap-1  text-xs mb-4 opacity-60'>
-            <Link className='' to={"/"}>
-                Forgot your password? Click here to reset credentials.
-            </Link>
-          </div>
+          
           {userStatus === 'failed' && (
-                <p className="text-danger dark:text-danger-light text-[12px] py-2 flex gap-1 items-center input-errors"><SlInfo/> {userError}</p>
+                <p className="text-danger dark:text-danger-light text-[12px] py-2 flex gap-1 items-start input-errors"><SlInfo/> {userError}</p>
             )}
         </div>
-
-        
       </form>
       
     </div>

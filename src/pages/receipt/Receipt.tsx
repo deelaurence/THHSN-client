@@ -1,9 +1,10 @@
 import { useSearchParams } from "react-router-dom";
 import PriceToast from "../../components/PriceToast";
-
+import { Link } from "react-router-dom";
+import { sdk } from "../../utils/sdk";
 const Receipt = () => {
   const [searchParams] = useSearchParams();
-
+  sdk.clearCart()
   const orderNumber = searchParams.get("reference") || "1527369";
   const description = JSON.parse(searchParams.get("description")||"{}");
 //   const name = searchParams.get("name") || "Customer";
@@ -12,6 +13,7 @@ const Receipt = () => {
   return (
     <div className="flex flex-col text-primary items-center justify-center min-h-screen  p-6">
       <div className="bg-white shadow-lg rounded-lg p-6 w-full max-w-md">
+        <h1 className="text-4xl  mb-12 font-queens">Thanks for shopping with us!</h1>
         {/* Header */}
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-xl font-bold">Order Confirmation</h2>
@@ -61,6 +63,9 @@ const Receipt = () => {
           <PriceToast className="" price={description.grandTotal} />
         </div>
 
+
+        <p className="text-xs mt-16">Our dedicated support team will reach out to you shortly to provide comprehensive details regarding the delivery process, including timelines, logistics, and any additional requirements necessary to ensure a seamless experience.</p>
+        <Link to={sdk.shopRoute} className="mt-4 underline block">Continue shopping</Link>
         {/* Download Receipt Button */}
         {/* <button
           className="mt-4 flex items-center justify-center w-full bg-gray-200 text-gray-900 px-4 py-2 rounded-lg hover:bg-gray-300"

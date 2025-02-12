@@ -15,6 +15,7 @@ interface FormInputProps {
   value: string | number;
   required: boolean;
   fieldTip?: string;
+  extraclass?:string;
   disabled?: boolean;
   selectOptions?: any;
   onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => void;
@@ -25,6 +26,7 @@ const FormInput: React.FC<FormInputProps> = ({
   placeholder,
   value,
   fieldTip,
+  extraclass,
   disabled,
   name,
   required,
@@ -90,7 +92,7 @@ const FormInput: React.FC<FormInputProps> = ({
           value={value}
           required={required}
           onChange={handleSanitize}
-          className="w-full pl-1 border-b dark:border-neutral-600 bg-secondary border-neutral-700 focus:outline-none focus:dark:border-b-neutral-100 dark:bg-primary dark:text-neutral-300 resize-none overflow-hidden"
+          className={`${extraclass??''} w-full pl-1 border-b dark:border-neutral-600 bg-secondary border-neutral-700 focus:outline-none focus:dark:border-b-neutral-100 dark:bg-primary dark:text-neutral-300 resize-none overflow-hidden`}
         />
       ) : type === 'password' ? (
         <div className="relative">

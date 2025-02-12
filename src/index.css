@@ -156,9 +156,16 @@ input{
     color: rgba(156, 163, 175, 0.416); /* Adjust the color and opacity */
 }
 
+
+
 .placeholder{
     color: rgba(103, 104, 105, 0.6); /* Adjust the color and opacity */
 }
+
+.message-client::placeholder{
+  color: rgb(106, 107, 106) !important;
+}
+
 
 .force-z{
     z-index: 999999 ; /* Ensure the element is always on top */

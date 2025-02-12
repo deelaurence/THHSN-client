@@ -3,6 +3,7 @@ import { AppDispatch } from "../store/store";
 import { useDispatch } from "react-redux";
 import { editTrackingStatus } from "../store/adminSlice";
 import { Order } from "../interfaces/order";
+import { FaCheck } from "react-icons/fa";
 
 type DeliveryTimeline = {
   status: string;
@@ -55,41 +56,40 @@ const OrderTracking: React.FC<OrderTrackingProps> = ({
 
         {/* Completed Progress Line (Green) */}
         <div
-          className="absolute left-4 top-2 w-[2px] bg-green-500"
+          className="absolute left-4 top-2 w-[2px] bg-gradient-to-b from-green-500 via-green-400 to-transparent"
           style={{ height: `${(completedIndex + 1) * 22}%` }}
         ></div>
 
         {orderSteps.map((step, index) => {
           const timelineEntry = deliveryTimeline.find(entry => entry.status === step);
           const isCompleted = index <= completedIndex;
-
           return (
             <div key={step} className="relative flex items-start mb-8 pl-12">
               <button
-                className={`absolute left-[3%] w-5 h-5 rounded-md flex items-center justify-center text-white font-bold
+                className={`absolute left-[2.4%] w-5 h-5 rounded-md flex items-center justify-center text-white font-bold
                   ${isCompleted ? "bg-green-500 border-2 border-green-500" : "bg-gray-300 border-2 border-gray-300"}
                   ${isAdmin ? "cursor-pointer" : "cursor-default"}
                 `}
                 onClick={() => isAdmin && onStatusUpdate && onStatusUpdate(step)}
                 disabled={!isAdmin}
               >
-                {isCompleted && <span className="text-xs">✔</span>}
+                {isCompleted && <span className="text-xs text-white"><FaCheck/></span>}
               </button>
 
               <div>
-                <h3 className={`font-semibold text-lg ${isCompleted ? "text-green-600" : "text-gray-400"}`}>
+                <h3 className={`font-semibold text-sm ${isCompleted ? "text-green-600" : "text-gray-400"}`}>
                   {step.charAt(0).toUpperCase() + step.slice(1)}
                 </h3>
-                <p className={`text-sm ${isCompleted ? "text-gray-600" : "text-gray-400"}`}>
-                    {timelineEntry?.status === "pending"
+                <p className={`text-xs ${isCompleted ? "text-gray-600" : "text-gray-400"}`}>
+                    {step === "pending" && isCompleted 
                         ? "Your payment will be confirmed soon"
-                        : timelineEntry?.status === "dispatched"
+                        : step === "dispatched" && isCompleted
                         ? "Your order has been dispatched"
-                        : timelineEntry?.status === "shipped"
+                        : step === "shipped" && isCompleted
                         ? "Your product is on the way"
-                        : timelineEntry?.status === "ready"
+                        : step === "ready" && isCompleted
                         ? "Your order is ready for collection"
-                        : "Awaiting confirmation..."}
+                        : "Awaiting confirmation"}
                 </p>
 
                 {timelineEntry && <span className="text-xs text-gray-500">{timelineEntry.time}</span>}
@@ -105,7 +105,7 @@ const OrderTracking: React.FC<OrderTrackingProps> = ({
         <textarea
           ref={textAreaRef}
           placeholder={deliveryMessage||"Enter your message"}
-          className="w-full message-client border-0 border-l-[4px] pl-2  border-gray-300 outline-none focus:border-gray-500 bg-transparent mt-6  text-sm pb-2 resize-none"
+          className="w-full message-client border-0 border-l-[4px] pl-1  border-gray-200 outline-none focus:border-gray-300 bg-transparent mt-6  text-sm  resize-none"
           value={deliveryMessageState}
           onChange={(e) => setDeliveryMessage(e.target.value)}
           rows={1}

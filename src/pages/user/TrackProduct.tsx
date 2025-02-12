@@ -6,10 +6,11 @@ import { getAllUserOrders } from '../../store/userSlice';
 import PageHeader from '../../components/PageHeader';
 import { Order } from '../../interfaces/order';
 import { GiCancel } from 'react-icons/gi';
-import { FaBox, FaMapMarkerAlt, FaPhoneAlt, FaShoppingCart } from 'react-icons/fa';
+import { FaBox, FaMapMarkerAlt, FaPhoneAlt } from 'react-icons/fa';
 import PriceToast from '../../components/PriceToast';
 import { sdk } from '../../utils/sdk';
 import { truncate } from '../admin/sales/Sales';
+import Loader from '../../components/Loader';
 
 const TrackProduct = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -19,7 +20,7 @@ const TrackProduct = () => {
     dispatch(getAllUserOrders());
   }, [dispatch]);
 
-  const { allOrders } = useSelector((state: RootState) => state.user);
+  const { allOrders,status } = useSelector((state: RootState) => state.user);
 
   const statusColors = {
     pending: 'bg-yellow-300 ', // Yellow for pending
@@ -29,25 +30,27 @@ const TrackProduct = () => {
   };
 
   return (
-    <div className="px-6 flex flex-col gap-2 my-12">
+    <div className="px-6 flex min-h-[70vh] flex-col gap-2 my-12">
       <PageHeader heading="" accent="Order status." />
       <p className='-mt-24 mb-12 text-sm'>Click on any order to check the status</p>
+			
+			{status==='loading'&&<Loader/>}
 			{allOrders?.map((single) => (
         <div
           key={single.reference}
           className="border-b-2 flex items-center justify-between border-b-neutral-300 dark:border-b-neutral-800 pb-2 cursor-pointer"
           onClick={() => setSelectedOrder(single)} // Open modal on click
         >
-          <p className="text-xs flex items-center gap-2">
+          <p className="text-sm flex items-center gap-2">
             <FaBox className="text-gray-500" /> { truncate(single.description.cart[0].name,30)}
           </p>
 					
 					<div className='flex items-center gap-2'>
-						<p className='capitalize'>
+						<p className='text-xs opacity-70  underline'>
 							{single.deliveryStatus}
 						</p>
-					{/* @ts-ignore */}
-						<p className={`capitalize dark:text-primary border-neutral-300 border text-[10px] h-3 w-3 font-semibold rounded-full ${statusColors[single.deliveryStatus] || 'text-gray-500'
+					  {/* @ts-ignore */}
+						<p className={`capitalize dark:text-primary border-neutral-300 dark:border-none border text-[10px] h-3 w-3 font-semibold rounded-full ${statusColors[single.deliveryStatus] || 'text-gray-500'
 							}`}
 							>
 						</p>
@@ -67,7 +70,7 @@ const TrackProduct = () => {
           >
             {/* Close Button */}
             <button
-              className="absolute top-4 right-4 h-6 w-6 text-red-400 dark:text-red-400 text-2xl hover:text-red-500 rounded-full"
+              className="absolute top-12 right-4 h-6 w-6 text-red-400 dark:text-red-400 text-2xl hover:text-red-500 rounded-full"
               onClick={() => setSelectedOrder(null)}
             >
               <GiCancel />
@@ -79,11 +82,13 @@ const TrackProduct = () => {
 
             {/* Delivery Message */}
             {selectedOrder.deliveryMessage && (
-              <div className="mt-2 flex items-end gap-2">
-                <div className="h-6 w-6 overflow-hidden rounded-full">
+              <div className="mt-2 flex text-xs items-start gap-2">
+                <div className="h-6 w-6 border overflow-hidden rounded-full">
                   <img src={sdk.betranImage} alt="" />
                 </div>
+								<p className='max-w-[80%]'>
                 <span className="">Betran:</span> "{selectedOrder.deliveryMessage}"
+								</p>
               </div>
             )}
 

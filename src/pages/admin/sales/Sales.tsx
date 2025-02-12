@@ -153,6 +153,8 @@ const SalesInventory: React.FC<{filter:string}> = ({filter}) => {
                   })
                 }}
                 className='bg-yellow-700 w-fit p-1 px-4 my-4 rounded-md text-white'>Update Status</p>
+             
+             <div className='flex flex-col gap-2'>
               <p className="flex items-center gap-2 border-b dark:border-b-neutral-800 pb-1"><FiCalendar /> Date: {order.date || 'Not provided'}</p>
               <p className="flex items-center gap-2 border-b dark:border-b-neutral-800 pb-1"><FiMail /> Email: {order.owner || 'Not provided'}</p>
               <p className="flex items-center gap-2 border-b dark:border-b-neutral-800 pb-1"><FiPhone /> Phone: {order.description.telephone || 'Not provided'}</p>
@@ -162,6 +164,7 @@ const SalesInventory: React.FC<{filter:string}> = ({filter}) => {
               <p className="flex items-center gap-2 border-b dark:border-b-neutral-800 pb-1">
                 {order.status === 'Success' ? <FiCheckCircle className="text-green-500" /> : <FiXCircle className="text-red-500" />} Payment Status: {order.status}
               </p>
+             </div>
               <div className="ml-6 space-y-1">
                 <div className='flex mt-6 items-center gap-1'>
                     <h2 

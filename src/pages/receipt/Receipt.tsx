@@ -65,14 +65,12 @@ const Receipt = () => {
 
 
         <p className="text-xs mt-16">Our dedicated support team will reach out to you shortly to provide comprehensive details regarding the delivery process, including timelines, logistics, and any additional requirements necessary to ensure a seamless experience.</p>
-        <Link to={sdk.shopRoute} className="mt-4 underline block">Continue shopping</Link>
+        <div className="flex  [&>*]:underline gap-2">
+          <Link to={sdk.shopRoute} className="mt-4 block text-sm">Continue shopping</Link>
+          <Link to={sdk.trackingPage} className="mt-4  block text-sm">Track your orders</Link>
+        </div>
+        <p className="text-xs mt-2 text-gray-400">For further information you can <a  className='underline' href={sdk.whatsappLink}>contact our support team</a></p>
         {/* Download Receipt Button */}
-        {/* <button
-          className="mt-4 flex items-center justify-center w-full bg-gray-200 text-gray-900 px-4 py-2 rounded-lg hover:bg-gray-300"
-          onClick={() => window.print()}
-        >
-          ⬇ Download receipt
-        </button> */}
       </div>
     </div>
   );

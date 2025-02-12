@@ -35,7 +35,6 @@ import GoogleSignInSuccess from './pages/user/GoogleSignInSuccess.tsx';
 import Checkout from './pages/checkout/Checkout.tsx';
 import ShippingOptions from './pages/admin/ShippingOptions.tsx';
 import Receipt from './pages/receipt/Receipt.tsx';
-import SalesInventory from './pages/admin/sales/Sales.tsx';
 //@ts-ignore
 import FontFaceObserver from 'fontfaceobserver'
 import ContactUs from './pages/staticpages/ContactUs.tsx';

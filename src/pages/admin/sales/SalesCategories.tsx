@@ -17,10 +17,18 @@ const SalesCategory: React.FC = () => {
   const { status, error, orders } = useSelector((state: RootState) => state.admin);
 
   // Memoize categories to prevent unnecessary recalculations
-  const categories = useMemo(() => {
+  let categories = useMemo(() => {
     return [...new Set(orders.map(order => order.deliveryStatus))];
   }, [orders]);
+  const orderPattern = ["pending", "dispatched", "shipped", "ready"];
 
+function sortStatuses(statuses:string[]) {
+return statuses.sort((a, b) => orderPattern.indexOf(a) - orderPattern.indexOf(b));
+}
+
+categories = sortStatuses(categories);
+
+  
   useEffect(() => {
     console.log("disparching")
     dispatch(fetchPayments());
@@ -36,8 +44,11 @@ const SalesCategory: React.FC = () => {
     }));
   }, [categories]);
 
+
+  console.log(categories) 
+
   return (
-    <div className="container mx-auto p-6">
+    <div className="container mx-auto p-6 tablet:px-24 md:px-72">
       <PageHeader heading="" accent="Sales" backToRoute={sdk.adminDashboardRoute} backToLabel="Dashboard" />
       <DashboardNav menuItems={menuItems} showNav={true} />
       {status === 'loading' && <div className="mt-32"><Loader /></div>}

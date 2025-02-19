@@ -9,6 +9,7 @@ import { SlInfo } from 'react-icons/sl';
 import PageHeader from '../../components/PageHeader.tsx';
 import { useNavigate } from 'react-router-dom';
 import { sdk } from '../../utils/sdk.ts';
+import AuthWrapper from '../../wrappers/AuthWrapper.tsx';
 const ForgotPassword: React.FC = () => {
 
 
@@ -45,27 +46,31 @@ const ForgotPassword: React.FC = () => {
   }
  
 
+  
   return (
-    <div className="flex px-6 flex-col items-center justify-center h-screen dark:bg-primary dark:text-secondary">
-      <PageHeader heading='' accent='Forgot Password'/>
-      <div className='flex gap-1 text-xs mb-4 opacity-60 -mt-12'>
-            <p>Enter the email you registered with.</p>
-        </div>
-      <form
-        className="w-full pt-6 pb-8 mb-4"
-        onSubmit={handleSignIn}
-      >
-        <FormInput type='email' placeholder='Email' value={email} required={true} onChange={handleEmailChange} />
-        <div className="mt-8 flex flex-col gap-6 justify-between">
-          <Button extraClass='capitalize  border-none py-1 font-thin bg-primary text-secondary' disabled={disableSubmit||userStatus==="loading"} size="large" label="Continue" loading={userStatus==='loading'} />
-        </div>
+    <AuthWrapper>
+      <div className="flex flex-[1] px-6 flex-col items-center justify-center h-screen dark:bg-primary dark:text-secondary">
+        <PageHeader heading='' accent='Forgot Password'/>
+        <div className='flex gap-1 text-xs mb-4 opacity-60 -mt-12'>
+              <p>Enter the email you registered with.</p>
+          </div>
+        <form
+          className="w-full pt-6 pb-8 mb-4"
+          onSubmit={handleSignIn}
+        >
+          <FormInput type='email' placeholder='Email' value={email} required={true} onChange={handleEmailChange} />
+          <div className="mt-8 flex flex-col gap-6 justify-between">
+            <Button extraClass='capitalize  border-none py-1 font-thin bg-primary text-secondary' disabled={disableSubmit||userStatus==="loading"} size="large" label="Continue" loading={userStatus==='loading'} />
+          </div>
+  
+          
+        </form>
+        {userStatus === 'failed' && (
+          <p className="text-danger dark:text-danger-light text-[12px] py-2 flex gap-1 items-center input-errors"><SlInfo/> {userError}</p>
+        )}
+      </div>
+    </AuthWrapper>
 
-        
-      </form>
-      {userStatus === 'failed' && (
-        <p className="text-danger dark:text-danger-light text-[12px] py-2 flex gap-1 items-center input-errors"><SlInfo/> {userError}</p>
-      )}
-    </div>
   );
 };
 

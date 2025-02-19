@@ -40,6 +40,7 @@ const SelectMerchant: React.FC<SelectMerchantProps> = ({ setShowMerchants,shippi
             alert("You have not selected your shipping location")
             return setShowMerchants(false)
         }
+        console.log(shippingDetails)
         dispatch(makePayment({...shippingDetails,cart:streamlinedCart}))
     }
 

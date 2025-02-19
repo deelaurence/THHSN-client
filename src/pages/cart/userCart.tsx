@@ -48,11 +48,11 @@ const userCart = () => {
     };
 
     return (
-        <div className="px-6 tablet:px-16">
+        <div className="px-6 tablet:px-16 sm:px-44">
             {cartItems>0&&<h1 className="uppercase mt-16 mb-10 font-queens text-4xl">Your Cart</h1>}
             
-            {cartItems>0?<section>
-                <div className=" flex flex-col gap-12">
+            {cartItems>0?<section className="sm:flex sm:gap-12 sm:items-start justify-around">
+                <div className="sm:flex-[4] flex flex-col gap-12">
                     {cart.map(item => (
                         
                         <div className="pb-4 flex gap-4 border-b border-b-neutral-300 dark:border-b-neutral-600" key={`${item.product._id}-${item.variant.name}`}>
@@ -77,13 +77,16 @@ const userCart = () => {
                         </div>
                     ))}
                 </div>
-                <div className="mt-12 ">
-                    <h2 className="font-queens text-3xl opacity-80">Estimated Total</h2>
-                    <PriceToast price={getTotal()} className="text-2xl font-queens opacity-90"/>
+                <div className="sm:flex-[3]">
+                    <div className="mt-12">
+                        <h2 className="font-queens text-3xl opacity-80">Estimated Total</h2>
+                        <PriceToast price={getTotal()} className="text-2xl font-queens opacity-90"/>
+                    </div>
+                    <Link to={sdk.checkoutRoute}>
+                        <Button extraClass="my-12 text-secondary bg-primary" label="checkout" size="large" loading={false}/>
+                    </Link>
                 </div>
-                <Link to={sdk.checkoutRoute}>
-                    <Button extraClass="my-12 text-secondary bg-primary" label="checkout" size="large" loading={false}/>
-                </Link>
+
             </section>:
             <div className="flex flex-col items-center justify-center h-[70vh]">
                 <h2 className="font-queens text-3xl opacity-80">Cart Empty</h2>

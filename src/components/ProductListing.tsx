@@ -37,7 +37,7 @@ const ProductListing: React.FC<ProductsProps> = ({ products,filterProps }) => {
   return (
     <section>
     <PageHeader heading="" accent={filterProps==="all"?"All Products":filterProps}/>
-    <div className="grid grid-cols-2 gap-6 -mt-8 mb-44" >
+    <div className="grid grid-cols-2 tablet:grid-cols-3 md:grid-cols-4 gap-6 tablet:gap-8 md:gap-12 -mt-8 mb-44" >
       {filteredProducts.length === 0 && (
         <>
           {[...Array(6)].map((_, index) => (

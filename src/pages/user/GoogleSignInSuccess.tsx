@@ -28,7 +28,7 @@ const GoogleSignInSuccess = () => {
     }
     useEffect(()=>{
         dispatch(setUserAfterGoogleAuth())
-        navigate(sdk.cartRoute)
+        navigate(sdk.userDashboard)
     })
     return (null);
 };

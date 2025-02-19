@@ -30,7 +30,7 @@ const TrackProduct = () => {
   };
 
   return (
-    <div className="px-6 flex min-h-[70vh] flex-col gap-2 my-12">
+    <div className="px-6 sm:px-16 flex min-h-[70vh] flex-col gap-2 my-12">
       <PageHeader heading="" accent="Order status." />
       <p className='-mt-24 mb-12 text-sm'>Click on any order to check the status</p>
 			
@@ -41,11 +41,14 @@ const TrackProduct = () => {
           className="border-b-2 flex items-center justify-between border-b-neutral-300 dark:border-b-neutral-800 pb-2 cursor-pointer"
           onClick={() => setSelectedOrder(single)} // Open modal on click
         >
-          <p className="text-sm flex items-center gap-2">
+          <p className="text-sm md:flex-[2] flex  items-center gap-2">
             <FaBox className="text-gray-500" /> { truncate(single.description.cart[0].name,30)}
           </p>
 					
-					<div className='flex items-center gap-2'>
+          <p className='flex-[2] hidden tablet:hidden sm:block justify-self-start'>{truncate(single.description.address,30)}</p>
+          <div className='flex-[2] hidden sm:block justify-self-start'><PriceToast price={Number(single.description.grandTotal)}/></div>
+
+					<div className='flex md:flex-[1] items-center gap-2'>
 						<p className='text-xs opacity-70  underline'>
 							{single.deliveryStatus}
 						</p>

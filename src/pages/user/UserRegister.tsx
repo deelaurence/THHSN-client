@@ -11,6 +11,7 @@ import PageHeader from '../../components/PageHeader.tsx';
 import { Link, useNavigate } from 'react-router-dom';
 import { FcGoogle } from 'react-icons/fc';
 import { Sdk } from '../../utils/sdk.ts';
+import AuthWrapper from '../../wrappers/AuthWrapper.tsx';
 const sdk = new Sdk()
 
 const UserRegistration: React.FC = () => {
@@ -84,44 +85,48 @@ const UserRegistration: React.FC = () => {
       }
   },[password,password2])
 
-  return (
-    <div className="flex px-6 flex-col items-center justify-center min-h-screen dark:bg-primary dark:text-secondary">
-      <PageHeader heading='' accent='Create Your Account.'/>
-      <div className='flex gap-1 text-xs mb-4 opacity-60 -mt-20'>
-            <p >Already have an account?</p>
-            <Link className='text-yellow-600' to={sdk.userLoginRoute}>
-                Login
-            </Link>
-        </div>
-      <form
-        className="w-full pt-6 pb-8 mb-4"
-        onSubmit={handleRegister}
-      >
-        <FormInput type='email' placeholder='Email' value={email} required={true} onChange={handleEmailChange} />
-        <FormInput type='text' placeholder='Last Name' value={lastName} required={true} onChange={handleLastNameChange} />
-        <FormInput type='text' placeholder='First Name' value={firstName} required={true} onChange={handleFirstNameChange} />
-        <FormInput type='password' placeholder='Password' value={password} required={true} onChange={handlePasswordChange} />
-        <FormInput type='password' placeholder='Confirm Password' value={password2} fieldTip={passwordUnmatch??""} required={true} onChange={handlePasswordChange2} />
-        <div className="mt-8 flex flex-col gap-6 justify-between">
-          <Button extraClass='capitalize  border-none py-1 font-thin bg-primary text-secondary' disabled={disableSubmit||userStatus==="loading"} size="large" label="Sign Up" loading={userStatus==='loading'} />
-          
-          <div 
-          onClick={()=>{
-                dispatch(googleSignIn())
-            }}
-          className='border gap-4  text-xl justify-center bg-[#fff] dark:bg-primary-light dark:border-none border-neutral-600 flex items-center p-2 w-full  '>
-            <p className='text-base opacity-80'>Continue with Google</p>
-            <FcGoogle/>
-          </div>
 
-          
-          {userStatus === 'failed' && (
-                <p className="text-danger dark:text-danger-light text-[12px] py-2 flex gap-1 items-start input-errors"><SlInfo/> {userError}</p>
-            )}
-        </div>
-      </form>
-      
-    </div>
+
+  return (
+    <AuthWrapper>
+      <div className="flex flex-[1] px-6 flex-col items-center justify-center min-h-screen dark:bg-primary dark:text-secondary">
+        <PageHeader heading='' accent='Create Your Account.'/>
+        <div className='flex gap-1 text-xs mb-4 opacity-60 -mt-20'>
+              <p >Already have an account?</p>
+              <Link className='text-yellow-600' to={sdk.userLoginRoute}>
+                  Login
+              </Link>
+          </div>
+        <form
+          className="w-full pt-6 pb-8 mb-4"
+          onSubmit={handleRegister}
+        >
+          <FormInput type='email' placeholder='Email' value={email} required={true} onChange={handleEmailChange} />
+          <FormInput type='text' placeholder='Last Name' value={lastName} required={true} onChange={handleLastNameChange} />
+          <FormInput type='text' placeholder='First Name' value={firstName} required={true} onChange={handleFirstNameChange} />
+          <FormInput type='password' placeholder='Password' value={password} required={true} onChange={handlePasswordChange} />
+          <FormInput type='password' placeholder='Confirm Password' value={password2} fieldTip={passwordUnmatch??""} required={true} onChange={handlePasswordChange2} />
+          <div className="mt-8 flex flex-col gap-6 justify-between">
+            <Button extraClass='capitalize  border-none py-1 font-thin bg-primary text-secondary' disabled={disableSubmit||userStatus==="loading"} size="large" label="Sign Up" loading={userStatus==='loading'} />
+            
+            <div 
+            onClick={()=>{
+                  dispatch(googleSignIn())
+              }}
+            className='border gap-4  text-xl justify-center bg-[#fff] dark:bg-primary-light dark:border-none border-neutral-600 flex items-center p-2 w-full  '>
+              <p className='text-base opacity-80'>Continue with Google</p>
+              <FcGoogle/>
+            </div>
+  
+            
+            {userStatus === 'failed' && (
+                  <p className="text-danger dark:text-danger-light text-[12px] py-2 flex gap-1 items-start input-errors"><SlInfo/> {userError}</p>
+              )}
+          </div>
+        </form>
+        
+      </div>
+    </AuthWrapper>
   );
 };
 

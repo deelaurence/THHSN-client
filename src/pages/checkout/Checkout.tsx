@@ -11,10 +11,11 @@ import { sdk } from '../../utils/sdk';
 import { BsArrowRight } from 'react-icons/bs';
 import SelectMerchant from './SelectMerchant';
 import { IPayment } from '../../interfaces/paymentPayload';
+import countries from '../../data/countries.json'
+
 const Checkout = () => {
     const availableShippingLocations = useSelector((state:RootState)=>state.shipping.availableShippingOptions)
     const user = useSelector((state:RootState)=>state.user.user) 
-    console.log(user)
     const [shippingType, setShippingType] = useState<"local"|"international"|"">(""); // local or international
     const [shippingFees,setShippingFees] = useState(0)
     const [states, setStates] = useState<{ location: string; price: number }[]>([]);
@@ -74,10 +75,21 @@ useEffect(() => {
 
   const handleShippingTypeChange = (e:any) => {
     setShippingType(e.target.value);
+    
     setSelectedState(''); // Reset state selection for local shipping
     setCities([]); // Reset cities
   };
 
+  useEffect(()=>{
+    if(shippingType==='local'){
+        setCountry('Nigeria')
+    }
+    else{
+        setCountry('')
+    }
+  },[shippingType])
+
+  console.log(country)
   useEffect(()=>{
     if(shippingType==='international'){
         setShippingFees(availableShippingLocations.find(item => item.location === 'international')?.price || 0)
@@ -122,12 +134,12 @@ useEffect(() => {
     grandTotal:shippingFees+cartTotal
   };
 
-
-
+  
+  
   return (
-    <div className="py-12 relative mb-44">
+    <div className="py-12 relative  mb-44">
       {showMerchants&&<SelectMerchant setShowMerchants={setShowMerchants} shippingDetails={shippingDetails}/>}
-      <div className='px-6'>
+      <div className='px-6 sm:px-32'>
             <h2 className="uppercase mb-2">Supply your billing address</h2>
             <p className="text-xs opacity-60">To place your order, you must supply your billing address</p>
 
@@ -159,20 +171,20 @@ useEffect(() => {
                 <div className="mb-4">
                     
                     <label className="block text-[10px] opacity-80 mb-2">Select a state</label>
-                    <select
+                <select
                 value={selectedState}
                 required={true} 
                 onChange={handleStateChange}
                 className="border-b dark:border-b-neutral-600 border-neutral-600 p-2 pl-1 w-full bg-transparent focus:outline-none focus:border-b-2 focus:border-primary"
                     >
-                {states[0].location}
+                {states[0]?.location}
                 <option value="">Select a state</option>
                 {states.map((state: {location:string,price:number}) => (
                     <option className='text-primary' key={state.location} value={state.location}>
                     {state.location}
                     </option>
                 ))}
-                    </select>
+                </select>
 
                 </div>
                 {selectedState && cities.length > 0 && (
@@ -202,8 +214,25 @@ useEffect(() => {
             {/* Conditional Fields for International Shipping */}
             {shippingType === 'international' && (
                 <>
+                
+                <label className="block text-[10px] opacity-80 mb-2">Select your country</label>
+                <select
+                value={country}
+                required={true} 
+                onChange={(e) => {setCountry(e.target.value)}}
+                className="border-b dark:border-b-neutral-600 mb-4 border-neutral-600 p-2 pl-1 w-full bg-transparent focus:outline-none focus:border-b-2 focus:border-primary"
+                    >
+                {states[0]?.location}
+                <option value="">Select a country</option>
+                {countries.map((country: {name:string, code:string}) => (
+                    <option className='text-primary' key={country.name} value={country.name}>
+                    {country.name}
+                    </option>
+                ))}
+                </select>
                 <FormInput type="number" value={shippingFees} required={true} onChange={() => {}} placeholder="Shipping Fees" />
-                <FormInput type="text" value={country} required={true} onChange={(e) => {setCountry(e.target.value)}} placeholder="Country" />
+
+                {/* <FormInput type="text" value={country} required={true} onChange={(e) => {setCountry(e.target.value)}} placeholder="Country" /> */}
                 <FormInput type="text" value={internationalCity} required={true} onChange={(e) => {setInternationalCity(e.target.value)}} placeholder="City" />
                 <FormInput type="text" value={postcode} required={true} onChange={(e) => {setPostcode(e.target.value)}} placeholder="Postcode" />
                 <FormInput type="text" value={stateOrProvince} required={true} onChange={(e) => {setStateOrProvince(e.target.value)}} placeholder="State/Province" />
@@ -211,7 +240,7 @@ useEffect(() => {
             )}
             <FormInput type="text" value={address} required={true} onChange={(e) => {setAddress(e.target.value)}} placeholder="Address" />
             <FormInput type="number" value={telephone} required={true} onChange={(e) => {setTelephone(e.target.value)}} placeholder="Telephone" />
-            <div className='w-screen fixed left-0  bottom-0'>
+            <div className='w-screen fixed left-0  sm:px-24 bottom-0'>
                 <div className='px-6 pt-4 pb-2 flex flex-col gap-1 bg-secondary text-primary dark:bg-primary dark:text-secondary border-t border-t-neutral-700 dark:border-t-neutral-800 shadow-sm'>
                     <h3 className='font-bold'>Price Details</h3>
                     <div className='flex items-end justify-between text-xs'>

@@ -75,7 +75,7 @@ const SalesInventory: React.FC<{filter:string}> = ({filter}) => {
 
 
   return (
-    <div className="container flex flex-col gap-3 mx-auto mt-12">
+    <div className="container flex flex-col gap-3 mx-auto mt-12 ">
 
       
       {/* {<DashboardNav menuItems={menuItems} showNav={true}/>} */}

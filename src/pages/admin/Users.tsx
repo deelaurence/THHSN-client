@@ -25,7 +25,7 @@ const UserInventory: React.FC = () => {
   };
 
   return (
-    <div className="container flex flex-col gap-3 mx-auto p-6">
+    <div className="container flex flex-col gap-3 mx-auto p-6 tablet:px-24 md:px-72">
       <PageHeader heading="" accent="Users" backToRoute={sdk.adminDashboardRoute} backToLabel="Dashboard" />
 
       {users.map((user) => (

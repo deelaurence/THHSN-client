@@ -42,6 +42,7 @@ import PrivacyPolicy from './pages/staticpages/Policy.tsx';
 import TermsOfService from './pages/staticpages/TermsOfService.tsx';
 import SalesCategory from './pages/admin/sales/SalesCategories.tsx';
 import TrackProduct from './pages/user/TrackProduct.tsx';
+import UserDashboard from './pages/user/Dashboard.tsx';
 // import Loader from './components/Loader.tsx';
 const sdk = new Sdk()
 
@@ -66,7 +67,7 @@ const App: React.FC = () => {
   return (
     <>
   
-    <div className='dark:bg-primary   sm:hidden dark:text-secondary text-primary  bg-secondary'>
+    <div className='dark:bg-primary   dark:text-secondary text-primary  bg-secondary'>
     <ThemeProvider>
 
     <Router>
@@ -77,6 +78,7 @@ const App: React.FC = () => {
             <Route path="/" element={<Home />} />
             <Route element={<UserPrivateRoutes/>}>
               <Route path={sdk.checkoutRoute} element={<Checkout/>}/>
+              <Route path={sdk.userDashboard} element={<UserDashboard/>}/>
               <Route path={sdk.trackingPage} element={<TrackProduct/>}/>
             </Route>
             <Route path={sdk.shopRoute} element={<MainShop />} />

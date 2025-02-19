@@ -33,7 +33,7 @@ const DraftInventory: React.FC = () => {
 
 
   return (
-    <div className="container mx-auto p-6">
+    <div className="container mx-auto p-6 tablet:px-24 md:px-72">
       <PageHeader heading="" accent="Your Unfinished Drafts" backToRoute={sdk.adminDashboardRoute} backToLabel='Dashboard'/>
       {<DashboardNav menuItems={menuItems} showNav={true}/>}
       {status==='loading'&& <div className='mt-32'><Loader/></div>}

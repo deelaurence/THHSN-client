@@ -24,7 +24,7 @@ const AddProduct = () => {
   let stepProgressType=2
   // addProductPage=2
   return (
-    <div className='min-h-screen px-6 mt-16'>
+    <div className='min-h-screen px-6 mt-16 tablet:mx-44 md:mx-72'>
         {/* todo, change the heading based on current page */}
         <PageHeader heading={editingProduct?"Revamp your store,":"Grow your inventory,"} accent={editingProduct?"Sell More Tomorrow!":"Grow your brand"}/>
         {stepProgressType===1?<StepProgessTypeOne menuItems={menuItems} currentMenu={addProductPage} />:<StepProgessTypeTwo menuItems={menuItems} currentMenu={addProductPage}/>}

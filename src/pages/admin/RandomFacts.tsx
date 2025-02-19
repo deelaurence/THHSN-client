@@ -27,7 +27,7 @@ const RandomFacts = () => {
     console.log(facts)
 
     return (
-    <section className='px-6'>
+    <section className='px-6 tablet:px-24 md:px-72'>
         <div className=' min-h-64'>
             <PageHeader heading='' accent='Do you know?' backToLabel='dashboard' backToRoute={new Sdk().adminDashboardRoute}/>
             {status==='loading'&&<Loader/>}

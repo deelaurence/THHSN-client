@@ -59,16 +59,19 @@ const BestSellersAndNewArrivals: React.FC<BestSellersProps> = ({
       <Skeleton className="dark:bg-primary-light" animation="wave" variant="text" width={150} />
     </div>
   );
+  if(store.length<4){
+    return null
+  }
   return (
-    <section>
-      <h2 className="text-2xl mt-16 font-queens uppercase px-6 sm:px-16 mx-auto">
+    <section className="px-6 sm:px-16">
+      <h2 className="text-2xl mt-16 font-queens uppercase  mx-auto">
         {title}
       </h2>
-      <p className="px-6 sm:px-16 mb-4 text-xs">{subtitle}</p>
+      <p className=" mb-4 text-xs">{subtitle}</p>
       <div className="relative">
         {/* Scrollable Container */}
         <div
-          className={`${dataReady?'':''} flex no-scrollbar overflow-x-auto scroll-snap-x snap-mandatory sm:px-16`}
+          className={`${dataReady?'':''} flex no-scrollbar overflow-x-auto scroll-snap-x snap-mandatory `}
           ref={containerRef}
         >
           {store.map((item, index) => (

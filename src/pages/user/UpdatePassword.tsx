@@ -9,6 +9,7 @@ import { Sdk } from '../../utils/sdk.ts';
 import PageHeader from '../../components/PageHeader.tsx';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { updatePassword } from '../../store/userSlice.ts';
+import AuthWrapper from '../../wrappers/AuthWrapper.tsx';
 const sdk = new Sdk()
 const UpdatePassword: React.FC = () => {
 
@@ -62,8 +63,11 @@ const UpdatePassword: React.FC = () => {
     }
   },[password,password2])
 
+  
+
   return (
-    <div className="flex px-6 flex-col items-center justify-center h-screen dark:bg-primary dark:text-secondary">
+    <AuthWrapper>
+      <div className="flex px-6 flex-col items-center justify-center h-screen dark:bg-primary dark:text-secondary">
       <PageHeader heading='' accent='Update Password'/>
       <div className='flex gap-1 text-xs mb-4 opacity-60 -mt-12'>
             <p>Enter Your New Password</p>
@@ -74,7 +78,7 @@ const UpdatePassword: React.FC = () => {
         onSubmit={handleUpdatePassword}
       >
         <div className='opacity-70'>
-            <FormInput type='email' disabled={true} placeholder='Email' value={email||""} required={true} onChange={handleEmailChange} />
+          <FormInput type='email' disabled={true} placeholder='Email' value={email||""} required={true} onChange={handleEmailChange} />
         </div>
         <FormInput type='password' placeholder='Password' value={password} required={true} onChange={handlePasswordChange} />
         <FormInput type='password' placeholder='Confirm Password' value={password2} required={true} fieldTip={passwordUnmatch??""} onChange={handlePasswordChange2} />
@@ -90,7 +94,9 @@ const UpdatePassword: React.FC = () => {
         <p className="text-danger dark:text-danger-light text-[12px] py-2 flex gap-1 items-center input-errors"><SlInfo/> {userError}</p>
       )}
     </div>
+    </AuthWrapper>
   );
+
 };
 
 export default UpdatePassword;

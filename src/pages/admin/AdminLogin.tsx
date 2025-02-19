@@ -9,6 +9,7 @@ import { SlInfo } from 'react-icons/sl';
 import { sdk, Sdk } from '../../utils/sdk.ts';
 import PageHeader from '../../components/PageHeader.tsx';
 import { useNavigate } from 'react-router-dom';
+import AuthWrapper from '../../wrappers/AuthWrapper.tsx';
 const AdminLogin: React.FC = () => {
   const navigate = useNavigate()
 
@@ -34,7 +35,7 @@ const AdminLogin: React.FC = () => {
   //Redirect to admin dashboard if still logged in
   useEffect(()=>{
     if(getAdminObject()?.token){
-      window.history.pushState({}, '', adminDashboardRoute);
+      navigate(adminDashboardRoute)
     }
   },[])
 
@@ -51,8 +52,10 @@ const AdminLogin: React.FC = () => {
     setPassword(e.target.value)
   }
 
-  return (
-    <div className="flex px-6 flex-col items-center justify-center h-screen dark:bg-primary dark:text-secondary">
+  
+  return(
+      <AuthWrapper>
+        <div className="flex px-6 flex-col items-center justify-center h-screen dark:bg-primary dark:text-secondary">
       <PageHeader heading='' accent='Hi, Admin'/>
       <form
         className="w-full pt-6 pb-8 mb-4"
@@ -68,7 +71,9 @@ const AdminLogin: React.FC = () => {
         <p className="text-danger dark:text-danger-light text-[12px] py-2 flex gap-1 items-center input-errors"><SlInfo/> {adminError}</p>
       )}
     </div>
-  );
+
+      </AuthWrapper>  
+    )
 };
 
 export default AdminLogin;

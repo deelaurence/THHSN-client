@@ -89,12 +89,13 @@ const ProductDetail = () => {
         sdk.setSingleProductDetail(product)
     }
     }, [product]);
+    console.log(isAdmin)
 
     //update the state of bestseller and newArrival
     useEffect(()=>{
         if(!product){
             return
-        }  
+        }
         setIsBestSeller(product.bestSeller)
         setIsNewArrival(product.newArrival)
     },[])
@@ -118,7 +119,7 @@ const ProductDetail = () => {
         <HelmetProvider>
         {product&&product.name?
             <div 
-            className='px-6 tablet:px-16 pb-12 '>
+            className='px-6 tablet:px-16 sm:px-44 pb-12 '>
                 <Helmet>
                     <title>{product.name}</title>
                     <meta property="og:title" content={product.name} />
@@ -129,11 +130,15 @@ const ProductDetail = () => {
                 <PageHeader 
                 heading='' 
                 accent='' />
-                {!product.images||!product.images[0]&&<Slideshow images={[sdk.placeholderImage]}/>}
-                {product.images&&product.images[0]&&<Slideshow images={product.coverImage ? [product.coverImage, ...product.images] : product.images}/>}
+                
+                <main className='tablet:flex tablet:gap-14 md:flex md:gap-14 '>
+                <div className='flex-[2]'>
+                    {!product.images||!product.images[0]&&<Slideshow images={[sdk.placeholderImage]}/>}
+                    {product.images&&product.images[0]&&<Slideshow images={product.coverImage ? [product.coverImage, ...product.images] : product.images}/>}
+                </div>
                 
 
-                <section className=''>
+                <section className='flex-[3] md:flex-[3]'>
                 
                 <div className='text-[10px] flex gap-1 items-center pt-6'>
                 <p>4.9</p>
@@ -315,6 +320,7 @@ const ProductDetail = () => {
                 <Button label='Add to Cart'  size='large' extraClass=' font-thin  bg-primary text-secondary py-3' loading={false} />
                 </Link>}
                 </section>
+                </main>
             </div>:
             <div className='flex my-12 px-6 sm:px-16 items-center justify-center'>
                 <SkeletonLoader customWidth='w-full' customHeight='h-108' extraClass='w-screen h-screen'/>

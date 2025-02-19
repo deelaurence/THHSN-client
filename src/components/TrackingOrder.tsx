@@ -56,7 +56,7 @@ const OrderTracking: React.FC<OrderTrackingProps> = ({
 
         {/* Completed Progress Line (Green) */}
         <div
-          className="absolute left-4 top-2 w-[2px] bg-gradient-to-b from-green-500 via-green-400 to-transparent"
+          className="absolute left-4 top-2 w-[2px] bg-gradient-to-b from-green-600 via-green-400 to-transparent"
           style={{ height: `${(completedIndex + 1) * 22}%` }}
         ></div>
 
@@ -66,8 +66,8 @@ const OrderTracking: React.FC<OrderTrackingProps> = ({
           return (
             <div key={step} className="relative flex items-start mb-8 pl-12">
               <button
-                className={`absolute left-[2.4%] w-5 h-5 rounded-md flex items-center justify-center text-white font-bold
-                  ${isCompleted ? "bg-green-500 border-2 border-green-500" : "bg-gray-300 border-2 border-gray-300"}
+                className={`absolute left-[2.4%] w-5 h-5 rounded flex items-center justify-center text-white font-bold
+                  ${isCompleted ? "bg-green-600 border-2 border-green-600" : "bg-gray-300 border-2 border-gray-300"}
                   ${isAdmin ? "cursor-pointer" : "cursor-default"}
                 `}
                 onClick={() => isAdmin && onStatusUpdate && onStatusUpdate(step)}

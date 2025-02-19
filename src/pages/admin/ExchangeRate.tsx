@@ -51,7 +51,7 @@ const ExchangeRate = () => {
 
 
     return (
-        <div className='min-h-screen pb-4 px-6 sm-px-16'>        
+        <div className='min-h-screen pb-4 px-6 sm-px-16 tablet:px-24 md:px-72'>        
             <form 
             onSubmit={handleSubmitRate}
             >

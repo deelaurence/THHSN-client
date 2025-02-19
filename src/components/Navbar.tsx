@@ -131,7 +131,7 @@ const Navbar = () => {
     <div className={`relative  pb-12 z-100 force-z`}>
       {/* Main Navbar */}
       {/* <div className={`${scrolled?'bg-secondary dark:bg-primary':'bg-secondary dark:bg-primary'} px-6 tablet:px-16 sm:px-16 py-4 sm:py-8 border-b  border-b-primary fixed w-full   dark:border-b-neutral-500 justify-between flex items-center  dark:text-secondary`}> */}
-      <div className={`bg-secondary dark:bg-primary  px-6 tablet:px-16 sm:px-16 py-4 sm:py-8 border-b  border-b-primary fixed w-full   dark:border-b-neutral-500 justify-between flex items-center  dark:text-secondary`}>
+      <div className={`bg-secondary dark:bg-primary  px-6 tablet:px-16 sm:px-16 py-4  border-b  border-b-primary fixed w-full   dark:border-b-neutral-500 justify-between flex items-center  dark:text-secondary`}>
         <div className='flex items-center gap-3'>
           {/* Hamburger Icon */}
           <button onClick={toggleMenu} className='focus:outline-none md:hidden'>
@@ -165,11 +165,9 @@ const Navbar = () => {
         {/* Desktop Links */}
         <div className='hidden md:flex items-center gap-4'>
           
-          <div onClick={handleUserLogout} className='cursor-pointer'>
-              {userObject?"Logout":"Login"}
-          </div>
           
-          <Link to={sdk.adminDashboardRoute} className='hover:text-gray-500'>
+          
+          <Link to={sdk.userDashboard} className='hover:text-gray-500'>
             Dashboard
           </Link>
           <ThemeToggleButton />

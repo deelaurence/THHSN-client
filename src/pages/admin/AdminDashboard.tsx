@@ -214,10 +214,10 @@ let salesData = [
 ];
 
 salesData = generateSalesData(orders);
-  // console.log(getSalesPerCountry(orders)) 
-  // console.log(getCustomerStats(orders)) 
-  // console.log(getTopCustomers(orders)) 
-  // console.log(getTotalCustomers(orders)) 
+  // //console.log(getSalesPerCountry(orders)) 
+  // //console.log(getCustomerStats(orders)) 
+  // //console.log(getTopCustomers(orders)) 
+  // //console.log(getTotalCustomers(orders)) 
   
   
   // const [currentMenu, setCurrentMenu] = useState<number >(0);
@@ -244,7 +244,7 @@ salesData = generateSalesData(orders);
           <p className="text-xs   text-neutral-500 flex gap-2 items-center ">Total Revenue  <GrAnalytics className="text-yellow-700"/> </p>
           <PriceToast className="text-3xl sm:text-7xl font-medium text-neutral-700 dark:text-neutral-200" price={calculateTotalRevenue(orders)}/>  
         </div>
-        <div className=" dark:bg-primary-light bg-gray-200 border-b-2 dark:border-b-neutral-700 p-2 ">
+        <div className=" dark:bg-primary-light  bg-gray-200 border-b-2 dark:border-b-neutral-700 p-2 ">
           <p className="text-xs text-neutral-500 flex gap-2 items-center">Customers <LuUsers2 className="text-green-700"/> </p>
           <p className="text-3xl  text-neutral-700 sm:text-7xl dark:text-neutral-200 font-adelia">{getTotalCustomers(orders)}</p>
         </div>
@@ -253,15 +253,16 @@ salesData = generateSalesData(orders);
       <section className="sm:flex sm:my-12 tablet:flex gap-10">
           <div className="my-12 sm:my-0 tablet:my-0">
             
-            <div className="flex mb-4 justify-between items-center">
+            <div className="flex mb-4 relative justify-between items-center">
               <h2 className="text-xs  text-neutral-500">Top Customers</h2>
               {getTopCustomers(orders).length > 2 && (
                 <button className="text-orange-400 text-xs" onClick={() => setShowMoreCustomers(!showMoreCustomers)}>{showMoreCustomers?"Hide Details":"Show more"}</button>
               )}
+              {!showMoreCustomers&&<p className="absolute z-10 top-12 bg-gradient-to-b from-transparent dark:via-transparent dark:to-primary  via-transparent to-secondary w-full h-14"></p>}
             </div>
             {getTopCustomers(orders).slice(0, 2).map((customer, index) => {
               return (
-            <div key={index} className="flex text-neutral-400 gap-7 mb-1 p-1 justify-between dark:border-neutral-700 border-b-neutral-300 border-b items-center">
+            <div key={index} className="flex text-neutral-400 gap-7 mb-1 p-1 justify-between dark:border-neutral-800 border-b-neutral-200 border-b items-center">
               <p>{customer.name}</p>
               <div className="flex "><PriceToast price={customer.totalSpent}/>({customer.ordersCount})</div>
             </div>
@@ -270,7 +271,7 @@ salesData = generateSalesData(orders);
             
             {showMoreCustomers && getTopCustomers(orders).slice(2,10).map((customer, index) => {
               return (
-            <div key={index} className="flex text-neutral-400 gap-7 mb-1 p-1 justify-between dark:border-neutral-700 border-b-neutral-300 border-b items-center">
+            <div key={index} className="flex text-neutral-400 gap-7 mb-1 p-1 justify-between dark:border-neutral-800 border-b-neutral-200 border-b items-center">
               <p>{customer.name}</p>
               <div className="flex "><PriceToast price={customer.totalSpent}/>({customer.ordersCount})</div>
             </div>
@@ -280,15 +281,16 @@ salesData = generateSalesData(orders);
           
 
           <div className="mb-12">
-            <div className="flex mb-4 justify-between items-center">
+            <div className="flex mb-4 relative justify-between items-center">
               <p className="text-xs text-neutral-500">Sales By Country</p>
               {getSalesPerCountry(orders).length > 2 && (
                 <button className="text-purple-500 text-xs" onClick={() => setShowMoreCountries(!showMoreCountries)}>{showMoreCountries?"Hide details":"Show more"}</button>
               )}
+              {!showMoreCountries&&<p className="absolute z-10 top-12 bg-gradient-to-b from-transparent dark:via-transparent dark:to-primary  via-transparent to-secondary w-full h-14"></p>}
             </div>
             {getSalesPerCountry(orders).slice(0, 2).map((country, index) => {
               return (
-                <div key={index} className="flex text-neutral-400 gap-7 mb-1 p-1 justify-between border-b dark:border-neutral-700 border-b-neutral-300 items-center">
+                <div key={index} className="flex relative text-neutral-400 gap-7 mb-1 p-1 justify-between border-b dark:border-neutral-800 border-b-neutral-200 items-center">
                   <p>{country.country}</p>
                   <div className="flex "><PriceToast price={country.totalSales}/></div>
                 </div>
@@ -297,7 +299,7 @@ salesData = generateSalesData(orders);
             
             {showMoreCountries && getSalesPerCountry(orders).slice(2).map((country, index) => {
               return (
-                <div key={index} className="flex text-neutral-400 gap-7 mb-1 p-1 justify-between border-b dark:border-neutral-700 border-b-neutral-300 items-center">
+                <div key={index} className="flex text-neutral-400 gap-7 mb-1 p-1 justify-between border-b dark:border-neutral-800 border-b-neutral-200 items-center">
                   <p>{country.country}</p>
                   <div className="flex "><PriceToast price={country.totalSales}/></div>
                 </div>

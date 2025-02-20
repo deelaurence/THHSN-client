@@ -89,7 +89,13 @@ const ProductDetail = () => {
         sdk.setSingleProductDetail(product)
     }
     }, [product]);
-    console.log(isAdmin)
+
+
+    //Set the product detail to local storage
+    //if so we can use later to edit or other things
+    useEffect(()=>{
+        sdk.setSingleProductDetail(product)
+    },[product])
 
     //update the state of bestseller and newArrival
     useEffect(()=>{

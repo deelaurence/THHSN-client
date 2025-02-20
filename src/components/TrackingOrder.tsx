@@ -37,8 +37,6 @@ const OrderTracking: React.FC<OrderTrackingProps> = ({
   const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
   const dispatch = useDispatch<AppDispatch>()
   // Adjust textarea height based on content
-  console.log(deliveryMessageState)
-  console.log(deliveryMessage) 
   useEffect(() => {
     if (textAreaRef.current) {
       textAreaRef.current.style.height = "auto";

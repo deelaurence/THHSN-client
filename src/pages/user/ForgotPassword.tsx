@@ -34,13 +34,11 @@ const ForgotPassword: React.FC = () => {
 
   useEffect(()=>{
 
-    const errorElements = document.querySelectorAll('.input-errors')
-    console.log(errorElements)
     setDisableSubmit(userFormErrors[userFormErrors.length-1]!=='')
     
   },[userFormErrors])
 
-  console.log(userFormErrors[userFormErrors.length-1]!=='')
+  //console.log(userFormErrors[userFormErrors.length-1]!=='')
   const handleEmailChange = (e:any)=>{
     setEmail(e.target.value)
   }

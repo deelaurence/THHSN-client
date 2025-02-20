@@ -30,10 +30,9 @@ categories = sortStatuses(categories);
 
   
   useEffect(() => {
-    console.log("disparching")
     dispatch(fetchPayments());
   }, [dispatch]);
-//   console.log(categories); // Ensure categories update when orders change
+//   //console.log(categories); // Ensure categories update when orders change
 
   // Generate menu items dynamically
   const menuItems = useMemo(() => {
@@ -45,7 +44,6 @@ categories = sortStatuses(categories);
   }, [categories]);
 
 
-  console.log(categories) 
 
   return (
     <div className="container mx-auto p-6 tablet:px-24 md:px-72">

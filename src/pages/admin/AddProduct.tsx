@@ -20,6 +20,8 @@ const AddProduct = () => {
   let editingProduct = useSelector((state:RootState)=>{
     return state.admin.editingProduct
   })
+
+  
   
   let stepProgressType=2
   // addProductPage=2

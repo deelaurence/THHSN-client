@@ -218,7 +218,7 @@ export class Sdk{
 
 
     setSingleProductDetail(object:any){
-      // console.log(object)
+      // //console.log(object)
       // if(object.coverImage){
       //   object.images.unshift(object.coverImage)
       // }

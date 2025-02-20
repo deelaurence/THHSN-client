@@ -92,7 +92,7 @@ export const addProductNameAndPrice = createAsyncThunk(
             throw error.response.data.reason
           }
           else{
-            console.log(error)
+            //console.log(error)
             throw "Failed to connect, Try again"
           }
       }
@@ -120,7 +120,7 @@ export const editTrackingStatus = createAsyncThunk(
             throw error.response.data.reason
           }
           else{
-            console.log(error)
+            //console.log(error)
             throw "Failed to connect, Try again"
           }
       }
@@ -140,7 +140,7 @@ export const addProductImage = createAsyncThunk(
             formData.append('images',file)
           })
           for (let pair of formData.entries()) {
-            console.log(pair[0] + ':', pair[1]);
+            //console.log(pair[0] + ':', pair[1]);
           } 
 
           const headers={
@@ -155,7 +155,7 @@ export const addProductImage = createAsyncThunk(
             throw error.response.data.reason
           }
           else{
-            console.log(error)
+            //console.log(error)
             throw "Failed to connect, Try again"
           }
       }
@@ -178,7 +178,7 @@ export const deleteProduct = createAsyncThunk(
             throw error.response.data.reason
           }
           else{
-            console.log(error)
+            //console.log(error)
             throw "Failed to connect, Try again"
           }
       }
@@ -205,7 +205,7 @@ export const addProductVariation = createAsyncThunk(
             throw error.response.data.reason
           }
           else{
-            console.log(error)
+            //console.log(error)
             throw "Failed to connect, Try again"
           }
       }
@@ -231,7 +231,7 @@ export const updateExchangeRate = createAsyncThunk(
             throw error.response.data.reason
           }
           else{
-            console.log(error)
+            //console.log(error)
             throw "Failed to connect, Try again"
           }
       }
@@ -260,7 +260,7 @@ export const addBestsellerAndNewArrival = createAsyncThunk(
             throw error.response.data.reason
           }
           else{
-            console.log(error)
+            //console.log(error)
             throw "Failed to connect, Try again"
           }
       }
@@ -286,7 +286,7 @@ export const bestsellerAndNewArrivalCoverimage = createAsyncThunk(
             throw error.response.data.reason
           }
           else{
-            console.log(error)
+            //console.log(error)
             throw "Failed to connect, Try again"
           }
       }
@@ -375,7 +375,7 @@ const adminSlice = createSlice({
       })
       .addCase(signInAdmin.rejected, (state, action) => {
         state.status = 'failed';
-        console.log(action.error.message)
+        //console.log(action.error.message)
         state.error = action.error.message || 'Sign-in failed';
       })
 
@@ -397,7 +397,7 @@ const adminSlice = createSlice({
       })
       .addCase(addProductNameAndPrice.rejected, (state, action) => {
         state.status = 'failed';
-        console.log(action.error.message)
+        //console.log(action.error.message)
         state.error = action.error.message || 'Adding Product name failed';
       })
 
@@ -412,7 +412,7 @@ const adminSlice = createSlice({
       })
       .addCase(editTrackingStatus.rejected, (state, action) => {
         state.status = 'failed';
-        console.log(action.error.message)
+        //console.log(action.error.message)
         state.error = action.error.message || 'Editing status failed';
       })
 
@@ -432,9 +432,9 @@ const adminSlice = createSlice({
         // window.location.href=sdk.adminDashboardRoute  // Redirect to admin dashboard after successful sign-in. Replace with your dashboard route.
       })
       .addCase(addProductImage.rejected, (state, action) => {
-        console.log(action)
+        //console.log(action)
         state.status = 'failed';
-        console.log(action.error.message)
+        //console.log(action.error.message)
         state.error = action.error.message || 'Adding Image Failed';
       })
 
@@ -449,9 +449,9 @@ const adminSlice = createSlice({
         // window.location.href=sdk.adminDashboardRoute  // Redirect to admin dashboard after successful sign-in. Replace with your dashboard route.
       })
       .addCase(deleteProduct.rejected, (state, action) => {
-        console.log(action)
+        //console.log(action)
         state.status = 'failed';
-        console.log(action.error.message)
+        //console.log(action.error.message)
         state.error = action.error.message || 'Adding Image Failed';
       })
 
@@ -473,9 +473,9 @@ const adminSlice = createSlice({
         // window.location.href=sdk.manageInventoryRoute 
       })
       .addCase(addProductVariation.rejected, (state, action) => {
-        console.log(action)
+        //console.log(action)
         state.status = 'failed';
-        console.log(action.error.message)
+        //console.log(action.error.message)
         state.error = action.error.message || 'Adding Image Failed';
       })
 
@@ -490,7 +490,7 @@ const adminSlice = createSlice({
         state.successFeedback=action.payload.message
       })
       .addCase(updateExchangeRate.rejected, (state, action) => {
-        console.log(action)
+        //console.log(action)
         state.status = 'failed';
         state.error = action.error.message || 'Adding Image Failed';
       })
@@ -510,7 +510,7 @@ const adminSlice = createSlice({
       })
       .addCase(addBestsellerAndNewArrival.rejected, (state, action) => {
         state.status = 'failed';
-        console.log(action.error.message)
+        //console.log(action.error.message)
         state.error = action.error.message || 'Adding Product name failed';
       })
 
@@ -563,7 +563,7 @@ const adminSlice = createSlice({
       })
       .addCase(bestsellerAndNewArrivalCoverimage.rejected, (state, action) => {
         state.status = 'failed';
-        console.log(action.error.message)
+        //console.log(action.error.message)
         state.error = action.error.message || 'Adding Product name failed';
       })
   },

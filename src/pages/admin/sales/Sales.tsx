@@ -55,7 +55,6 @@ const SalesInventory: React.FC<{filter:string}> = ({filter}) => {
   // },[status])
 
   const handleStatusUpdate = (status:any) =>{
-    console.log(status)
     setCurrentStatus(status)
     if(!currentOrder) return
     dispatch(editTrackingStatus({reference:currentOrder.reference,deliveryStatus:status}))
@@ -143,7 +142,6 @@ const SalesInventory: React.FC<{filter:string}> = ({filter}) => {
               <div className='flex gap-2 pb-1 border-b dark:border-b-neutral-800'>Shipping/<PriceToast price={Number(order.description.shippingFees)}/> </div>
               <p 
                 onClick={()=>{
-                  console.log(order.reference)
                   setHideTrackingBar(false)
                   setCurrentOrder({
                     reference:order.reference,

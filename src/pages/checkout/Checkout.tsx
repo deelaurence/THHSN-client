@@ -89,7 +89,7 @@ useEffect(() => {
     }
   },[shippingType])
 
-  console.log(country)
+  //console.log(country)
   useEffect(()=>{
     if(shippingType==='international'){
         setShippingFees(availableShippingLocations.find(item => item.location === 'international')?.price || 0)
@@ -98,7 +98,7 @@ useEffect(() => {
 
   let selectMerchant = (e:any)=>{
     e.preventDefault()
-    // console.log(sdk.getCart())
+    // //console.log(sdk.getCart())
     // return
     setShowMerchants(true)
   }

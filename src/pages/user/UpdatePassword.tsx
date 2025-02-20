@@ -44,7 +44,7 @@ const UpdatePassword: React.FC = () => {
   useEffect(()=>{
 
     setDisableSubmit(userFormErrors[userFormErrors.length-1]!=='')
-    console.log(userFormErrors)
+    //console.log(userFormErrors)
   },[userFormErrors])
 
   const handleEmailChange = (e:any)=>{

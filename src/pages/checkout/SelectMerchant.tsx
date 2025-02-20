@@ -23,8 +23,8 @@ const SelectMerchant: React.FC<SelectMerchantProps> = ({ setShowMerchants,shippi
 
     shippingDetails.merchant=selected
     const currentCart = sdk.getCart()
-    console.log(currentCart)
-    console.log(shippingDetails)
+    //console.log(currentCart)
+    //console.log(shippingDetails)
     const dispatch = useDispatch<AppDispatch>()
     const streamlinedCart=currentCart.map((cartItem:any)=>{
         return {
@@ -34,13 +34,13 @@ const SelectMerchant: React.FC<SelectMerchantProps> = ({ setShowMerchants,shippi
             variant:cartItem.variant
         }
     })
-    console.log(streamlinedCart)
+    //console.log(streamlinedCart)
     const proceedWithPayment =()=>{
         if(!shippingDetails.shippingFees){
             alert("You have not selected your shipping location")
             return setShowMerchants(false)
         }
-        console.log(shippingDetails)
+        //console.log(shippingDetails)
         dispatch(makePayment({...shippingDetails,cart:streamlinedCart}))
     }
 

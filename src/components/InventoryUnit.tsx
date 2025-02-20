@@ -125,7 +125,6 @@ const ProductDeleteButton:React.FC<{product:IProduct|IProductDraft}> = ({product
          <Link
             to={`${sdk.singleInventoryRoute}/${product.name}`}
             onDoubleClick={()=>{
-              console.log('dragging')
             }}
             className="flex  border-b-[1px] relative border-b-gray-300 dark:border-b-neutral-700 justify-start items-center w-[90%] gap-4 pt-6"
           >

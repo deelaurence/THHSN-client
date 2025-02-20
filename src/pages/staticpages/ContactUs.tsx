@@ -4,7 +4,7 @@ const ContactUs = () => {
   const title = "Contact Us"
   const {contactLinks} = sdk
   
-  console.log(contactLinks)
+  //console.log(contactLinks)
   const sections = [
     {
       header: "Get in Touch",

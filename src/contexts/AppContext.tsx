@@ -35,7 +35,6 @@ export const ThemeProvider:React.FC<{children: React.ReactNode}> = ({children})=
     const [successFeedback, setSuccessFeedback]=React.useState<string>("")
     const [cartTotal,setCartTotal]=React.useState(0)    
     const [totalToCheckout, setTotalToCheckout] = React.useState(0)
-    console.log(sdk.getAdminObject()?true:false)
     
     useEffect(()=>{setIsAdmin(sdk.getAdminObject()?true:false)},[sdk.getAdminObject()])
     

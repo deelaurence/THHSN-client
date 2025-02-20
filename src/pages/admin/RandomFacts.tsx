@@ -24,7 +24,6 @@ const RandomFacts = () => {
     const {facts,status,error} = useSelector((state:RootState)=>{
        return state.facts 
     })
-    console.log(facts)
 
     return (
     <section className='px-6 tablet:px-24 md:px-72'>

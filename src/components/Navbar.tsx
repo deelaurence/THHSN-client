@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { IoCloseOutline } from 'react-icons/io5';
-import { RootState, AppDispatch } from '../store/store';
-import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch } from '../store/store';
+import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { Sdk } from '../utils/sdk';
 import { IoMenuOutline } from 'react-icons/io5';
@@ -18,7 +18,7 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false); // State for mobile menu visibility
   const [timeoutId, setTimeoutId]= useState(0);
   // const adminObject = useSelector((state: RootState) => state.admin.admin);
-  const userObject = useSelector((state: RootState) => state.user.user);
+  // const userObject = useSelector((state: RootState) => state.user.user);
   const navigate = useNavigate()
   const [isCurrencyDropdownOpen, setIsCurrencyDropdownOpen] = useState(false); // State for dropdown visibility
   const [loginOrLogoutText, setLoginOrLogoutText] = useState("Login")

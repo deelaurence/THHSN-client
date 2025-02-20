@@ -196,7 +196,7 @@ const userSlice = createSlice({
     },
     setUserAfterGoogleAuth(state) {
       state.user = sdk.getUserObject() 
-      console.log(state.user)
+      //console.log(state.user)
     },
     user_formIsValid(state,action){
         state.formErrors.push(action.payload)
@@ -219,7 +219,7 @@ const userSlice = createSlice({
       })
       .addCase(signInUser.rejected, (state, action) => {
         state.status = 'failed';
-        console.log(action.error.message)
+        //console.log(action.error.message)
         state.error = action.error.message || 'Sign-in failed';
       })
 
@@ -234,7 +234,7 @@ const userSlice = createSlice({
       })
       .addCase(googleSignIn.rejected, (state, action) => {
         state.status = 'failed';
-        console.log(action.error.message)
+        //console.log(action.error.message)
         state.error = action.error.message || 'Sign-in failed';
       })
 
@@ -249,7 +249,7 @@ const userSlice = createSlice({
       })
       .addCase(registerUser.rejected, (state, action) => {
         state.status = 'failed';
-        console.log(action.error.message)
+        //console.log(action.error.message)
         state.error = action.error.message || 'Sign-in failed';
       })
 
@@ -259,12 +259,12 @@ const userSlice = createSlice({
       .addCase(makePayment.fulfilled, (state,action) => {
         state.status = 'succeeded';
         state.error=''
-        console.log(action.payload)
+        //console.log(action.payload)
         window.location.href=action.payload.payload.redirect
       })
       .addCase(makePayment.rejected, (state, action) => {
         state.status = 'failed';
-        console.log(action.error.message)
+        //console.log(action.error.message)
         state.error = action.error.message || 'Payment Failed';
       })
 
@@ -279,7 +279,7 @@ const userSlice = createSlice({
       })
       .addCase(getAllUserOrders.rejected, (state, action) => {
         state.status = 'failed';
-        console.log(action.error.message)
+        //console.log(action.error.message)
         state.error = action.error.message || 'Payment Failed';
       })
 
@@ -291,11 +291,11 @@ const userSlice = createSlice({
       .addCase(getOrder.fulfilled, (state,action) => {
         state.status = 'succeeded';
         state.order=action.payload.payload
-        console.log(action.payload)
+        //console.log(action.payload)
       })
       .addCase(getOrder.rejected, (state, action) => {
         state.status = 'failed';
-        console.log(action.error.message)
+        //console.log(action.error.message)
         state.error = action.error.message || 'Payment Failed';
       })
 
@@ -306,11 +306,11 @@ const userSlice = createSlice({
         state.status = 'succeeded';
         state.error=''
         const {payload} = action.payload
-        console.log(payload)
+        //console.log(payload)
       })
       .addCase(forgotPassword.rejected, (state, action) => {
         state.status = 'failed';
-        console.log(action.error.message)
+        //console.log(action.error.message)
         state.error = action.error.message || 'Sign-in failed';
       })
 
@@ -321,11 +321,11 @@ const userSlice = createSlice({
         state.status = 'succeeded';
         state.error=''
         const {payload} = action.payload
-        console.log(payload)
+        //console.log(payload)
       })
       .addCase(updatePassword.rejected, (state, action) => {
         state.status = 'failed';
-        console.log(action.error.message)
+        //console.log(action.error.message)
         state.error = action.error.message || 'Sign-in failed';
       })
   },

@@ -84,7 +84,6 @@ const BestSellersAndNewArrivals: React.FC<BestSellersProps> = ({
 
             {dataReady?  
             <Link 
-              onClick={()=>console.log(item.image)}
               to={`${new Sdk().productDetailRoute}/${item.text}`}>
               <div 
               onMouseEnter={() => setHoveredIndex(index)}

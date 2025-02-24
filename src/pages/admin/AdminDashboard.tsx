@@ -23,6 +23,8 @@ import { Order } from "../../interfaces/order";
 import { RootState } from "../../store/store";
 import PriceToast from "../../components/PriceToast";
 import { fetchExchangeRate } from "../../store/fetchProductSlice";
+import { CiLocationArrow1 } from "react-icons/ci";
+import { FaShippingFast } from "react-icons/fa";
 const data = [
   { color: '#FF6384', percentage: 80,label:"Hair Products" }, // 40% - Red
   { color: '#36A2EB', percentage: 10 ,label:"Wig Bundles" }, // 30% - Blue
@@ -93,6 +95,7 @@ const menuItems = [
 const AdminDashboard = () => {
   const dispatch = useDispatch<AppDispatch>()
   const [showMoreCustomers, setShowMoreCustomers] = useState(false);
+  const [showMoreAllCustomers, setShowMoreAllCustomers] = useState(false);
   const [showMoreCountries, setShowMoreCountries] = useState(false);
  
   const orders = useSelector((state: RootState) => state.admin.orders);
@@ -154,19 +157,19 @@ const AdminDashboard = () => {
   
   const getSalesPerCountry = (orders: Order[]): CountrySales[] => {
     const countryMap = new Map<string, number>();
-  
+
     orders.forEach(order => {
       const country = order.description.country || "Unknown";
       countryMap.set(country, (countryMap.get(country) || 0) + order.amount);
     });
-  
-    return Array.from(countryMap.entries()).map(([country, totalSales]) => ({
-      country,
-      totalSales,
-    }));
-  };
 
-  
+    return Array.from(countryMap.entries())
+      .map(([country, totalSales]) => ({
+        country,
+        totalSales,
+      }))
+      .sort((a, b) => b.totalSales - a.totalSales); // Sort from highest to lowest
+  };
   
 
 const generateSalesData = (orders: Order[]): { label: string; value: number; color: string }[] => {
@@ -254,13 +257,13 @@ salesData = generateSalesData(orders);
           <div className="my-12 sm:my-0 tablet:my-0">
             
             <div className="flex mb-4 relative justify-between items-center">
-              <h2 className="text-xs  text-neutral-500">Top Customers</h2>
-              {getTopCustomers(orders).length > 2 && (
+              <h2 className="text-xs  text-neutral-500 flex items-center gap-2">Top Customers <LuUsers2/> </h2>
+              {getTopCustomers(orders).length > 1 && (
                 <button className="text-orange-400 text-xs" onClick={() => setShowMoreCustomers(!showMoreCustomers)}>{showMoreCustomers?"Hide Details":"Show more"}</button>
               )}
-              {!showMoreCustomers&&<p className="absolute z-10 top-12 bg-gradient-to-b from-transparent dark:via-transparent dark:to-primary  via-transparent to-secondary w-full h-14"></p>}
+              {/* {!showMoreCustomers&&<p className="absolute z-10 top-12 bg-gradient-to-b from-transparent dark:via-transparent dark:to-primary  via-transparent to-secondary w-full h-14"></p>} */}
             </div>
-            {getTopCustomers(orders).slice(0, 2).map((customer, index) => {
+            {getTopCustomers(orders).slice(0, 1).map((customer, index) => {
               return (
             <div key={index} className="flex text-neutral-400 gap-7 mb-1 p-1 justify-between dark:border-neutral-800 border-b-neutral-200 border-b items-center">
               <p>{customer.name}</p>
@@ -278,17 +281,47 @@ salesData = generateSalesData(orders);
               );
             })}
           </div>
-          
+
+
+
+          <div className="my-12 sm:my-0 tablet:my-0">
+            
+            <div className="flex mb-4 relative justify-between items-center">
+              <h2 className="text-xs  text-neutral-500 flex gap-2 items-center">All Customers <LuUsers2/></h2>
+              {getTopCustomers(orders).length > 1 && (
+                <button className="text-green-400 text-xs" onClick={() => setShowMoreAllCustomers(!showMoreAllCustomers)}>{showMoreAllCustomers?"Hide Details":"Show more"}</button>
+              )}
+              {/* {!showMoreCustomers&&<p className="absolute z-10 top-12 bg-gradient-to-b from-transparent dark:via-transparent dark:to-primary  via-transparent to-secondary w-full h-14"></p>} */}
+            </div>
+            {getTopCustomers(orders).slice(0, 1).map((customer, index) => {
+              return (
+            <div key={index} className="flex text-neutral-400 gap-7 mb-1 p-1 justify-between dark:border-neutral-800 border-b-neutral-200 border-b items-center">
+              <p>{customer.name}</p>
+              <div className="flex "><PriceToast price={customer.totalSpent}/>({customer.ordersCount})</div>
+            </div>
+              );
+            })}
+            
+            {showMoreAllCustomers && getTopCustomers(orders).map((customer, index) => {
+              return (
+            <div key={index} className="flex text-neutral-400 gap-7 mb-1 p-1 justify-between dark:border-neutral-800 border-b-neutral-200 border-b items-center">
+              <p>{customer.name}</p>
+              <div className="flex "><PriceToast price={customer.totalSpent}/>({customer.ordersCount})</div>
+            </div>
+              );
+            })}
+          </div>
+
 
           <div className="mb-12">
             <div className="flex mb-4 relative justify-between items-center">
-              <p className="text-xs text-neutral-500">Sales By Country</p>
-              {getSalesPerCountry(orders).length > 2 && (
+              <p className="text-xs text-neutral-500 items-center flex gap-2">Sales By Country <FaShippingFast/> </p>
+              {getSalesPerCountry(orders).length > 1 && (
                 <button className="text-purple-500 text-xs" onClick={() => setShowMoreCountries(!showMoreCountries)}>{showMoreCountries?"Hide details":"Show more"}</button>
               )}
-              {!showMoreCountries&&<p className="absolute z-10 top-12 bg-gradient-to-b from-transparent dark:via-transparent dark:to-primary  via-transparent to-secondary w-full h-14"></p>}
+              {/* {!showMoreCountries&&<p className="absolute z-10 top-12 bg-gradient-to-b from-transparent dark:via-transparent dark:to-primary  via-transparent to-secondary w-full h-14"></p>} */}
             </div>
-            {getSalesPerCountry(orders).slice(0, 2).map((country, index) => {
+            {getSalesPerCountry(orders).slice(0, 1).map((country, index) => {
               return (
                 <div key={index} className="flex relative text-neutral-400 gap-7 mb-1 p-1 justify-between border-b dark:border-neutral-800 border-b-neutral-200 items-center">
                   <p>{country.country}</p>

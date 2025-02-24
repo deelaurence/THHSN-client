@@ -18,31 +18,38 @@ const SalesCategory: React.FC = () => {
 
   // Memoize categories to prevent unnecessary recalculations
   let categories = useMemo(() => {
-    return [...new Set(orders.map(order => order.deliveryStatus))];
+    const categoryCount = orders.reduce((acc, order) => {
+      acc[order.deliveryStatus] = (acc[order.deliveryStatus] || 0) + 1;
+      return acc;
+    }, {} as Record<string, number>);
+    
+    return Object.entries(categoryCount).map(([category, count]) => `${category}(${count})`);
   }, [orders]);
+
   const orderPattern = ["pending", "dispatched", "shipped", "ready"];
 
-function sortStatuses(statuses:string[]) {
-return statuses.sort((a, b) => orderPattern.indexOf(a) - orderPattern.indexOf(b));
-}
+  function sortStatuses(statuses: string[]) {
+    return statuses.sort((a, b) => {
+      const statusA = a.split('(')[0];
+      const statusB = b.split('(')[0];
+      return orderPattern.indexOf(statusA) - orderPattern.indexOf(statusB);
+    });
+  }
 
-categories = sortStatuses(categories);
+  categories = sortStatuses(categories);
 
-  
   useEffect(() => {
     dispatch(fetchPayments());
   }, [dispatch]);
-//   //console.log(categories); // Ensure categories update when orders change
 
   // Generate menu items dynamically
   const menuItems = useMemo(() => {
     return categories.map(category => ({
       label: category,
       icon: <RxDragHandleDots2 className="opacity-60 text-xs" />,
-      component: <SalesInventory filter={category} />
+      component: <SalesInventory filter={category.split('(')[0]} />
     }));
   }, [categories]);
-
 
 
   return (

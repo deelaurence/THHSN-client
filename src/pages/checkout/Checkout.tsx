@@ -12,6 +12,7 @@ import { BsArrowRight } from 'react-icons/bs';
 import SelectMerchant from './SelectMerchant';
 import { IPayment } from '../../interfaces/paymentPayload';
 import countries from '../../data/countries.json'
+import { LiaShippingFastSolid } from 'react-icons/lia';
 
 const Checkout = () => {
     const availableShippingLocations = useSelector((state:RootState)=>state.shipping.availableShippingOptions)
@@ -163,6 +164,17 @@ useEffect(() => {
                 <option className='text-primary bg-white' value="local">Nigeria</option>
                 <option className='text-primary bg-white ' value="international">International </option>
                 </select>
+            </div>
+
+
+
+            {/* additional information */}
+            <div className='py-6 '>
+                <div className='flex gap-2 items-start'>
+                    <LiaShippingFastSolid className='opacity-60' />
+                    <p className='text-[10px] w-[90%] opacity-70'>Items above 1kg in weight would attract additional shipping fee. You would be contacted in this case</p>
+                </div>
+                
             </div>
 
             {/* Conditional Fields for Local Shipping */}

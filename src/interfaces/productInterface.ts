@@ -1,3 +1,5 @@
+import { outOfStock } from "../store/adminSlice";
+
 export interface VariationLevelOne {
     variation: string;
     price: number;
@@ -14,6 +16,7 @@ export interface VariationLevelOne {
     name: string;
     coverImage?:string;
     category: string;
+    outOfStock:boolean;
     description?: string; // Optional, as your backend does not make it required
     quantity: number;
     price: number;
@@ -31,6 +34,7 @@ export interface VariationLevelOne {
     description?: string; // Optional, as your backend does not make it required
     quantity?: number;
     price?: number;
+    outOfStock:boolean;
     bestSeller:boolean;
     newArrival:boolean;
     images?: string[]; // Array of image URLs

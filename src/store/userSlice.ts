@@ -302,10 +302,9 @@ const userSlice = createSlice({
       .addCase(forgotPassword.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(forgotPassword.fulfilled, (state, action: PayloadAction<{ payload:{email:string} }>) => {
+      .addCase(forgotPassword.fulfilled, (state) => {
         state.status = 'succeeded';
         state.error=''
-        const {payload} = action.payload
         //console.log(payload)
       })
       .addCase(forgotPassword.rejected, (state, action) => {
@@ -317,11 +316,9 @@ const userSlice = createSlice({
       .addCase(updatePassword.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(updatePassword.fulfilled, (state, action: PayloadAction<{ payload:{email:string} }>) => {
+      .addCase(updatePassword.fulfilled, (state) => {
         state.status = 'succeeded';
         state.error=''
-        const {payload} = action.payload
-        //console.log(payload)
       })
       .addCase(updatePassword.rejected, (state, action) => {
         state.status = 'failed';

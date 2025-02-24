@@ -8,7 +8,7 @@ import { IProduct, IProductDraft, VariationLevelOne } from '../../interfaces/pro
 import Button from '../../components/Button'
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState, AppDispatch } from '../../store/store.ts';
-import { setEditProductMode,addBestsellerAndNewArrival } from '../../store/adminSlice'
+import { setEditProductMode,addBestsellerAndNewArrival, outOfStock } from '../../store/adminSlice'
 import { useNavigate } from 'react-router-dom'
 import { LiaShippingFastSolid } from "react-icons/lia";
 import { BsStars } from "react-icons/bs";
@@ -24,6 +24,7 @@ import PriceToast from '../../components/PriceToast.tsx'
 // import { RiCheckboxBlankCircleLine, RiCircleFill } from 'react-icons/ri'
 import { fetchExchangeRate,fetchProductsPublic } from '../../store/fetchProductSlice.ts'
 import SkeletonLoader from '../../components/SkeletonLoader.tsx'
+import { TiCancel } from 'react-icons/ti'
 
 const ProductDetail = () => {
 
@@ -104,7 +105,7 @@ const ProductDetail = () => {
         }
         setIsBestSeller(product.bestSeller)
         setIsNewArrival(product.newArrival)
-    },[])
+    },[product])
 
 
     const handleEditMode = ()=>{
@@ -266,7 +267,7 @@ const ProductDetail = () => {
                 </div>
 
                 
-
+                
                 {/* BESTSELLER AND NEW ARRIVAL TOGGLE */}
                 
                 {isAdmin&&<div className='flex flex-col min-h-12  mt-12'>
@@ -297,6 +298,25 @@ const ProductDetail = () => {
                 </section>
                 
                 </div>}
+
+                {/* OUT OF STOCK TOGGLE */}
+
+                
+                {isAdmin && (
+                    <div className='flex  items-center '>
+                        <button
+                            onClick={() => {
+                                const newOutOfStockStatus = !product?.outOfStock;
+                                setProduct({ ...product, outOfStock: newOutOfStockStatus });
+                                dispatch(outOfStock({outOfStock:newOutOfStockStatus}));
+                            }}
+                            className={`flex -ml-1  items-center gap-1 cursor-pointer`}
+                        >   
+                            <TiCancel className={`text-2xl  ${product?.outOfStock ? 'text-red-500' : ' opacity-40'}`} />
+                            <span className={`text-sm   ${product?.outOfStock ? ' text-red-500' : ' opacity-40'}`}> {product?.outOfStock?'Out of stock':'In stock'}</span>
+                        </button>
+                    </div>
+                )}
 
 
                 {/* additional information */}

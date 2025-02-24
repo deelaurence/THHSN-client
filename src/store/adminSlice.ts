@@ -139,9 +139,6 @@ export const addProductImage = createAsyncThunk(
           Array.from(images).forEach((file)=>{
             formData.append('images',file)
           })
-          for (let pair of formData.entries()) {
-            //console.log(pair[0] + ':', pair[1]);
-          } 
 
           const headers={
             'Authorization':`Bearer ${sdk.getAdminObject()?.token}`
@@ -198,6 +195,34 @@ export const addProductVariation = createAsyncThunk(
           }
           const productId=state?.admin.productDraftOne?._id
           const response = await apiClient.put(`/v1/admin/manage/product/variant/${productId}`,variations,{headers});
+          return response.data;
+      } catch (error:any) {
+
+          if(error.response){
+            throw error.response.data.reason
+          }
+          else{
+            //console.log(error)
+            throw "Failed to connect, Try again"
+          }
+      }
+}
+);
+export const outOfStock = createAsyncThunk(
+  'admin/outOfStock',
+      async (outOfStock:{},{getState}) => {      
+        try {
+          const state=getState() as any
+          if(!state?.admin.productDraftOne?._id){
+            console.log("No product id")
+          }
+
+          const headers={
+            'Authorization':`Bearer ${sdk.getAdminObject()?.token}`,
+            'content-Type':"application/json"
+          }
+          const productId=sdk.getSingleProductDetail()._id
+          const response = await apiClient.put(`/v1/admin/manage/product/out-of-stock/${productId}`,outOfStock,{headers});
           return response.data;
       } catch (error:any) {
 
@@ -477,6 +502,25 @@ const adminSlice = createSlice({
         state.status = 'failed';
         //console.log(action.error.message)
         state.error = action.error.message || 'Adding Image Failed';
+      })
+
+      //out of stock
+      .addCase(outOfStock.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(outOfStock.fulfilled, (state,action) => {
+        state.status = 'succeeded';
+        state.error=''
+        // const {payload} = action.payload
+        // state.productDraftOne = payload
+        state.successFeedback=action.payload.message
+        // window.location.href=sdk.manageInventoryRoute 
+      })
+      .addCase(outOfStock.rejected, (state, action) => {
+        //console.log(action)
+        state.status = 'failed';
+        //console.log(action.error.message)
+        state.error = action.error.message || 'changing out of stock failed';
       })
 
 

@@ -216,6 +216,7 @@ let salesData = [
 ];
 
 salesData = generateSalesData(orders);
+const maxToshow = 2;
   // //console.log(getSalesPerCountry(orders)) 
   // //console.log(getCustomerStats(orders)) 
   // //console.log(getTopCustomers(orders)) 
@@ -227,6 +228,18 @@ salesData = generateSalesData(orders);
   // const firstName = adminObject?.name.split(' ')[0];
   return (
     <section className="px-6 sm:px-16 relative">
+      {/* <div className="absolute inset-0 z-0 bg-gradient-to-br  from-orange-400 via-purple-400 to-pink-300 opacity-5 blur-3xl"></div> */}
+      <div className="absolute inset-0 -z-0">
+        {/* Gradient Patch 1 */}
+        <div className="absolute top-10 left-20 w-40 h-40 bg-gradient-to-br from-purple-700 via-indigo-400 to-transparent opacity-30 blur-3xl rounded-full"></div>
+
+        {/* Gradient Patch 2 */}
+        <div className="absolute bottom-20 right-10 w-32 h-32 bg-gradient-to-br from-blue-700 via-cyan-800 to-transparent opacity-30 blur-2xl rounded-full"></div>
+
+        {/* Gradient Patch 3 */}
+        
+      </div>
+
       <div 
       onClick={() => {
         dispatch(signOutAdmin());
@@ -243,37 +256,40 @@ salesData = generateSalesData(orders);
       
       <div className="my-12  flex items-center gap-4 flex-wrap text-neutral-300 dark:text-neutral-600">
         <div className="dark:bg-primary-light bg-gray-200 border-b-2 dark:border-b-neutral-700 p-2 ">
+        {/* <div className=" border-b-2 dark:border-b-neutral-700 p-2 "> */}
           <p className="text-xs   text-neutral-500 flex gap-2 items-center ">Total Revenue  <GrAnalytics className="text-yellow-700"/> </p>
           <PriceToast className="text-3xl sm:text-7xl font-medium text-neutral-700 dark:text-neutral-200" price={calculateTotalRevenue(orders)}/>  
         </div>
+        {/* <div className=" dark:bg-primary-light  bg-gray-200 border-b-2 dark:border-b-neutral-700 p-2 "> */}
         <div className=" dark:bg-primary-light  bg-gray-200 border-b-2 dark:border-b-neutral-700 p-2 ">
           <p className="text-xs text-neutral-500 flex gap-2 items-center">Customers <LuUsers2 className="text-green-700"/> </p>
           <p className="text-3xl  text-neutral-700 sm:text-7xl dark:text-neutral-200 font-adelia">{getTotalCustomers(orders)}</p>
         </div>
       </div>
 
-      <section className="sm:flex sm:my-12 tablet:flex gap-10">
-          <div className="my-12 sm:my-0 tablet:my-0">
-            
+      <section className="sm:flex sm:my-12 relative tablet:flex [&>*]:dark:bg-primary-light [&>*]:p-4 [&>*]:rounded-xl [&>*]:border [&>*]:border-neutral-600 mb-12 gap-10">
+          <div className="absolute top-1/2 left-1/3 w-48 h-24 bg-gradient-to-br from-pink-500 via-orange-700 to-purple-500 opacity-20 blur-3xl rounded-full"></div>
+          <div className="my-12 sm:my-0 tablet:my-0 ">
+            {/* Get top customers */}
             <div className="flex mb-4 relative justify-between items-center">
-              <h2 className="text-xs  text-neutral-500 flex items-center gap-2">Top Customers <LuUsers2/> </h2>
-              {getTopCustomers(orders).length > 1 && (
+              <h2 className="text-xs  text-neutral-500 flex items-center gap-2">Top Customers <BsGraphUpArrow /> </h2>
+              {getTopCustomers(orders).length > maxToshow && (
                 <button className="text-orange-400 text-xs" onClick={() => setShowMoreCustomers(!showMoreCustomers)}>{showMoreCustomers?"Hide Details":"Show more"}</button>
               )}
               {/* {!showMoreCustomers&&<p className="absolute z-10 top-12 bg-gradient-to-b from-transparent dark:via-transparent dark:to-primary  via-transparent to-secondary w-full h-14"></p>} */}
             </div>
-            {getTopCustomers(orders).slice(0, 1).map((customer, index) => {
+            {getTopCustomers(orders).slice(0, maxToshow).map((customer, index) => {
               return (
-            <div key={index} className="flex text-neutral-400 gap-7 mb-1 p-1 justify-between dark:border-neutral-800 border-b-neutral-200 border-b items-center">
+            <div key={index} className="flex text-neutral-700 gap-7 dark:text-neutral-400 mb-1 p-1 justify-between dark:border-neutral-800 border-b-neutral-200 border-b items-center">
               <p>{customer.name}</p>
               <div className="flex "><PriceToast price={customer.totalSpent}/>({customer.ordersCount})</div>
             </div>
               );
             })}
             
-            {showMoreCustomers && getTopCustomers(orders).slice(2,10).map((customer, index) => {
+            {showMoreCustomers && getTopCustomers(orders).slice(maxToshow+1,10).map((customer, index) => {
               return (
-            <div key={index} className="flex text-neutral-400 gap-7 mb-1 p-1 justify-between dark:border-neutral-800 border-b-neutral-200 border-b items-center">
+            <div key={index} className="flex text-neutral-700 gap-7 dark:text-neutral-400 mb-1 p-1 justify-between dark:border-neutral-800 border-b-neutral-200 border-b items-center">
               <p>{customer.name}</p>
               <div className="flex "><PriceToast price={customer.totalSpent}/>({customer.ordersCount})</div>
             </div>
@@ -283,27 +299,27 @@ salesData = generateSalesData(orders);
 
 
 
+            {/* Get all customers */}
           <div className="my-12 sm:my-0 tablet:my-0">
-            
             <div className="flex mb-4 relative justify-between items-center">
               <h2 className="text-xs  text-neutral-500 flex gap-2 items-center">All Customers <LuUsers2/></h2>
-              {getTopCustomers(orders).length > 1 && (
+              {getTopCustomers(orders).length > maxToshow && (
                 <button className="text-green-400 text-xs" onClick={() => setShowMoreAllCustomers(!showMoreAllCustomers)}>{showMoreAllCustomers?"Hide Details":"Show more"}</button>
               )}
               {/* {!showMoreCustomers&&<p className="absolute z-10 top-12 bg-gradient-to-b from-transparent dark:via-transparent dark:to-primary  via-transparent to-secondary w-full h-14"></p>} */}
             </div>
-            {getTopCustomers(orders).slice(0, 1).map((customer, index) => {
+            {getTopCustomers(orders).slice(0, maxToshow).map((customer, index) => {
               return (
-            <div key={index} className="flex text-neutral-400 gap-7 mb-1 p-1 justify-between dark:border-neutral-800 border-b-neutral-200 border-b items-center">
+            <div key={index} className="flex text-neutral-700 gap-7 dark:text-neutral-400 mb-1 p-1 justify-between dark:border-neutral-800 border-b-neutral-200 border-b items-center">
               <p>{customer.name}</p>
               <div className="flex "><PriceToast price={customer.totalSpent}/>({customer.ordersCount})</div>
             </div>
               );
             })}
             
-            {showMoreAllCustomers && getTopCustomers(orders).map((customer, index) => {
+            {showMoreAllCustomers && getTopCustomers(orders).slice(maxToshow).map((customer, index) => {
               return (
-            <div key={index} className="flex text-neutral-400 gap-7 mb-1 p-1 justify-between dark:border-neutral-800 border-b-neutral-200 border-b items-center">
+            <div key={index} className="flex text-neutral-700 gap-7 dark:text-neutral-400 mb-1 p-1 justify-between dark:border-neutral-800 border-b-neutral-200 border-b items-center">
               <p>{customer.name}</p>
               <div className="flex "><PriceToast price={customer.totalSpent}/>({customer.ordersCount})</div>
             </div>
@@ -312,26 +328,30 @@ salesData = generateSalesData(orders);
           </div>
 
 
+
+
+
+          {/* Get sales per country */}
           <div className="mb-12">
             <div className="flex mb-4 relative justify-between items-center">
               <p className="text-xs text-neutral-500 items-center flex gap-2">Sales By Country <FaShippingFast/> </p>
-              {getSalesPerCountry(orders).length > 1 && (
+              {getSalesPerCountry(orders).length > maxToshow && (
                 <button className="text-purple-500 text-xs" onClick={() => setShowMoreCountries(!showMoreCountries)}>{showMoreCountries?"Hide details":"Show more"}</button>
               )}
               {/* {!showMoreCountries&&<p className="absolute z-10 top-12 bg-gradient-to-b from-transparent dark:via-transparent dark:to-primary  via-transparent to-secondary w-full h-14"></p>} */}
             </div>
-            {getSalesPerCountry(orders).slice(0, 1).map((country, index) => {
+            {getSalesPerCountry(orders).slice(0, maxToshow).map((country, index) => {
               return (
-                <div key={index} className="flex relative text-neutral-400 gap-7 mb-1 p-1 justify-between border-b dark:border-neutral-800 border-b-neutral-200 items-center">
+                <div key={index} className="flex relative text-neutral-700 gap-7 dark:text-neutral-400 mb-1 p-1 justify-between border-b dark:border-neutral-800 border-b-neutral-200 items-center">
                   <p>{country.country}</p>
                   <div className="flex "><PriceToast price={country.totalSales}/></div>
                 </div>
               );
             })}
             
-            {showMoreCountries && getSalesPerCountry(orders).slice(2).map((country, index) => {
+            {showMoreCountries && getSalesPerCountry(orders).slice(maxToshow+1).map((country, index) => {
               return (
-                <div key={index} className="flex text-neutral-400 gap-7 mb-1 p-1 justify-between border-b dark:border-neutral-800 border-b-neutral-200 items-center">
+                <div key={index} className="flex text-neutral-700 gap-7 dark:text-neutral-400 mb-1 p-1 justify-between border-b dark:border-neutral-800 border-b-neutral-200 items-center">
                   <p>{country.country}</p>
                   <div className="flex "><PriceToast price={country.totalSales}/></div>
                 </div>

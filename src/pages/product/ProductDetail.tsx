@@ -142,7 +142,6 @@ const ProductDetail = () => {
                 <main className='tablet:flex tablet:gap-14 md:flex md:gap-14 '>
                 {product.outOfStock&&<div className='absolute text-white dark:text-orange-600 z-10 top-16 left-0 w-full h-12 bg-primary-light flex items-center justify-center'>
                     <p className='  font-queens '>Sold Out</p>
-                    <TiCancel className=' mb-1'/>
                 </div>}
                 <div className='flex-[2]'>
                     {!product.images||!product.images[0]&&<Slideshow images={[sdk.placeholderImage]}/>}
@@ -315,9 +314,9 @@ const ProductDetail = () => {
                                 setProduct({ ...product, outOfStock: newOutOfStockStatus });
                                 dispatch(outOfStock({outOfStock:newOutOfStockStatus}));
                             }}
-                            className={`flex -ml-1  items-center gap-1 cursor-pointer`}
+                            className={`flex -ml-1  items-end gap-1 cursor-pointer`}
                         >   
-                            <TiCancel className={`text-2xl  ${product?.outOfStock ? 'text-red-500' : ' opacity-40'}`} />
+                            <TiCancel className={`text-xl  ${product?.outOfStock ? 'text-red-500' : ' opacity-40'}`} />
                             <span className={`text-sm   ${product?.outOfStock ? ' text-red-500' : ' opacity-40'}`}> {product?.outOfStock?'Out of stock':'In stock'}</span>
                         </button>
                     </div>

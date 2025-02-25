@@ -45,8 +45,8 @@ export const CurrencyPair = ({showFlag}: CurrencyPairProps) => {
           onClick={() => setIsCurrencyDropdownOpen((prev) => !prev)}
         >
           {showFlag&&<div>
-          {isDollar?<img src={sdk.usaFlagIcon} className='h-3  no-fade grayscale-[40%]'/>:
-          <img src={sdk.nigeriaFlagIcon} className='h-3 no-fade grayscale-[40%]'/>}
+          {isDollar?<img src={sdk.usaFlagIcon} className='h-4  no-fade grayscale-[40%]'/>:
+          <img src={sdk.nigeriaFlagIcon} className='h-4 no-fade grayscale-[40%]'/>}
           </div>}
           <span className='p-0 no-fade text-sm m-0 ml-[2px] '>{isDollar ? 'USD' : 'NGN'}</span>
           <IoIosArrowDown className='no-fade text-xs' />

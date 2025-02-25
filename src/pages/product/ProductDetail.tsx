@@ -274,7 +274,10 @@ const ProductDetail = () => {
                 
                 {/* BESTSELLER AND NEW ARRIVAL TOGGLE */}
                 
-                {isAdmin&&<div className='flex flex-col min-h-12  mt-12'>
+                {isAdmin&&<div className='flex flex-col min-h-24  mt-12'>
+                <p className='text-[8px] my-4 opacity-40 underline'>You can click on any of these options to toggle them on or off</p>
+                
+                
                 <div className={`flex justify-center relative z-0 -mb-6 items-center duration-1000  w-full ${status==='loading'?'opacity-100':'opacity-0'}`}>
                     <Loader/>
                 </div>
@@ -316,8 +319,8 @@ const ProductDetail = () => {
                             }}
                             className={`flex -ml-1  items-end gap-1 cursor-pointer`}
                         >   
-                            <TiCancel className={`text-xl  ${product?.outOfStock ? 'text-red-500' : ' opacity-40'}`} />
-                            <span className={`text-sm   ${product?.outOfStock ? ' text-red-500' : ' opacity-40'}`}> {product?.outOfStock?'Out of stock':'In stock'}</span>
+                            <FaShare className={`   ${product?.outOfStock ? 'text-red-500' : ' opacity-40'}`} />
+                            <span className={`text-sm   ${product?.outOfStock ? ' text-red-500' : ' opacity-40'}`}> {product?.outOfStock?'Currently Out of stock':'In stock'}</span>
                         </button>
                     </div>
                 )}

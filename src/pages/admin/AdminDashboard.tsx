@@ -228,17 +228,13 @@ const maxToshow = 2;
   // const firstName = adminObject?.name.split(' ')[0];
   return (
     <section className="px-6 sm:px-16 relative">
-      {/* <div className="absolute inset-0 z-0 bg-gradient-to-br  from-orange-400 via-purple-400 to-pink-300 opacity-5 blur-3xl"></div> */}
-      <div className="absolute inset-0 -z-0">
-        {/* Gradient Patch 1 */}
-        <div className="absolute top-10 left-20 w-40 h-40 bg-gradient-to-br from-purple-700 via-indigo-400 to-transparent opacity-30 blur-3xl rounded-full"></div>
+      
 
-        {/* Gradient Patch 2 */}
-        <div className="absolute bottom-20 right-10 w-32 h-32 bg-gradient-to-br from-blue-700 via-cyan-800 to-transparent opacity-30 blur-2xl rounded-full"></div>
 
-        {/* Gradient Patch 3 */}
-        
-      </div>
+      {/* gradient glow */}
+      <div className="absolute top-10 left-20 w-40 h-40 bg-gradient-to-br from-purple-700 via-indigo-400 to-transparent opacity-30 blur-3xl rounded-full"></div>
+      <div className="absolute bottom-20 right-10 w-32 h-32 bg-gradient-to-br from-blue-700 via-cyan-800 to-transparent opacity-30 blur-2xl rounded-full"></div>
+
 
       <div 
       onClick={() => {

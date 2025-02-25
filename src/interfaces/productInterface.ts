@@ -1,4 +1,3 @@
-import { outOfStock } from "../store/adminSlice";
 
 export interface VariationLevelOne {
     variation: string;

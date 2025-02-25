@@ -14,15 +14,73 @@ import { signOutUser } from '../store/userSlice';
 
 const sdk = new Sdk();
 
+
+interface CurrencyPairProps {
+  showFlag?:boolean
+}
+
+export const CurrencyPair = ({showFlag}: CurrencyPairProps) => {
+  // const adminObject = useSelector((state: RootState) => state.admin.admin);
+  // const userObject = useSelector((state: RootState) => state.user.user);
+  const [isCurrencyDropdownOpen, setIsCurrencyDropdownOpen] = useState(false); // State for dropdown visibility
+  const {toggleCurrency,isDollar}=useTheme()
+ 
+
+  const handleCurrencyToggle = (currency: string) => {
+    if(currency==="USD"){
+      toggleCurrency(true)
+      sdk.setIsDollarPersisted("true")
+    }
+    else{
+      sdk.setIsDollarPersisted("false")
+      toggleCurrency(false)
+    }
+    setIsCurrencyDropdownOpen(false); // Close the dropdown after selection
+  };
+  
+  return(
+    <div className='relative  font-queens no-fade  border-black p-0 '>
+        <button
+          className='flex  text-sm no-fade opacity-80 gap-[2px] items-center cursor-pointer'
+          onClick={() => setIsCurrencyDropdownOpen((prev) => !prev)}
+        >
+          {showFlag&&<div>
+          {isDollar?<img src={sdk.usaFlagIcon} className='h-3  no-fade grayscale-[40%]'/>:
+          <img src={sdk.nigeriaFlagIcon} className='h-3 no-fade grayscale-[40%]'/>}
+          </div>}
+          <span className='p-0 no-fade text-sm m-0 ml-[2px] '>{isDollar ? 'USD' : 'NGN'}</span>
+          <IoIosArrowDown className='no-fade text-xs' />
+        </button>
+
+        {isCurrencyDropdownOpen && (
+          <div className='text-xs no-fade absolute w-32  right-0 bg-secondary dark:bg-primary-light shadow-lg rounded-md mt-2 '>
+            <button
+              className='flex no-fade border-b dark:border-b-neutral-700 items-center  gap-2  p-2 '
+              onClick={() => handleCurrencyToggle('NGN')}
+            >
+              <img src={sdk.nigeriaFlagIcon} className='h-4'/>
+              <p className='text-primary  dark:text-secondary whitespace-nowrap'>NGN &mdash; Naira</p>
+            </button>
+            <button
+              className='flex no-fade items-center gap-2  p-2'
+              onClick={() => handleCurrencyToggle('USD')}
+            >
+              <img src={sdk.usaFlagIcon} className='h-4'/>
+              <p className='text-primary dark:text-secondary'>USD &mdash; Dollars</p>
+            </button>
+          </div>
+        )}
+</div>)
+}
+
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false); // State for mobile menu visibility
   const [timeoutId, setTimeoutId]= useState(0);
   // const adminObject = useSelector((state: RootState) => state.admin.admin);
   // const userObject = useSelector((state: RootState) => state.user.user);
   const navigate = useNavigate()
-  const [isCurrencyDropdownOpen, setIsCurrencyDropdownOpen] = useState(false); // State for dropdown visibility
   const [loginOrLogoutText, setLoginOrLogoutText] = useState("Login")
-  const {cartItems,isAdmin,toggleCurrency,isDollar}=useTheme()
+  const {cartItems,isAdmin}=useTheme()
   const dispatch = useDispatch<AppDispatch>();
 
   // Toggle mobile menu visibility
@@ -37,17 +95,6 @@ const Navbar = () => {
 
   
 
-  const handleCurrencyToggle = (currency: string) => {
-    if(currency==="USD"){
-      toggleCurrency(true)
-      sdk.setIsDollarPersisted("true")
-    }
-    else{
-      sdk.setIsDollarPersisted("false")
-      toggleCurrency(false)
-    }
-    setIsCurrencyDropdownOpen(false); // Close the dropdown after selection
-  };
   
   useEffect(()=>{
     return()=>{
@@ -91,39 +138,7 @@ const Navbar = () => {
   // }, []);
 
 
-  const CurrencyPair=()=>{
-      return(
-        <div className='relative  font-queens no-fade  border-black p-0 '>
-            <button
-              className='flex  text-sm no-fade opacity-80 gap-[2px] items-center cursor-pointer'
-              onClick={() => setIsCurrencyDropdownOpen((prev) => !prev)}
-            >
-              {/* {isDollar?<img src={sdk.usaFlagIcon} className='h-3  no-fade grayscale-[40%]'/>:
-              <img src={sdk.nigeriaFlagIcon} className='h-3 no-fade grayscale-[40%]'/>} */}
-              <span className='p-0 no-fade text-sm m-0 ml-[2px] '>{isDollar ? 'USD' : 'NGN'}</span>
-              <IoIosArrowDown className='no-fade text-xs' />
-            </button>
-
-            {isCurrencyDropdownOpen && (
-              <div className='text-xs no-fade absolute w-32  right-0 bg-secondary dark:bg-primary-light shadow-lg rounded-md mt-2 '>
-                <button
-                  className='flex no-fade border-b dark:border-b-neutral-700 items-center  gap-2  p-2 '
-                  onClick={() => handleCurrencyToggle('NGN')}
-                >
-                  <img src={sdk.nigeriaFlagIcon} className='h-4'/>
-                  <p className=' whitespace-nowrap'>NGN &mdash; Naira</p>
-                </button>
-                <button
-                  className='flex no-fade items-center gap-2  p-2'
-                  onClick={() => handleCurrencyToggle('USD')}
-                >
-                  <img src={sdk.usaFlagIcon} className='h-4'/>
-                  <p className=''>USD &mdash; Dollars</p>
-                </button>
-              </div>
-            )}
-          </div>)
-  }
+  
 
 
 

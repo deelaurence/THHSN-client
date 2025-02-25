@@ -23,7 +23,6 @@ import { Order } from "../../interfaces/order";
 import { RootState } from "../../store/store";
 import PriceToast from "../../components/PriceToast";
 import { fetchExchangeRate } from "../../store/fetchProductSlice";
-import { CiLocationArrow1 } from "react-icons/ci";
 import { FaShippingFast } from "react-icons/fa";
 const data = [
   { color: '#FF6384', percentage: 80,label:"Hair Products" }, // 40% - Red

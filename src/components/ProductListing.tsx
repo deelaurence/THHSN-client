@@ -7,6 +7,7 @@ import { sdk } from '../utils/sdk';
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import PriceToast from './PriceToast';
+import { GiCancel } from 'react-icons/gi';
 interface ProductsProps {
   products: IProduct[];
   filterProps: string;
@@ -57,7 +58,10 @@ const ProductListing: React.FC<ProductsProps> = ({ products,filterProps }) => {
         <h2 className="uppercase text-xs">
         {product.name.length > 20 ? product.name.slice(0, 20) + '...' : product.name}
         </h2>
+        <div className='flex justify-between items-center'>
         <PriceToast className='text-[8px] text-yellow-600' price={product.variations[0].variations[0].price}/>
+        {product.outOfStock&&<p className='text-[8px] bg-red-500 text-white px-1 rounded-xl flex items-center gap-1'>Sold out <GiCancel/> </p>}
+        </div>
         {/* <Button loading={false} extraClass='text-xs rounded-l bg-transparent  font-thin h-8 mt-2' label='View product' size='large' /> */}
         </div>
       </Link>  

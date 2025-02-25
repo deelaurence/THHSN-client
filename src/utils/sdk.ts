@@ -206,6 +206,7 @@ export class Sdk{
         .map((item,index)=>{
             return{
                 ...item,
+                outOfStock:dataInDatabase[index].outOfStock,
                 image:dataInDatabase[index].coverImage??item.image,
                 price:dataInDatabase[index]
                 .variations[0]

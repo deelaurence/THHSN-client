@@ -126,6 +126,7 @@ const ProductDetail = () => {
         <HelmetProvider>
         {product&&product.name?
             <div 
+    
             className='px-6 tablet:px-16 sm:px-44 pb-12 '>
                 <Helmet>
                     <title>{product.name}</title>
@@ -139,6 +140,10 @@ const ProductDetail = () => {
                 accent='' />
                 
                 <main className='tablet:flex tablet:gap-14 md:flex md:gap-14 '>
+                {product.outOfStock&&<div className='absolute text-white dark:text-orange-600 z-10 top-16 left-0 w-full h-12 bg-primary-light flex items-center justify-center'>
+                    <p className='  font-queens '>Sold Out</p>
+                    <TiCancel className=' mb-1'/>
+                </div>}
                 <div className='flex-[2]'>
                     {!product.images||!product.images[0]&&<Slideshow images={[sdk.placeholderImage]}/>}
                     {product.images&&product.images[0]&&<Slideshow images={product.coverImage ? [product.coverImage, ...product.images] : product.images}/>}
@@ -336,6 +341,7 @@ const ProductDetail = () => {
                 <Link
                 className='mt-16 block'
                 onClick={()=>{
+                    if(product.outOfStock)return
                     if(!product.variations)return
                     const currentlySelectedVariant = product.variations[currentVariation].variations[selectedVariant]
                     // @ts-ignore
@@ -343,7 +349,7 @@ const ProductDetail = () => {
                     setSuccessFeedback(`${product.name} Added to cart`)
                 }}
                 to={sdk.cartRoute}>
-                <Button label='Add to Cart'  size='large' extraClass=' font-thin  bg-primary text-secondary py-3' loading={false} />
+                <Button  disabled={product.outOfStock} label={product.outOfStock?'Sold out':'Add to Cart'}  size='large' extraClass=' font-thin  bg-primary text-secondary py-3' loading={false} />
                 </Link>}
                 </section>
                 </main>

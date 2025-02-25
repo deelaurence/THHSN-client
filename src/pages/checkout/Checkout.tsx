@@ -200,7 +200,7 @@ useEffect(() => {
 
                 </div>
                 {selectedState && cities.length > 0 && (
-                    <div className="mb-4">
+                <div className="">
                 <label className="block mb-2 text-[10px] opacity-80">City</label>
                 <select 
                 required={true}
@@ -214,7 +214,7 @@ useEffect(() => {
                     </option>
                     ))}
                 </select>
-                <div className='mt-8'>
+                <div className='mt-6'>
                         <FormInput type="number" value={`${shippingFees}`} required={true} onChange={() => {}} placeholder="Shipping Fees in NGN" />
                 </div>
                 </div>

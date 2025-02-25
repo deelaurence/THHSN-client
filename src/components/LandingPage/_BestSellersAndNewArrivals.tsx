@@ -10,6 +10,7 @@ import PriceToast from "../PriceToast";
 interface StoreItem {
   text: string;
   image: string;
+  outOfStock?: boolean;
   secondaryImage?: string; // Add an optional secondary image
   price: number;
   path: string;
@@ -90,38 +91,38 @@ const BestSellersAndNewArrivals: React.FC<BestSellersProps> = ({
               onMouseLeave={() => setHoveredIndex(null)}
               
               className="h-64 sm:h-[24rem] relative overflow-hidden cursor-pointer">
-                {/* Primary Image */}
+              {/* Primary Image */}
 
+              <img
+                className={`object-cover h-full w-full px-1 transition-opacity duration-1000 ${
+                hoveredIndex === index ? "opacity-10" : "opacity-100 "
+                }`}
+                src={item.image}
+                alt={item.text}
+              />
+              {/* Secondary Image */}
+              {item.secondaryImage && (
                 <img
-                  className={`object-cover h-full w-full px-1 transition-opacity duration-1000 ${
-                    hoveredIndex === index ? "opacity-10" : "opacity-100 "
-                  }`}
-                  src={item.image}
-                  alt={item.text}
+                className={`absolute inset-0 object-cover h-full w-full px-1  transition-opacity duration-500 ${
+                  hoveredIndex === index ? "opacity-100" : "opacity-0"
+                }`}
+                src={item.secondaryImage}
+                alt={`${item.text} - Hover`}
                 />
-                {/* Secondary Image */}
-                {item.secondaryImage && (
-                  <img
-                    className={`absolute inset-0 object-cover h-full w-full px-1  transition-opacity duration-500 ${
-                      hoveredIndex === index ? "opacity-100" : "opacity-0"
-                    }`}
-                    src={item.secondaryImage}
-                    alt={`${item.text} - Hover`}
-                  />
-                )}
+              )}
               </div>
               <div className="h-20">
-                <p className="px-2 flex gap-2 leading-4 font-queens text-sm sm:text-xl pt-4 capitalize">
-                  {item.text}
-                </p>
-                <PriceToast price={item.price} className="font-queens px-2 mt-1 font-medium"/>
+              <p className="px-2 flex gap-2 leading-4 font-queens text-sm sm:text-xl pt-4 capitalize">
+                {item.text}
+              </p>
+              <PriceToast price={item.price} className="font-queens px-2 mt-1 font-medium"/>
               </div>
               <Button
-                extraClass="text-xs mx-1 dark:radial-gradient-bg bg-transparent py-2 capitalize"
-                size="large"
-                label={isAdmin?"Edit item":"Add to Cart"}
-                loading={false}
-                />
+              extraClass={` text-xs mx-1 dark:radial-gradient-bg bg-transparent py-2 capitalize ${item.outOfStock?'opacity-60':''}`}
+              size="large"
+              label={isAdmin ? "Edit item" : item.outOfStock ? "Out of Stock" : "Add to Cart"}
+              loading={false}
+              />
             </Link>:
             
             <SkeletonLoader/>}

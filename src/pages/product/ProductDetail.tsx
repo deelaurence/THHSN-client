@@ -24,7 +24,6 @@ import PriceToast from '../../components/PriceToast.tsx'
 // import { RiCheckboxBlankCircleLine, RiCircleFill } from 'react-icons/ri'
 import { fetchExchangeRate,fetchProductsPublic } from '../../store/fetchProductSlice.ts'
 import SkeletonLoader from '../../components/SkeletonLoader.tsx'
-import { TiCancel } from 'react-icons/ti'
 
 const ProductDetail = () => {
 
